@@ -13,33 +13,30 @@ const Stack = createStackNavigator();
 
 const FeedStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      headerBackground: () => <BackgroundHeader />,
+      headerBackTitle: null,
+      headerStyle: {
+        backgroundColor: 'rgba(231, 73, 62, 0.98)',
+        borderBottomWidth: 0,
+        elevation: 0,
+      },
+      headerBackTitleVisible: false,
+      headerTintColor: '#FFFFFF',
+    }}>
       <Stack.Screen
         component={FeedScreen}
         name="Feed"
         options={{
-          headerBackground: () => <BackgroundHeader />,
-          headerBackTitle: null,
           headerLeft: () => null,
-          headerStyle: {
-            backgroundColor: 'rgba(231, 73, 62, 0.98)',
-            borderBottomWidth: 0,
-            elevation: 0,
-          },
           headerTitle: () => <HeaderTitle />
         }}/>
       <Stack.Screen component={DetailScreen} name="Detail" options={({ route }) => ({
-        headerBackTitleVisible: false,
-        headerBackground: () => <BackgroundHeader />,
-        headerStyle: {
-          backgroundColor: 'rgba(231, 73, 62, 0.98)',
-          borderBottomWidth: 0,
-          elevation: 0,
-        },
-        headerTintColor: '#FFFFFF',
-        title: `${route.params.username}'s Post`
+        title: `${route.params.username}'s BarSnap`
       })}/>
-      <Stack.Screen component={PostCheersScreen} name="PostCheers" />
+      <Stack.Screen component={PostCheersScreen} name="PostCheers" options={{
+        title: 'Cheers'
+      }} />
     </Stack.Navigator>
   );
 };

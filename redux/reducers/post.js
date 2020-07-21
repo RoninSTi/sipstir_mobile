@@ -1,4 +1,10 @@
-import { CLEAR_CHEERS, FETCH_POST_CHEERS_SUCCESS, FETCH_SINGLE_POST_SUCCESS, REFRESH_DETAIL } from '../actions/types'
+import {
+  CLEAR_CHEERS,
+  FETCH_POST_CHEERS_SUCCESS,
+  FETCH_SINGLE_POST_SUCCESS,
+  LOGOUT,
+  REFRESH_DETAIL
+} from '../actions/types'
 
 const initialState = {
   isRefreshing: false,
@@ -27,6 +33,10 @@ const reducer = (state = initialState, action) => {
         isRefreshing: false
       }
     }
+    case LOGOUT: 
+      return {
+        ...initialState
+      }
     case REFRESH_DETAIL: {
       return {
         ...state,

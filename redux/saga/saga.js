@@ -5,6 +5,7 @@ import { watchAuth } from './auth';
 import { watchCreateProfile } from './createProfile';
 import { watchFeed } from './feed'
 import { watchLeaderboard } from './leaderboard'
+import { watchMyPosts } from './myPosts'
 import { watchPlaces } from './places'
 import { watchPost } from './post'
 import { watchUI } from './ui';
@@ -16,6 +17,7 @@ export default function* rootSaga() {
     watchCreateProfile(),
     watchFeed(),
     watchLeaderboard(),
+    watchMyPosts(),
     watchPlaces(),
     watchPost(),
     watchUI()

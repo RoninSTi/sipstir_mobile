@@ -1,4 +1,4 @@
-import { FETCH_ACTIVITY_SUCCESS, REFRESH_ACTIVITY } from '../actions/types'
+import { FETCH_ACTIVITY_SUCCESS, LOGOUT, REFRESH_ACTIVITY } from '../actions/types'
 
 const initialState = {
   activities: [],
@@ -16,6 +16,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         activities: payload.data,
         isRefreshing: false
+      }
+    }
+    case LOGOUT: {
+      return {
+        ...initialState
       }
     }
     case REFRESH_ACTIVITY: 

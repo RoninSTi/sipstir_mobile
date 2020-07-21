@@ -2,13 +2,22 @@ import { call, put, takeEvery, select } from 'redux-saga/effects'
 
 import { AsyncStorage } from 'react-native'
 
-import { ATTEMPT_LOGIN, CREATE_USER_SUCCESS, GET_USER_BY_EMAIL_SUCCESS, SET_AUTH_USER, UPDATE_LOADING } from '../actions/types'
+import {
+  ATTEMPT_LOGIN,
+  ATTEMPT_LOGOUT,
+  CREATE_USER_SUCCESS,
+  GET_USER_BY_EMAIL_SUCCESS,
+  LOGOUT,
+  SET_AUTH_USER,
+  UPDATE_LOADING
+} from '../actions/types'
 import { getUserByEmailAction } from '../actions/auth'
 import { createUserAction } from '../actions/user'
 
 import { toQueryString } from '../../helpers/url';
 
 import * as AuthSession from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
 import jwtDecode from 'jwt-decode';
 
 import env from '../../environment';
@@ -48,6 +57,21 @@ function* onAttemptLogin() {
   }))
 
   yield handleLoginResponse(response);
+}
+
+function* onAttemptLogout() {
+  const params = toQueryString({
+    client_id: env.auth0.clientId,
+    returnTo: `https://www.barsnap.com/`,
+  });
+
+  yield call(() => WebBrowser.openBrowserAsync(`https://${env.auth0.domain}/v2/logout${params}`));
+
+  yield put({ type: LOGOUT })
+
+  yield AsyncStorage.removeItem('user')
+
+  navigate('Auth');
 }
 
 function* onSetAuthUser() {
@@ -135,6 +159,7 @@ function* onGetUserByEmail(action) {
 
 export function* watchAuth() {
   yield takeEvery(ATTEMPT_LOGIN, onAttemptLogin)
+  yield takeEvery(ATTEMPT_LOGOUT, onAttemptLogout)
   yield takeEvery(CREATE_USER_SUCCESS, onCreateUserSuccess)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)
   yield takeEvery(GET_USER_BY_EMAIL_SUCCESS, onGetUserByEmail)

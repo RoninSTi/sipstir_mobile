@@ -1,7 +1,6 @@
-import { SET_AUTH_USER } from '../actions/types';
+import { LOGOUT, SET_AUTH_USER } from '../actions/types';
 
 const initialState = {
-  isLoggedIn: false,
   user: null,
 }
 
@@ -9,6 +8,11 @@ const reducer = (state = initialState, action) => {
   const { payload, type } = action;
 
   switch (type) {
+    case LOGOUT: {
+      return {
+        ...initialState
+      }
+    }
     case SET_AUTH_USER:
       return {
         ...state,

@@ -1,4 +1,4 @@
-import { FETCH_LEADERBOARD_SUCCESS, REFRESH_LEADERBOARD } from '../actions/types'
+import { FETCH_LEADERBOARD_SUCCESS, LOGOUT, REFRESH_LEADERBOARD } from '../actions/types'
 
 const initialState = {
   isRefreshing: false,
@@ -14,6 +14,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         isRefreshing: false,
         leaders: payload.data
+      }
+    case LOGOUT:
+      return {
+        ...initialState
       }
     case REFRESH_LEADERBOARD:
       return {

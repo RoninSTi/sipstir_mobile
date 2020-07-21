@@ -33,6 +33,10 @@ const TabBar = ({ descriptors, navigation, state }) => {
       navigate('Leaderboard')
     }
 
+    if (key.startsWith('Profile')) {
+      navigate('Profile')
+    }
+
 
     // const feedRoute = navigation.state.routes.find(route => route.routeName === 'FeedStack');
 

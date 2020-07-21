@@ -47,24 +47,23 @@ const Tab = ({ focusAnim, routeKey, onPress }) => {
             source={require('../assets/images/tab_icon_leaderboard.png')}
           />
         );
-    //   case 'ProfileStack':
-    //     return (
-    //       <Animated.Image
-    //         style={{
-    //           width: 28,
-    //           height: 28,
-    //           tintColor: focusAnim.interpolate({
-    //             inputRange: [0, 1],
-    //             outputRange: ['rgba(255, 255, 255, 0.6)', '#FFFFFF'],
-    //           }),
-    //         }}
-    //         source={require('../assets/images/tab_icon_profile.png')}
-    //       />
-    //     );
-    //   default:
-    //     return null;
-    // }
-  };
+    
+    if (routeKey.startsWith('Profile'))
+        return (
+          <Animated.Image
+            style={{
+              width: 28,
+              height: 28,
+              tintColor: focusAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['rgba(255, 255, 255, 0.6)', '#FFFFFF'],
+              }),
+            }}
+            source={require('../assets/images/tab_icon_profile.png')}
+          />
+        );
+  }
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={{ padding: 10 }}>{icon()}</View>

@@ -1,8 +1,7 @@
-import { LOGOUT, REFRESH_FEED, SET_FEED_TYPE, SET_POSTS } from '../actions/types'
+import { LOGOUT, REFRESH_MY_FEED, SET_MY_POSTS } from '../actions/types'
 
 const initialState = {
   isRefreshing: false,
-  feedType: 'main',
   page: 1,
   pageSize: 100,
   posts: [],
@@ -16,18 +15,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...initialState
       }
-    case REFRESH_FEED:
+    case REFRESH_MY_FEED:
       return {
         ...state,
         isRefreshing: true,
         page: 1
       }
-    case SET_FEED_TYPE:
-      return {
-        ...state,
-        feedType: payload
-      }
-    case SET_POSTS:
+    case SET_MY_POSTS:
       return {
         ...state,
         isRefreshing: false,

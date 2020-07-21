@@ -1,4 +1,12 @@
-import { CHECK_USERNAME_SUCCESS, SET_AUTH_USER, SET_AVATAR, SET_USERNAME, SET_SHOW_AVAILABLE_INDICATOR } from '../actions/types'
+import {
+  CHECK_USERNAME_SUCCESS,
+  CREATE_USER_SUCCESS,
+  LOGOUT,
+  SET_AUTH_USER,
+  SET_AVATAR,
+  SET_USERNAME,
+  SET_SHOW_AVAILABLE_INDICATOR
+} from '../actions/types'
 
 const initialState = {
   avatar: null,
@@ -15,6 +23,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ...payload.data
+      }
+    case CREATE_USER_SUCCESS: 
+    case LOGOUT:
+      return {
+        ...initialState
       }
     case SET_AUTH_USER:
       return {

@@ -6,6 +6,7 @@ import createPost from './createPost'
 import createProfile from './createProfile'
 import feed from './feed'
 import leaderboard from './leaderboard'
+import myPosts from './myPosts'
 import places from './places'
 import post from './post'
 import user from './user';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   createProfile,
   feed,
   leaderboard,
+  myPosts,
   places,
   post,
   ui,

@@ -1,4 +1,4 @@
-import { SET_PLACES } from '../actions/types'
+import { LOGOUT, SET_PLACES, SELECT_PLACE_SUCCESS } from '../actions/types'
 
 const initialState = {
   currentLocation: null,
@@ -15,6 +15,11 @@ const reducer = (state = initialState, action) => {
         places: payload
       }
     }
+    case LOGOUT:
+    case SELECT_PLACE_SUCCESS:
+      return {
+        ...initialState
+      }
     default:
       return {
         ...state

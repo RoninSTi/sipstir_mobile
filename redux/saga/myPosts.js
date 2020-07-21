@@ -3,22 +3,23 @@ import { put, takeEvery, select } from 'redux-saga/effects'
 import {
   CHEERS_POST_SUCCESS,
   CREATE_COMMENT_SUCCESS,
-  FETCH_FEED_SUCCESS,
   FETCH_SINGLE_POST_SUCCESS,
-  REFRESH_FEED, SET_AUTH_USER,
-  SET_POSTS,
+  REFRESH_MY_FEED,
+  SET_AUTH_USER,
+  SET_MY_POSTS,
   CREATE_POST_SUCCESS,
+  FETCH_FEED_SUCCESS,
 } from '../actions/types';
 import { fetchFeedAction } from '../actions/feed';
 
 const getAuthUser = state => state.auth.user
 
-const getPosts = state => state.feed.posts
+const getPosts = state => state.myPosts.posts
 
 const getFeedParams = state => {
-  const { feedType, page, pageSize } = state.feed;
+  const { page, pageSize } = state.myPosts;
 
-  return { feedType, page, pageSize }
+  return { feedType: 'user', page, pageSize }
 }
 
 function* fetchFeed() {
@@ -34,19 +35,31 @@ function* fetchFeed() {
 function* onCheersPostSuccess(action) {
   const post = action.payload.data
 
-  yield replacePost(post)
+  const { id } = yield select(getAuthUser)
+
+  if (id === post.createdById) {
+    yield replacePost(post)
+  }
 }
 
 function* onCreateCommentSuccess(action) {
   const post = action.payload.data
 
-  yield replacePost(post)
+  const { id } = yield select(getAuthUser)
+
+  if (id === post.createdById) {
+    yield replacePost(post)
+  }
 }
 
 function* onCreatePostSuccess(action) {
   const post = action.payload.data
 
-  yield replacePost(post)
+  const { id } = yield select(getAuthUser)
+
+  if (id === post.createdById) {
+    yield replacePost(post)
+  }
 }
 
 function* onFetchFeedSuccess(action) {
@@ -57,20 +70,24 @@ function* onFetchFeedSuccess(action) {
 
   const isUserFeed = parts[1] === 'user' && parts[3] === `${id}`
 
-  if (isUserFeed) return
+  if (!isUserFeed) return
 
   const { data: posts } = action.payload
 
   yield put({
-    type: SET_POSTS,
+    type: SET_MY_POSTS,
     payload: posts
   })
 }
 
 function* onFetchSinglePostSuccess(action) {
   const post = action.payload.data
-  
-  yield replacePost(post)
+
+  const { id } = yield select(getAuthUser)
+
+  if (id === post.createdById) {
+    yield replacePost(post)
+  }
 }
 
 function* onRefreshFeed() {
@@ -93,26 +110,26 @@ function* replacePost(post) {
   })
 
   if (index === -1) {
-    yield put({ 
-      type: SET_POSTS,
+    yield put({
+      type: SET_MY_POSTS,
       payload: [post, ...posts]
     })
   } else {
     posts[index] = post;
 
     yield put({
-      type: SET_POSTS,
+      type: SET_MY_POSTS,
       payload: posts
     })
   }
 }
 
-export function* watchFeed() {
+export function* watchMyPosts() {
   yield takeEvery(CHEERS_POST_SUCCESS, onCheersPostSuccess)
   yield takeEvery(CREATE_COMMENT_SUCCESS, onCreateCommentSuccess)
   yield takeEvery(CREATE_POST_SUCCESS, onCreatePostSuccess)
   yield takeEvery(FETCH_FEED_SUCCESS, onFetchFeedSuccess)
   yield takeEvery(FETCH_SINGLE_POST_SUCCESS, onFetchSinglePostSuccess)
-  yield takeEvery(REFRESH_FEED, onRefreshFeed)
+  yield takeEvery(REFRESH_MY_FEED, onRefreshFeed)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)
 };

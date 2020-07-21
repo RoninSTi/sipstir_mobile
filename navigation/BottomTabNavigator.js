@@ -8,6 +8,7 @@ import ActivityStack from './ActivityStack'
 import Empty from '../components/Empty'
 import FeedStack from './FeedStack';
 import LeaderboardStack from './LeaderboardStack'
+import ProfileStack from './ProfileStack'
 
 import TabBar from '../components/TabBar'
 
@@ -36,6 +37,10 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Leaderboard"
         component={LeaderboardStack}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileStack}
       />
     </BottomTab.Navigator>
   );

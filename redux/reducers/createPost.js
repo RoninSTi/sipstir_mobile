@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
   switch (type) {
     case CREATE_POST_SUCCESS: {
       return {
-        ...state,
+        ...initialState,
         isCreatingPost: false
       }
     }

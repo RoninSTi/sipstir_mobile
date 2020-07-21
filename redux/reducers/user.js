@@ -1,4 +1,11 @@
-import { CREATE_PROFILE_SUCCESS, CREATE_USER_SUCCESS, FOLLOW_USER_SUCCESS, GET_USER_BY_EMAIL_SUCCESS, UPDATE_USER_SUCCESS } from '../actions/types'
+import {
+  CREATE_PROFILE_SUCCESS,
+  CREATE_USER_SUCCESS,
+  FOLLOW_USER_SUCCESS,
+  GET_USER_BY_EMAIL_SUCCESS,
+  LOGOUT,
+  UPDATE_USER_SUCCESS
+} from '../actions/types'
 
 const initialState = {
   avatar: null,
@@ -24,6 +31,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ...payload.data
+      }
+    case LOGOUT:
+      return {
+        ...initialState
       }
     default: 
       return {
