@@ -2,7 +2,7 @@ import { FETCH_LEADERBOARD_SUCCESS, LOGOUT, REFRESH_LEADERBOARD } from '../actio
 
 const initialState = {
   isRefreshing: false,
-  leaders: []
+  leaders: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,20 +13,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isRefreshing: false,
-        leaders: payload.data
+        leaders: payload.data,
       }
     case LOGOUT:
       return {
-        ...initialState
+        ...initialState,
       }
     case REFRESH_LEADERBOARD:
       return {
         ...state,
-        isRefreshing: true
+        isRefreshing: true,
       }
     default:
       return {
-        ...state
+        ...state,
       }
   }
 }

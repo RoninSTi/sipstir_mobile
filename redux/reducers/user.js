@@ -4,7 +4,7 @@ import {
   FOLLOW_USER_SUCCESS,
   GET_USER_BY_EMAIL_SUCCESS,
   LOGOUT,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
 } from '../actions/types'
 
 const initialState = {
@@ -14,9 +14,9 @@ const initialState = {
   pointsBalance: 0,
   createdAt: null,
   updatedAt: null,
-  alltimeLeaderboardPosition: 0,
+  allTimeLeaderboardPosition: 0,
   followers: [],
-  following: []
+  following: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -30,15 +30,15 @@ const reducer = (state = initialState, action) => {
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
-        ...payload.data
+        ...payload.data,
       }
     case LOGOUT:
       return {
-        ...initialState
+        ...initialState,
       }
-    default: 
+    default:
       return {
-        ...state
+        ...state,
       }
   }
 }

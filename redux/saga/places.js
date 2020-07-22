@@ -1,37 +1,44 @@
+/* eslint-disable import/prefer-default-export */
 import { put, takeEvery, select } from 'redux-saga/effects'
 
-import { CHECK_LOCATION, FETCH_PLACES_SUCCESS, SELECT_PLACE, SET_PLACES_SEARCH_STRING, SET_PLACES } from '../actions/types';
-import { fetchPlaceAction, fetchPlacesAction } from '../actions/places';
+import {
+  CHECK_LOCATION,
+  FETCH_PLACES_SUCCESS,
+  SELECT_PLACE,
+  SET_PLACES_SEARCH_STRING,
+  SET_PLACES,
+} from '../actions/types'
+import { fetchPlaceAction, fetchPlacesAction } from '../actions/places'
 
 import env from '../../environment'
 
 const NO_IDEA = {
-  type: 'NO_GUESS'
+  type: 'NO_GUESS',
 }
 
-const getAuthUser = state => state.auth.user
+const getAuthUser = (state) => state.auth.user
 
-const getLocation = state => state.places.currentLocation
+const getLocation = (state) => state.places.currentLocation
 
 function* onCheckLocation(action) {
   const currentLocation = yield select(getLocation)
 
   let params = {
     type: 'bar',
-    key: env.google.placeApiKey
+    key: env.google.placeApiKey,
   }
 
   if (currentLocation) {
-    const { latitude, longitude } = this.currentLocation.coords;
+    const { latitude, longitude } = this.currentLocation.coords
 
     params = {
       ...params,
       radius: 500,
-      location: `${latitude},${longitude}`
+      location: `${latitude},${longitude}`,
     }
   }
 
-  const includeNoIdea = action.payload.includeNoIdea
+  const { includeNoIdea } = action.payload
 
   const url = 'textsearch/json'
 
@@ -41,7 +48,7 @@ function* onCheckLocation(action) {
 function* onFetchPlacesSuccess(action) {
   const { meta, payload } = action
 
-  const includeNoIdea = meta.previousAction.payload.includeNoIdea
+  const { includeNoIdea } = meta.previousAction.payload
 
   let posts = includeNoIdea ? [NO_IDEA] : []
 
@@ -53,13 +60,13 @@ function* onFetchPlacesSuccess(action) {
     posts = [...posts, ...payload.data.predictions]
   }
 
-  yield put({ type: SET_PLACES, payload: posts})
+  yield put({ type: SET_PLACES, payload: posts })
 }
 
 function* onSelectPlace(action) {
   const { token } = yield select(getAuthUser)
-  
-  const { payload: placeId } = action;
+
+  const { payload: placeId } = action
 
   yield put(fetchPlaceAction({ placeId, token }))
 }
@@ -74,12 +81,12 @@ function* onSetPlacesSearchString(action) {
   }
 
   if (currentLocation) {
-    const { latitude, longitude } = this.currentLocation.coords;
+    const { latitude, longitude } = this.currentLocation.coords
 
     params = {
       ...params,
       radius: 500,
-      location: `${latitude},${longitude}`
+      location: `${latitude},${longitude}`,
     }
   }
 
@@ -93,4 +100,4 @@ export function* watchPlaces() {
   yield takeEvery(FETCH_PLACES_SUCCESS, onFetchPlacesSuccess)
   yield takeEvery(SELECT_PLACE, onSelectPlace)
   yield takeEvery(SET_PLACES_SEARCH_STRING, onSetPlacesSearchString)
-};
+}

@@ -5,7 +5,7 @@ import {
   SET_AUTH_USER,
   SET_AVATAR,
   SET_USERNAME,
-  SET_SHOW_AVAILABLE_INDICATOR
+  SET_SHOW_AVAILABLE_INDICATOR,
 } from '../actions/types'
 
 const initialState = {
@@ -16,42 +16,42 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-  const { payload, type } = action;
+  const { payload, type } = action
 
   switch (type) {
     case CHECK_USERNAME_SUCCESS:
       return {
         ...state,
-        ...payload.data
+        ...payload.data,
       }
-    case CREATE_USER_SUCCESS: 
+    case CREATE_USER_SUCCESS:
     case LOGOUT:
       return {
-        ...initialState
+        ...initialState,
       }
     case SET_AUTH_USER:
       return {
         ...state,
-        avatar: payload.avatar
+        avatar: payload.avatar,
       }
     case SET_AVATAR:
       return {
         ...state,
-        avatar: payload
+        avatar: payload,
       }
     case SET_SHOW_AVAILABLE_INDICATOR:
       return {
         ...state,
-        showAvailableIndicator: payload
+        showAvailableIndicator: payload,
       }
     case SET_USERNAME:
       return {
         ...state,
-        username: payload
+        username: payload,
       }
     default: {
       return {
-        ...state
+        ...state,
       }
     }
   }

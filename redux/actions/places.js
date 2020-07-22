@@ -7,13 +7,13 @@ export const fetchPlaceAction = ({ placeId, token }) => ({
       method: 'post',
       url: `location/${placeId}`,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     },
     setLoading: {
-      meta: placeId
-    }
-  }
+      meta: placeId,
+    },
+  },
 })
 
 export const fetchPlacesAction = ({ includeNoIdea = false, params, url }) => ({
@@ -27,7 +27,7 @@ export const fetchPlacesAction = ({ includeNoIdea = false, params, url }) => ({
     },
     includeNoIdea,
     setLoading: {
-      meta: null
-    }
-  }
+      meta: null,
+    },
+  },
 })

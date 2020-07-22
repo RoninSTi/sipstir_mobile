@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { FETCH_ACTIVITY } from './types'
 
 export const fetchActivityAction = ({ token, userId, ...params }) => ({
@@ -8,8 +9,11 @@ export const fetchActivityAction = ({ token, userId, ...params }) => ({
       url: `activity/${userId}`,
       params,
       headers: {
-        Authorization: `Bearer ${token }`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    setLoading: {
+      meta: null,
+    },
+  },
 })

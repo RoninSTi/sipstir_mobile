@@ -1,7 +1,8 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
 import activity from './activity'
-import auth from './auth';
+import auth from './auth'
+import createGuess from './createGuess'
 import createPost from './createPost'
 import createProfile from './createProfile'
 import feed from './feed'
@@ -9,12 +10,13 @@ import leaderboard from './leaderboard'
 import myPosts from './myPosts'
 import places from './places'
 import post from './post'
-import user from './user';
-import ui from './ui';
+import user from './user'
+import ui from './ui'
 
 const rootReducer = combineReducers({
   activity,
   auth,
+  createGuess,
   createPost,
   createProfile,
   feed,
@@ -23,7 +25,7 @@ const rootReducer = combineReducers({
   places,
   post,
   ui,
-  user
-});
+  user,
+})
 
-export default rootReducer;
+export default rootReducer

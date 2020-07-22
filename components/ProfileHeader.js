@@ -1,15 +1,15 @@
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUserAction } from '../redux/actions/user';
 
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { ActivityIndicator, Avatar } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Image, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Avatar } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { updateUserAction } from '../redux/actions/user'
 
-import AlltimeLeaderboardPosition from './AlltimeLeaderboardPosition';
+import AlltimeLeaderboardPosition from './AlltimeLeaderboardPosition'
 import PhotoUploader from './PhotoUploader'
 
 const styles = StyleSheet.create({
@@ -90,18 +90,18 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 7,
   },
-});
+})
 
 const ProfileHeader = () => {
   const dispatch = useDispatch()
 
-  const authUser = useSelector(state => state.auth.user)
-  
-  const user = useSelector(state => state.user)
+  const authUser = useSelector((state) => state.auth.user)
 
-  const myPosts = useSelector(state => state.myPosts.posts)
+  const user = useSelector((state) => state.user)
 
-  const [isUploading, setIsUploading] = useState(false);
+  const myPosts = useSelector((state) => state.myPosts.posts)
+
+  const [isUploading, setIsUploading] = useState(false)
 
   const handleUploadComplete = ({ url }) => {
     dispatch(updateUserAction({ avatar: url, token: authUser.token, userId: user.id }))
@@ -111,11 +111,11 @@ const ProfileHeader = () => {
     switch (progressData) {
       case progressData > 0 && progress < 1 && !isUploading:
         setIsUploading(true)
-        break;
+        break
       case progressData === 1 && isUploading:
         setIsUploading(false)
         break
-      default: 
+      default:
         break
     }
   }
@@ -127,12 +127,12 @@ const ProfileHeader = () => {
           {user.avatar ? (
             <Image style={styles.avatar} source={{ uri: user.avatar }} />
           ) : (
-              <Avatar.Text
-                size={45}
-                label={user.username ? user.username[0] : 'u'}
-                style={styles.avatar}
-              />
-            )}
+            <Avatar.Text
+              size={45}
+              label={user.username ? user.username[0] : 'u'}
+              style={styles.avatar}
+            />
+          )}
           {isUploading && (
             <View style={styles.activityContainer}>
               <ActivityIndicator size="small" color="#D7D0CF" />
@@ -143,10 +143,10 @@ const ProfileHeader = () => {
           onProgress={handleProgress}
           onUploadComplete={handleUploadComplete}
           photoDimensions={{
-            height: 300, width: 300
+            height: 300,
+            width: 300,
           }}
-          style={styles.button}
-        >
+          style={styles.button}>
           <Icon
             color="#FFFFFF"
             name="camera"
@@ -188,7 +188,7 @@ const ProfileHeader = () => {
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default ProfileHeader;
+export default ProfileHeader

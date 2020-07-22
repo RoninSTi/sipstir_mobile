@@ -3,7 +3,7 @@
     "name": "BarSnap",
     "slug": "barsnap-mobile",
     "scheme": "barsnap",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -18,11 +18,38 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDx6FH8-_uPJuRzYqgWEUFoI9v0fVWUYQo"
+        }
+      },
+      "package": "com.barsnap.barsnap",
+      "versionCode": 10
+    },
     "ios": {
+      "buildNumber": "1.2.0",
+      "bundleIdentifier": "com.barsnap.barsnap",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "icon": "./assets/images/icon.png",
       "supportsTablet": true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "barsnap",
+            "project": "barsnap",
+            "authToken": "9215769ed85243a888d2f8b5d1b4cbeb74a19bd69fbc44cc9db47e52927b051c"
+          }
+        }
+      ]
     }
   }
 }

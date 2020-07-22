@@ -7,16 +7,16 @@ export const cheersPostAction = ({ createdById, postId, token }) => ({
       method: 'post',
       url: `post/${postId}/cheers`,
       data: {
-        createdById
+        createdById,
       },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     },
     setLoading: {
-      meta: postId
-    }
-  }
+      meta: postId,
+    },
+  },
 })
 
 export const createPostAction = ({ token, ...data }) => ({
@@ -27,13 +27,13 @@ export const createPostAction = ({ token, ...data }) => ({
       url: 'post',
       data,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     },
     setLoading: {
-      meta: null
-    }
-  }
+      meta: null,
+    },
+  },
 })
 
 export const fetchPostCheersAction = ({ postId, token }) => ({
@@ -43,13 +43,13 @@ export const fetchPostCheersAction = ({ postId, token }) => ({
       method: 'get',
       url: `post/${postId}/cheers`,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     },
     setLoading: {
-      meta: postId
-    }
-  }
+      meta: postId,
+    },
+  },
 })
 
 export const fetchSinglePostAction = ({ postId, token, userId }) => ({
@@ -59,11 +59,11 @@ export const fetchSinglePostAction = ({ postId, token, userId }) => ({
       method: 'get',
       url: `post/${postId}`,
       params: {
-        userId
+        userId,
       },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  },
 })

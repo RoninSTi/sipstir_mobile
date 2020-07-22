@@ -6,10 +6,27 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "prettier": "prettier 'src/**/*.js'"
   },
   "jest": {
     "preset": "jest-expo"
+  },
+  "prettier": {
+    "jsxBracketSameLine": true,
+    "semi": false,
+    "singleQuote": true
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.8.0",
@@ -35,6 +52,7 @@
     "expo-web-browser": "~8.3.1",
     "jwt-decode": "^2.2.0",
     "moment": "^2.27.0",
+    "prop-types": "^15.7.2",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
@@ -59,10 +77,22 @@
     "@babel/core": "^7.8.6",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.62.13",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-transform-optional-chaining": "^7.0.0-beta.3",
     "babel-preset-expo": "~8.1.0",
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "husky": "^4.2.5",
     "jest-expo": "~38.0.0",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
     "typescript": "~3.9.5"
   },
   "private": true

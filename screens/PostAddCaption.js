@@ -2,20 +2,20 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React from 'react';
+import React from 'react'
 
-import { Dimensions, Image, StyleSheet, View, Text, TextInput } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Dimensions, Image, StyleSheet, View, Text, TextInput } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Button } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_POST_IMAGE, SET_POST_CAPTION } from '../redux/actions/types'
 
-import AddCommentHeader from '../components/AddCommentHeader';
+import AddCommentHeader from '../components/AddCommentHeader'
 import PhotoUploader from '../components/PhotoUploader'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   container: {
@@ -53,18 +53,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     flex: 1,
   },
-});
+})
 
 const PostAddCaption = () => {
   const dispatch = useDispatch()
 
-  const caption = useSelector(state => state.createPost.caption)
+  const caption = useSelector((state) => state.createPost.caption)
 
-  const image = useSelector(state => state.createPost.image)
+  const image = useSelector((state) => state.createPost.image)
 
-  const location = useSelector(state => state.createPost.location)
+  const location = useSelector((state) => state.createPost.location)
 
-  const handleOnChangeText = text => {
+  const handleOnChangeText = (text) => {
     dispatch({ type: SET_POST_CAPTION, payload: text })
   }
   const handleUploadComplete = ({ url }) => {
@@ -94,11 +94,8 @@ const PostAddCaption = () => {
         <Text style={{ color: '#9C9C9C', flex: 1 }}>Don&apos;t give away your location! 👍</Text>
         <PhotoUploader
           onUploadComplete={handleUploadComplete}
-          photoDimensions={{ height: 800, width: 800 }}
-        >
-          <Button color="#E85349">
-            Change
-          </Button>
+          photoDimensions={{ height: 800, width: 800 }}>
+          <Button color="#E85349">Change</Button>
         </PhotoUploader>
       </View>
       {image && (
@@ -115,7 +112,7 @@ const PostAddCaption = () => {
         </View>
       )}
     </KeyboardAwareScrollView>
-  );
-};
+  )
+}
 
-export default PostAddCaption;
+export default PostAddCaption

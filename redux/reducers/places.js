@@ -1,28 +1,28 @@
-import { LOGOUT, SET_PLACES, SELECT_PLACE_SUCCESS } from '../actions/types'
+import { LOGOUT, SET_PLACES, FETCH_PLACE_SUCCESS } from '../actions/types'
 
 const initialState = {
   currentLocation: null,
-  places: []
+  places: [],
 }
 
 const reducer = (state = initialState, action) => {
-  const { payload, type } = action;
+  const { payload, type } = action
 
   switch (type) {
     case SET_PLACES: {
       return {
         ...state,
-        places: payload
+        places: payload,
       }
     }
     case LOGOUT:
-    case SELECT_PLACE_SUCCESS:
+    case FETCH_PLACE_SUCCESS:
       return {
-        ...initialState
+        ...initialState,
       }
     default:
       return {
-        ...state
+        ...state,
       }
   }
 }

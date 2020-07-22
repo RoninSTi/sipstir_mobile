@@ -1,7 +1,11 @@
+/* eslint-disable import/prefer-default-export */
 import { call, put, takeEvery, select } from 'redux-saga/effects'
 
 import { AsyncStorage } from 'react-native'
 
+import * as AuthSession from 'expo-auth-session'
+import * as WebBrowser from 'expo-web-browser'
+import jwtDecode from 'jwt-decode'
 import {
   ATTEMPT_LOGIN,
   ATTEMPT_LOGOUT,
@@ -9,32 +13,57 @@ import {
   GET_USER_BY_EMAIL_SUCCESS,
   LOGOUT,
   SET_AUTH_USER,
-  UPDATE_LOADING
+  UPDATE_LOADING,
 } from '../actions/types'
 import { getUserByEmailAction } from '../actions/auth'
 import { createUserAction } from '../actions/user'
 
-import { toQueryString } from '../../helpers/url';
+import { toQueryString } from '../../helpers/url'
 
-import * as AuthSession from 'expo-auth-session';
-import * as WebBrowser from 'expo-web-browser';
-import jwtDecode from 'jwt-decode';
+import env from '../../environment'
+import { navigate } from '../../navigation/rootNavigation'
 
-import env from '../../environment';
-import { navigate } from '../../navigation/rootNavigation';
+const getUser = (state) => state.auth.user
 
-const getUser = state => state.auth.user;
+function* handleLoginResponse(response) {
+  if (response.error || response.type !== 'success') {
+    yield put({
+      type: UPDATE_LOADING,
+      payload: {
+        loadingType: ATTEMPT_LOGIN,
+        loadingAction: 'unset',
+      },
+    })
+
+    return
+  }
+
+  const { access_token: token } = response.params
+
+  const decodedJwtIdToken = jwtDecode(response.params.id_token)
+
+  const { email, picture } = decodedJwtIdToken
+
+  yield put({
+    type: SET_AUTH_USER,
+    payload: {
+      avatar: picture,
+      email,
+      token,
+    },
+  })
+}
 
 function* onAttemptLogin() {
   yield put({
     type: UPDATE_LOADING,
     payload: {
       loadingType: ATTEMPT_LOGIN,
-      loadingAction: 'set'
-    }
+      loadingAction: 'set',
+    },
   })
 
-  const redirectUrl = AuthSession.getRedirectUrl();
+  const redirectUrl = AuthSession.getRedirectUrl()
 
   const params = {
     audience: env.auth0.audience,
@@ -45,50 +74,52 @@ function* onAttemptLogin() {
     scope: 'openid profile email offline_access',
     nonce: 'nonce',
     rememberLastLogin: true,
-  };
+  }
 
-  const queryParams = toQueryString(params);
+  const queryParams = toQueryString(params)
 
-  const authUrl = `https://${env.auth0.domain}/authorize${queryParams}`;
+  const authUrl = `https://${env.auth0.domain}/authorize${queryParams}`
 
-  const response = yield call(() => AuthSession.startAsync({
-    authUrl,
-    showInRecents: true,
-  }))
+  const response = yield call(() =>
+    AuthSession.startAsync({
+      authUrl,
+      showInRecents: true,
+    })
+  )
 
-  yield handleLoginResponse(response);
+  yield handleLoginResponse(response)
 }
 
 function* onAttemptLogout() {
   const params = toQueryString({
     client_id: env.auth0.clientId,
     returnTo: `https://www.barsnap.com/`,
-  });
+  })
 
-  yield call(() => WebBrowser.openBrowserAsync(`https://${env.auth0.domain}/v2/logout${params}`));
+  yield call(() => WebBrowser.openBrowserAsync(`https://${env.auth0.domain}/v2/logout${params}`))
 
   yield put({ type: LOGOUT })
 
   yield AsyncStorage.removeItem('user')
 
-  navigate('Auth');
+  navigate('Auth')
 }
 
 function* onSetAuthUser() {
-  const user = yield select(getUser);
+  const user = yield select(getUser)
 
-  const { email, id, token, username } = user;
+  const { email, id, token, username } = user
 
   if (!id) {
     yield put(getUserByEmailAction({ email, token }))
 
-    return;
+    return
   }
 
   if (!username) {
-    navigate('CreateProfile');
+    navigate('CreateProfile')
 
-    return;
+    return
   }
 
   yield AsyncStorage.setItem('user', JSON.stringify(user))
@@ -96,64 +127,35 @@ function* onSetAuthUser() {
   navigate('Root')
 }
 
-function * handleLoginResponse(response) {
-  if (response.error || response.type !== 'success') {
-    yield put({
-      type: UPDATE_LOADING,
-      payload: {
-        loadingType: ATTEMPT_LOGIN,
-        loadingAction: 'unset'
-      }
-    })
-
-    return;
-  }
-
-  const { access_token: token } = response.params;
-
-  const decodedJwtIdToken = jwtDecode(response.params.id_token);
-
-  const { email, picture } = decodedJwtIdToken;
-
-  yield put({
-    type: SET_AUTH_USER,
-    payload: {
-      avatar: picture,
-      email,
-      token
-    }
-  });
-};
-
 function* onCreateUserSuccess(action) {
   const { id } = action.payload.data
 
   yield put({
     type: SET_AUTH_USER,
-    payload: { id }
+    payload: { id },
   })
 }
 
 function* onGetUserByEmail(action) {
   const { data: user } = action.payload
 
-  const {avatar, email } = yield select(getUser)
+  const { avatar, email } = yield select(getUser)
 
   if (user) {
-    const { id, username } = user;
+    const { id, username } = user
     yield put({
       type: SET_AUTH_USER,
       payload: {
         avatar,
         email,
-        id, 
+        id,
         username,
-      }
-    });
+      },
+    })
   } else {
-    const { avatar, email, token } = yield select(getUser)
+    const { avatar: a, email: e, token } = yield select(getUser)
 
-    yield put(createUserAction({ avatar, email, token }))
+    yield put(createUserAction({ avatar: a, email: e, token }))
   }
 }
 
@@ -163,4 +165,4 @@ export function* watchAuth() {
   yield takeEvery(CREATE_USER_SUCCESS, onCreateUserSuccess)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)
   yield takeEvery(GET_USER_BY_EMAIL_SUCCESS, onGetUserByEmail)
-};
+}

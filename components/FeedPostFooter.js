@@ -1,17 +1,18 @@
 /* eslint-disable global-require */
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { CHEERS_POST } from '../redux/actions/types'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { cheersPostAction } from '../redux/actions/post'
+import { ATTEMPT_GUESS, CHEERS_POST } from '../redux/actions/types'
 
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import BackgroundButton from './BackgroundButton';
+import BackgroundButton from './BackgroundButton'
 
 const styles = StyleSheet.create({
   bubble: {
@@ -84,47 +85,48 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingRight: 7,
   },
-});
+})
 
-const FeedPostFooter = ({ post }) => {
-  const dispatch = useDispatch();
+const FeedPostFooter = ({ detailPath, post }) => {
+  const dispatch = useDispatch()
 
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation()
 
-  const isLoading = useSelector(state => state.ui.isLoading)
+  const isLoading = useSelector((state) => state.ui.isLoading)
 
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user)
 
-  const authUser = useSelector(state => state.auth.user)
+  const authUser = useSelector((state) => state.auth.user)
 
-  const { caption, id: postId, cheers, guesses = [], isCheered, isGuessed } = post;
+  const { caption, id: postId, cheers, guesses = [], isCheered, isGuessed } = post
 
-  const isOwner = user.id === post.createdById;
+  const isOwner = user.id === post.createdById
 
   const onPressCheers = () => {
     dispatch(cheersPostAction({ createdById: user.id, postId, token: authUser.token }))
-  };
+  }
 
   const onPressCheersLabel = () => {
-    navigate('PostCheers', { postId });
-  };
+    navigate('PostCheers', { postId })
+  }
 
-  const showGuess = !post.revealed && !isOwner && !isGuessed;
+  const showGuess = !post.revealed && !isOwner && !isGuessed
 
-  const showLocation = post.revealed || isGuessed || user.id === post.createdById;
+  const showLocation = post.revealed || isGuessed || user.id === post.createdById
 
   // const showGuess = true;
 
   const onPressGuess = () => {
-    if (showGuess) {
-      navigate('Guess', { username: post.createdBy.username });
-    } else {
-      navigate('Detail', {
-        postId: post.id,
-        username: post.createdBy.username,
-      });
+    const params = {
+      postId: post.id,
+      username: post.createdBy.username,
     }
-  };
+    if (showGuess) {
+      dispatch({ type: ATTEMPT_GUESS, payload: params })
+    } else {
+      navigate(detailPath, params)
+    }
+  }
 
   return (
     <View>
@@ -133,7 +135,7 @@ const FeedPostFooter = ({ post }) => {
           color="#676767"
           compact
           disabled={isLoading.some(
-            item => item.loadingType === CHEERS_POST && item.meta === post.id
+            (item) => item.loadingType === CHEERS_POST && item.meta === post.id
           )}
           icon={() => (
             <Image
@@ -206,7 +208,32 @@ const FeedPostFooter = ({ post }) => {
         </View>
       )}
     </View>
-  );
-};
+  )
+}
 
-export default FeedPostFooter;
+FeedPostFooter.defaultProps = {
+  detailPath: 'Detail',
+}
+
+FeedPostFooter.propTypes = {
+  detailPath: PropTypes.string,
+  post: PropTypes.shape({
+    caption: PropTypes.string,
+    cheers: PropTypes.number,
+    createdBy: PropTypes.shape({
+      username: PropTypes.string,
+    }),
+    createdById: PropTypes.number,
+    guesses: PropTypes.arrayOf(PropTypes.object),
+    id: PropTypes.number,
+    isCheered: PropTypes.bool,
+    isGuessed: PropTypes.bool,
+    location: PropTypes.shape({
+      name: PropTypes.string,
+      vicinity: PropTypes.string,
+    }),
+    revealed: PropTypes.bool,
+  }).isRequired,
+}
+
+export default FeedPostFooter

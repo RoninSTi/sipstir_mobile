@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
-import { useActionSheet } from '@expo/react-native-action-sheet';
+import { useActionSheet } from '@expo/react-native-action-sheet'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -16,15 +17,16 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
-import { LongPressGestureHandler, State } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+} from 'react-native'
+import { LongPressGestureHandler, State } from 'react-native-gesture-handler'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { ATTEMPT_GUESS } from '../redux/actions/types'
 
-import FeedPostFooter from './FeedPostFooter';
-import FeedPostHeader from './FeedPostHeader';
+import FeedPostFooter from './FeedPostFooter'
+import FeedPostHeader from './FeedPostHeader'
 
-const { width } = Dimensions.get('window');
-const IMAGE_WIDTH = width - 2 * 14;
+const { width } = Dimensions.get('window')
+const IMAGE_WIDTH = width - 2 * 14
 
 const styles = StyleSheet.create({
   container: {
@@ -55,42 +57,46 @@ const styles = StyleSheet.create({
     right: 14,
     top: 14,
   },
-});
+})
 
 const Post = ({ detailPath, isDetail, post }) => {
-  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
-  const { navigate } = useNavigation();
+  const user = useSelector((state) => state.user)
 
-  const { image } = post;
+  const { navigate } = useNavigation()
 
-  const { showActionSheetWithOptions } = useActionSheet();
+  const { image } = post
+
+  const { showActionSheetWithOptions } = useActionSheet()
 
   const onPress = () => {
-    const isOwner = post.createdById === user.id;
+    const isOwner = post.createdById === user.id
 
-    const navigateToDetail = isOwner || post.isGuessed || post.revealed;
+    const navigateToDetail = isOwner || post.isGuessed || post.revealed
+
+    const params = {
+      postId: post.id,
+      username: post.createdBy.username,
+    }
 
     if (navigateToDetail) {
-      navigate(detailPath, {
-        postId: post.id,
-        username: post.createdBy.username,
-      });
+      navigate(detailPath, params)
     } else {
-      navigate('Guess', { username: post.createdBy.username });
+      dispatch({ type: ATTEMPT_GUESS, payload: params })
     }
-  };
+  }
 
   const handleDeletePost = () => {
     // deletePost(post.id);
-  };
+  }
 
   const openActionSheet = () => {
-    const options = ['Delete Post', 'Cancel'];
-    const cancelButtonIndex = 1;
+    const options = ['Delete Post', 'Cancel']
+    const cancelButtonIndex = 1
 
-    const title = 'Admin Menu';
-    const message = 'Admin actions you can take';
+    const title = 'Admin Menu'
+    const message = 'Admin actions you can take'
 
     showActionSheetWithOptions(
       {
@@ -99,31 +105,31 @@ const Post = ({ detailPath, isDetail, post }) => {
         options,
         title,
       },
-      buttonIndex => {
+      (buttonIndex) => {
         switch (buttonIndex) {
           case 0:
-            handleDeletePost();
-            break;
+            handleDeletePost()
+            break
           default:
-            break;
+            break
         }
       }
-    );
-  };
+    )
+  }
 
-  const onHandlerStateChange = event => {
+  const onHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       if (user.role === 'admin') {
-        openActionSheet();
+        openActionSheet()
       }
     }
-  };
+  }
 
   const onPressZoom = () => {
     navigate('ZoomedImageScreen', {
       remoteUri: image,
-    });
-  };
+    })
+  }
 
   return (
     <LongPressGestureHandler onHandlerStateChange={onHandlerStateChange}>
@@ -143,7 +149,7 @@ const Post = ({ detailPath, isDetail, post }) => {
                 </View>
               )}
             </View>
-            <FeedPostFooter post={post} />
+            <FeedPostFooter detailPath={detailPath} post={post} />
             <FeedPostHeader post={post} />
             {Platform.OS === 'ios' && (
               <TouchableOpacity onPress={onPressZoom} style={styles.zoom}>
@@ -154,11 +160,29 @@ const Post = ({ detailPath, isDetail, post }) => {
         </TouchableWithoutFeedback>
       </View>
     </LongPressGestureHandler>
-  );
-};
+  )
+}
 
 Post.defaultProps = {
+  detailPath: 'Detail',
   isDetail: false,
-};
+}
 
-export default Post;
+Post.propTypes = {
+  detailPath: PropTypes.string,
+  isDetail: PropTypes.bool,
+  post: PropTypes.shape({
+    createdById: PropTypes.number,
+    createdBy: PropTypes.shape({
+      username: PropTypes.string,
+    }),
+    guessesCorrect: PropTypes.number,
+    guessesWrong: PropTypes.number,
+    id: PropTypes.number,
+    image: PropTypes.string,
+    isGuessed: PropTypes.bool,
+    revealed: PropTypes.bool,
+  }).isRequired,
+}
+
+export default Post

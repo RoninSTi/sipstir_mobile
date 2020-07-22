@@ -1,17 +1,17 @@
 /* eslint-disable global-require */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import { useDispatch } from 'react-redux'
+
+import { SectionList, StyleSheet, Text, View } from 'react-native'
+import { List } from 'react-native-paper'
 import { ATTEMPT_LOGOUT } from '../redux/actions/types'
 
-import { SectionList, StyleSheet, Text, View } from 'react-native';
-import { List } from 'react-native-paper';
+import ProfileHeader from '../components/ProfileHeader'
 
-import ProfileHeader from '../components/ProfileHeader';
-
-const VERSION = '1.1.48';
+const VERSION = '1.2.0'
 
 const styles = StyleSheet.create({
   activityContainer: {
@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     top: 14,
     right: 14,
   },
-});
+})
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch()
 
-  const { navigate } = navigation;
+  const { navigate } = navigation
 
   const DATA = [
     {
@@ -63,7 +63,7 @@ const ProfileScreen = ({ navigation }) => {
         {
           title: 'Awards',
           type: 'button',
-          right: props => (
+          right: (props) => (
             <List.Icon
               {...props}
               color="#000000"
@@ -76,7 +76,7 @@ const ProfileScreen = ({ navigation }) => {
           onPress: () => navigate('MyFeedScreen'),
           title: 'My BarSnaps',
           type: 'button',
-          right: props => (
+          right: (props) => (
             <List.Icon
               {...props}
               color="#000000"
@@ -100,7 +100,7 @@ const ProfileScreen = ({ navigation }) => {
         },
       ],
     },
-  ];
+  ]
 
   const renderItem = ({ item }) => {
     return (
@@ -114,22 +114,24 @@ const ProfileScreen = ({ navigation }) => {
           item.type === 'destructive-button' ? styles.titleDestructive : undefined,
         ]}
       />
-    );
-  };
+    )
+  }
 
   renderItem.propTypes = {
     item: PropTypes.shape({
+      name: PropTypes.string,
       onPress: PropTypes.func,
       right: PropTypes.node,
       title: PropTypes.string,
       type: PropTypes.string,
     }).isRequired,
-  };
+  }
 
   return (
     <View style={styles.container}>
       <SectionList
         ListHeaderComponent={<ProfileHeader />}
+        // eslint-disable-next-line react/prop-types
         keyExtractor={(item, index) => `${item.name}-${index}`}
         renderItem={renderItem}
         sections={DATA}
@@ -137,7 +139,13 @@ const ProfileScreen = ({ navigation }) => {
       />
       <Text style={styles.version}>{`v: ${VERSION}`}</Text>
     </View>
-  );
-};
+  )
+}
 
-export default ProfileScreen;
+ProfileScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+}
+
+export default ProfileScreen

@@ -1,4 +1,5 @@
-import { FETCH_FEED } from "./types";
+/* eslint-disable import/prefer-default-export */
+import { FETCH_FEED } from './types'
 
 export const fetchFeedAction = ({ page, pageSize, feedType, token, userId }) => ({
   type: FETCH_FEED,
@@ -8,11 +9,14 @@ export const fetchFeedAction = ({ page, pageSize, feedType, token, userId }) => 
       url: `feed/${feedType}/user/${userId}`,
       params: {
         page,
-        pageSize
+        pageSize,
       },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    setLoading: {
+      meta: null,
+    },
+  },
 })

@@ -1,4 +1,5 @@
-import { FETCH_LEADERBOARD } from '../actions/types'
+/* eslint-disable import/prefer-default-export */
+import { FETCH_LEADERBOARD } from './types'
 
 export const fetchLeaderboardAction = ({ token }) => ({
   type: FETCH_LEADERBOARD,
@@ -7,8 +8,11 @@ export const fetchLeaderboardAction = ({ token }) => ({
       method: 'get',
       url: 'leaderboard',
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    setLoading: {
+      meta: null,
+    },
+  },
 })

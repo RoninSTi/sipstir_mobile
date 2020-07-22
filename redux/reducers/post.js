@@ -3,49 +3,49 @@ import {
   FETCH_POST_CHEERS_SUCCESS,
   FETCH_SINGLE_POST_SUCCESS,
   LOGOUT,
-  REFRESH_DETAIL
+  REFRESH_DETAIL,
 } from '../actions/types'
 
 const initialState = {
   isRefreshing: false,
-  cheers: []
+  cheers: [],
 }
 
 const reducer = (state = initialState, action) => {
   const { payload, type } = action
-  
+
   switch (type) {
     case CLEAR_CHEERS: {
       return {
         ...state,
-        cheers: []
+        cheers: [],
       }
     }
     case FETCH_POST_CHEERS_SUCCESS: {
       return {
         ...state,
-        cheers: payload.data
+        cheers: payload.data,
       }
     }
     case FETCH_SINGLE_POST_SUCCESS: {
       return {
         ...state,
-        isRefreshing: false
+        isRefreshing: false,
       }
     }
-    case LOGOUT: 
+    case LOGOUT:
       return {
-        ...initialState
+        ...initialState,
       }
     case REFRESH_DETAIL: {
       return {
         ...state,
-        isRefreshing: true
+        isRefreshing: true,
       }
     }
     default:
       return {
-        ...state
+        ...state,
       }
   }
 }

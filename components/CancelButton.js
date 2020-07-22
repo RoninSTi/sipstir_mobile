@@ -1,20 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
-import { Button } from 'react-native-paper';
+import { Button } from 'react-native-paper'
 
 const CancelButton = ({ onPress, title }) => {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation()
 
   const handleOnPress = () => {
     if (onPress) onPress()
-    
+
     navigate('Main', {
-      screen: 'Root'
+      screen: 'Root',
     })
-  };
+  }
 
   return (
     <Button
@@ -24,15 +24,17 @@ const CancelButton = ({ onPress, title }) => {
       uppercase={false}>
       {title}
     </Button>
-  );
-};
+  )
+}
 
 CancelButton.defaultProps = {
+  onPress: () => {},
   title: 'Cancel',
-};
+}
 
 CancelButton.propTypes = {
+  onPress: PropTypes.func,
   title: PropTypes.string,
-};
+}
 
-export default CancelButton;
+export default CancelButton

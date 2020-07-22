@@ -4,34 +4,34 @@ const initialState = {
   activities: [],
   isRefreshing: false,
   page: 1,
-  pageSize: 100
+  pageSize: 100,
 }
 
 const reducer = (state = initialState, action) => {
   const { payload, type } = action
-  
+
   switch (type) {
     case FETCH_ACTIVITY_SUCCESS: {
       return {
         ...state,
         activities: payload.data,
-        isRefreshing: false
+        isRefreshing: false,
       }
     }
     case LOGOUT: {
       return {
-        ...initialState
+        ...initialState,
       }
     }
-    case REFRESH_ACTIVITY: 
+    case REFRESH_ACTIVITY:
       return {
         ...state,
         page: 1,
-        isRefreshing: true
+        isRefreshing: true,
       }
     default:
       return {
-        ...state
+        ...state,
       }
   }
 }

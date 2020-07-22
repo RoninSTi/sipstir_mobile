@@ -1,11 +1,10 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Animated, View } from 'react-native';
+import { Animated, View } from 'react-native'
 
-import { useNavigationState } from '@react-navigation/native'
-
-import CreatePostButton from '../components/CreatePostButton';
-import Tab from './Tab';
+import CreatePostButton from './CreatePostButton'
+import Tab from './Tab'
 
 const TabBar = ({ descriptors, navigation, state }) => {
   // const { setShouldScrollUp } = feedStore;
@@ -16,10 +15,10 @@ const TabBar = ({ descriptors, navigation, state }) => {
 
   // const state = useNavigationState(state => state)
 
-  const position = new Animated.Value(state.index);
+  const position = new Animated.Value(state.index)
 
-  const onPress = key => {
-    const { navigate, popToTop } = navigation;
+  const onPress = (key) => {
+    const { navigate } = navigation
 
     if (key.startsWith('Activity')) {
       navigate('Activity')
@@ -36,7 +35,6 @@ const TabBar = ({ descriptors, navigation, state }) => {
     if (key.startsWith('Profile')) {
       navigate('Profile')
     }
-
 
     // const feedRoute = navigation.state.routes.find(route => route.routeName === 'FeedStack');
 
@@ -68,7 +66,7 @@ const TabBar = ({ descriptors, navigation, state }) => {
     //     navigate(routeName);
     //     break;
     // }
-  };
+  }
 
   return (
     <View
@@ -81,34 +79,45 @@ const TabBar = ({ descriptors, navigation, state }) => {
         paddingBottom: 20,
       }}>
       {state.routes.map((route, idx) => {
-        const { options } = descriptors[route.key];
+        const { options } = descriptors[route.key]
         const label =
+          // eslint-disable-next-line no-nested-ternary
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-              ? options.title
-              : route.name;
+            ? options.title
+            : route.name
         const focusAnim = position.interpolate({
           inputRange: [idx - 2, idx - 1, idx, idx + 1, idx + 1],
           outputRange: [0, 0, 1, 0, 0],
-        });
+        })
 
         if (route.key.startsWith('CreatePost')) {
           return <CreatePostButton key={route.key} />
-        } else {
-          return (
-            <Tab
-              focusAnim={focusAnim}
-              key={route.key}
-              routeKey={route.key}
-              title={label}
-              onPress={() => onPress(route.key)}
-            />
-          );
         }
+        return (
+          <Tab
+            focusAnim={focusAnim}
+            key={route.key}
+            routeKey={route.key}
+            title={label}
+            onPress={() => onPress(route.key)}
+          />
+        )
       })}
     </View>
-  );
-};
+  )
+}
 
-export default TabBar;
+TabBar.propTypes = {
+  descriptors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+  state: PropTypes.shape({
+    index: PropTypes.number,
+    routes: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+}
+
+export default TabBar

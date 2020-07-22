@@ -1,29 +1,24 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React from 'react'
 
-import { FlatList } from 'react-native';
+import { FlatList } from 'react-native'
 
 import { useSelector } from 'react-redux'
 import { FETCH_PLACES } from '../redux/actions/types'
 
-import PlacesItem from './PlacesItem';
-import ScreenLoader from './ScreenLoader';
+import PlacesItem from './PlacesItem'
+import ScreenLoader from './ScreenLoader'
 
 const PlacesList = ({ onPressListItem, places }) => {
-  const isLoading = useSelector(state => state.ui.isLoading)
-  
-  const loading = isLoading.some(item => item.loadingType === FETCH_PLACES);
+  const isLoading = useSelector((state) => state.ui.isLoading)
 
-  const showLoading = loading && places?.length < 2;
+  const loading = isLoading.some((item) => item.loadingType === FETCH_PLACES)
 
-  const keyExtractor = item => item.place_id;
+  const showLoading = loading && places?.length < 2
 
-  const renderItem = ({ item }) => (
-    <PlacesItem
-      onPressListItem={onPressListItem}
-      place={item}
-    />
-  );
+  const keyExtractor = (item) => item.place_id
+
+  const renderItem = ({ item }) => <PlacesItem onPressListItem={onPressListItem} place={item} />
 
   return (
     <ScreenLoader loading={showLoading}>
@@ -36,6 +31,6 @@ const PlacesList = ({ onPressListItem, places }) => {
       />
     </ScreenLoader>
   )
-};
+}
 
-export default PlacesList;
+export default PlacesList

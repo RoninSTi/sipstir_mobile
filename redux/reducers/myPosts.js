@@ -11,25 +11,25 @@ const reducer = (state = initialState, action) => {
   const { payload, type } = action
 
   switch (type) {
-    case LOGOUT: 
+    case LOGOUT:
       return {
-        ...initialState
+        ...initialState,
       }
     case REFRESH_MY_FEED:
       return {
         ...state,
         isRefreshing: true,
-        page: 1
+        page: 1,
       }
     case SET_MY_POSTS:
       return {
         ...state,
         isRefreshing: false,
-        posts: payload
+        posts: payload,
       }
     default:
       return {
-        ...state
+        ...state,
       }
   }
 }
