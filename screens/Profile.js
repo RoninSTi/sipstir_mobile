@@ -11,7 +11,7 @@ import { ATTEMPT_LOGOUT } from '../redux/actions/types'
 
 import ProfileHeader from '../components/ProfileHeader'
 
-const VERSION = '1.2.4'
+const VERSION = '1.2.5'
 
 const styles = StyleSheet.create({
   activityContainer: {
