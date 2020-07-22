@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux'
 
 import axios from 'axios'
 
-import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from 'nanoid/async/index.native'
 import * as FileSystem from 'expo-file-system'
 import clients from '../services/api'
 
@@ -52,7 +52,8 @@ const PhotoUploader = ({
 
       const buffer = Buffer.from(base64, 'base64')
 
-      const fileName = uuidv4()
+      const fileName = await nanoid()
+
       const fileType = mime.lookup(resizedUri)
 
       const response = await api({
@@ -210,7 +211,7 @@ PhotoUploader.defaultProps = {
 }
 
 PhotoUploader.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  children: PropTypes.node.isRequired,
   onCancel: PropTypes.func,
   onPress: PropTypes.func,
   onProgress: PropTypes.func,

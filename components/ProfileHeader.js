@@ -109,10 +109,10 @@ const ProfileHeader = () => {
 
   const handleProgress = ({ progressData }) => {
     switch (progressData) {
-      case progressData > 0 && progress < 1 && !isUploading:
+      case progressData > 0 && progressData < 100 && !isUploading:
         setIsUploading(true)
         break
-      case progressData === 1 && isUploading:
+      case progressData === 100 && isUploading:
         setIsUploading(false)
         break
       default:

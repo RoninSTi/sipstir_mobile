@@ -1,43 +1,20 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import {
-  Dimensions,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import { Avatar, Button, ActivityIndicator } from 'react-native-paper';
-// import { SafeAreaView } from 'react-native-safe-area-context';
+import { Dimensions, Image, ImageBackground, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Avatar, Button, ActivityIndicator } from 'react-native-paper'
 
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
-import * as ImageManipulator from 'expo-image-manipulator';
-import * as Permissions from 'expo-permissions';
-import * as mime from 'react-native-mime-types';
-
-import { useActionSheet } from '@expo/react-native-action-sheet';
-
-import axios from 'axios'
-
-import { v4 as uuidv4 } from 'uuid';
-import * as FileSystem from 'expo-file-system';
-import clients from '../services/api';
-
-import { CREATE_PROFILE, SET_AVATAR, SET_USERNAME } from '../redux/actions/types';
 import { useDispatch, useSelector } from 'react-redux'
-import { createProfileAction } from '../redux/actions/createProfile';
+import KeyboardSpacer from 'react-native-keyboard-spacer'
 
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { CREATE_PROFILE, SET_AVATAR, SET_USERNAME } from '../redux/actions/types'
+import { createProfileAction } from '../redux/actions/createProfile'
 
-const api = clients.default.client;
+import PhotoUploader from '../components/PhotoUploader'
 
-const { height: HEIGHT, width: WIDTH } = Dimensions.get('window');
+const { height: HEIGHT, width: WIDTH } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   activityContainer: {
@@ -108,190 +85,61 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 16,
   },
-});
+})
 
 const CreateProfile = () => {
   const dispatch = useDispatch()
 
-  const username = useSelector(state => state.createProfile.username)
+  const username = useSelector((state) => state.createProfile.username)
 
-  const avatar = useSelector(state => state.createProfile.avatar)
+  const avatar = useSelector((state) => state.createProfile.avatar)
 
-  const authUser = useSelector(state => state.auth.user)
+  const authUser = useSelector((state) => state.auth.user)
 
-  const showAvailableIndicator = useSelector(state => state.createProfile.showAvailableIndicator)
+  const showAvailableIndicator = useSelector((state) => state.createProfile.showAvailableIndicator)
 
-  const isLoading = useSelector(state => state.ui.isLoading)
+  const isLoading = useSelector((state) => state.ui.isLoading)
 
-  const usernameButtonDisabled = useSelector(state => {
-    const { isAvailable, username: un } = state.createProfile;
+  const usernameButtonDisabled = useSelector((state) => {
+    const { isAvailable, username: un } = state.createProfile
 
-    return !isAvailable || username.length === 0
+    return !isAvailable || un.length === 0
   })
 
-  const { showActionSheetWithOptions } = useActionSheet();
+  const [isUploading, setIsUploading] = useState(false)
 
-  const [isUploading, setIsUploading] = useState(false);
-
-  const onChangeText = text => {
+  const onChangeText = (text) => {
     dispatch({
       type: SET_USERNAME,
-      payload: text
+      payload: text,
     })
-  };
+  }
 
-  const setPhoto = async result => {
-    const { uri } = result;
+  const handleUploadComplete = ({ url }) => {
+    dispatch({
+      type: SET_AVATAR,
+      payload: url,
+    })
+  }
 
-    const { uri: resizedUri } = await ImageManipulator.manipulateAsync(
-      uri,
-      [{ resize: { height: 300, width: 300 } }],
-      { compress: 1, format: ImageManipulator.SaveFormat.PNG, base64: true }
-    );
-
-    const base64 = await FileSystem.readAsStringAsync(resizedUri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-
-    const buffer = Buffer.from(base64, 'base64');
-
-    const fileName = uuidv4();
-    const fileType = mime.lookup(resizedUri);
-
-    try {
-      setIsUploading(true);
-
-      const response = await api({
-        method: 'post',
-        url: 'upload/signedurl/image',
-        data: {
-          fileName,
-          fileType,
-        },
-        headers: {
-          Authorization: `Bearer ${authUser.token}`,
-        },
-      });
-
-      const { signedRequest, url } = response.data;
-
-      const options = {
-        headers: {
-          'Content-Type': fileType,
-          'Content-Encoding': 'base64',
-        },
-        onUploadProgress: progressEvent => {
-          const totalLength = progressEvent.lengthComputable
-            ? progressEvent.total
-            : progressEvent.target.getResponseHeader('content-length') ||
-            progressEvent.target.getResponseHeader('x-decompressed-content-length');
-          if (totalLength !== null) {
-            const progressData = Math.round((progressEvent.loaded * 100) / totalLength);
-
-            console.log({ progressData });
-          }
-        },
-      };
-
-      await axios.put(signedRequest, buffer, options);
-
-      dispatch({
-        type: SET_AVATAR,
-        payload: url
-      });
-    } catch (error) {
-      console.log({ error });
-    } finally {
-      setIsUploading(false);
+  const handleProgress = ({ progressData }) => {
+    switch (progressData) {
+      case progressData > 0 && progressData < 100 && !isUploading:
+        setIsUploading(true)
+        break
+      case progressData === 100 && isUploading:
+        setIsUploading(false)
+        break
+      default:
+        break
     }
-  };
-
-  const openCamera = async () => {
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setPhoto(result);
-    }
-  };
-
-  const openCameraRoll = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setPhoto(result);
-    }
-  };
-
-  const checkCameraPermission = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera permissions to make this work!');
-      } else {
-        openCamera();
-      }
-    }
-  };
-
-  const checkCameraRollPermission = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-      } else {
-        openCameraRoll();
-      }
-    }
-  };
-
-  const openActionSheet = () => {
-    const options = ['Camera', 'Photo Library', 'Cancel'];
-    const cancelButtonIndex = 2;
-
-    const title = 'Change your avatar';
-    const message = 'Lemme take a selfie...';
-
-    showActionSheetWithOptions(
-      {
-        cancelButtonIndex,
-        message,
-        options,
-        title,
-      },
-      buttonIndex => {
-        switch (buttonIndex) {
-          case 0:
-            checkCameraPermission();
-            break;
-          case 1:
-            checkCameraRollPermission();
-            break;
-          default:
-            break;
-        }
-      }
-    );
-  };
-
-  const onPress = () => {
-    openActionSheet();
-  };
+  }
 
   const onPressContinue = async () => {
     dispatch(createProfileAction({ userId: authUser.id, avatar, token: authUser.token, username }))
-  };
+  }
 
-  const showLoadingIndicator = isLoading.some(item => item.loadingType === CREATE_PROFILE);
+  const showLoadingIndicator = isLoading.some((item) => item.loadingType === CREATE_PROFILE)
 
   return (
     <View>
@@ -305,17 +153,20 @@ const CreateProfile = () => {
               {avatar ? (
                 <Image style={styles.avatar} source={{ uri: avatar }} />
               ) : (
-                  <Avatar.Text size={45} label={username ? username[0] : 'u'} style={styles.avatar} />
-                )}
+                <Avatar.Text size={45} label={username ? username[0] : 'u'} style={styles.avatar} />
+              )}
               {isUploading && (
                 <View style={styles.activityContainer}>
                   <ActivityIndicator size="small" color="#D7D0CF" />
                 </View>
               )}
             </View>
-            <Button color="#5177FF" onPress={onPress}>
-              {avatar ? 'Change Photo' : 'Add Photo'}
-            </Button>
+            <PhotoUploader
+              onProgress={handleProgress}
+              onUploadComplete={handleUploadComplete}
+              photoDimensions={{ height: 300, width: 300 }}>
+              <Button color="#5177FF">{avatar ? 'Change Photo' : 'Add Photo'}</Button>
+            </PhotoUploader>
           </View>
           <View style={{ height: 20 }}>
             {showAvailableIndicator && (
@@ -349,7 +200,7 @@ const CreateProfile = () => {
         <KeyboardSpacer topSpacing={20} />
       </ImageBackground>
     </View>
-  );
-};
+  )
+}
 
-export default CreateProfile;
+export default CreateProfile

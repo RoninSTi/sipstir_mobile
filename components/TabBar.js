@@ -110,7 +110,7 @@ const TabBar = ({ descriptors, navigation, state }) => {
 }
 
 TabBar.propTypes = {
-  descriptors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  descriptors: PropTypes.shape({}).isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,

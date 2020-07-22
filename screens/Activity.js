@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import moment from 'moment';
+import React from 'react'
+import moment from 'moment'
 
-import { Dimensions, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
-import { List } from 'react-native-paper';
+import { Dimensions, FlatList, RefreshControl, StyleSheet, View } from 'react-native'
+import { List } from 'react-native-paper'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { FETCH_ACTIVITY, REFRESH_ACTIVITY } from '../redux/actions/types'
 
-import Avatar from '../components/Avatar';
-import ScreenLoader from '../components/ScreenLoader';
+import Avatar from '../components/Avatar'
+import ScreenLoader from '../components/ScreenLoader'
 
 const styles = StyleSheet.create({
   container: {
@@ -34,46 +34,46 @@ const styles = StyleSheet.create({
   list: {
     width: Dimensions.get('window').width,
   },
-});
+})
 
 const ActivityScreen = ({ navigation }) => {
-  const { navigate } = navigation;
+  const { navigate } = navigation
 
   const dispatch = useDispatch()
 
-  const activities = useSelector(state => state.activity.activities)
+  const activities = useSelector((state) => state.activity.activities)
 
-  const isLoading = useSelector(state => state.ui.isLoading)
+  const isLoading = useSelector((state) => state.ui.isLoading)
 
-  const isRefreshing = useSelector(state => state.activity.isRefreshing)
+  const isRefreshing = useSelector((state) => state.activity.isRefreshing)
 
-  const loading = isLoading.some(item => item.loadingType === FETCH_ACTIVITY);
+  const loading = isLoading.some((item) => item.loadingType === FETCH_ACTIVITY) && !isRefreshing
 
   const keyExtractor = (_, index) => `activity-${index}`
 
   const onRefresh = () => {
     dispatch({ type: REFRESH_ACTIVITY })
-  };
+  }
 
   const renderItem = ({ item }) => {
-    const { createdAt, createdBy, message, onClick } = item;
+    const { createdAt, createdBy, message, onClick } = item
 
-    const description = moment(createdAt).fromNow();
+    const description = moment(createdAt).fromNow()
 
     const onPress = () => {
-      const { action, payload } = onClick;
+      const { action, payload } = onClick
 
       switch (action) {
         case 'postDetail':
           navigate('ActivityPostDetail', {
             postId: payload,
             username: createdBy.username,
-          });
-          break;
+          })
+          break
         default:
-          break;
+          break
       }
-    };
+    }
 
     return (
       <List.Item
@@ -85,8 +85,8 @@ const ActivityScreen = ({ navigation }) => {
         title={message}
         titleStyle={styles.itemTitle}
       />
-    );
-  };
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -102,7 +102,7 @@ const ActivityScreen = ({ navigation }) => {
         />
       </ScreenLoader>
     </View>
-  );
-};
+  )
+}
 
-export default ActivityScreen;
+export default ActivityScreen

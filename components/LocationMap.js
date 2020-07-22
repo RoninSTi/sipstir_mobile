@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Dimensions, StyleSheet, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { Dimensions, StyleSheet, View } from 'react-native'
+import MapView, { Marker } from 'react-native-maps'
 
 const styles = StyleSheet.create({
   container: {
@@ -16,17 +16,17 @@ const styles = StyleSheet.create({
     height: 125,
     overflow: 'hidden',
   },
-});
+})
 
 const LocationMap = ({ location }) => {
-  const { lat, lng } = location.geometry.location;
+  const { lat, lng } = location.geometry.location
 
   const region = {
     latitude: lat,
     longitude: lng,
     latitudeDelta: 0.005,
     longitudeDelta: 0.01,
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -34,8 +34,8 @@ const LocationMap = ({ location }) => {
         <Marker coordinate={{ latitude: lat, longitude: lng }} />
       </MapView>
     </View>
-  );
-};
+  )
+}
 
 LocationMap.propTypes = {
   location: PropTypes.shape({
@@ -46,6 +46,6 @@ LocationMap.propTypes = {
       }),
     }),
   }).isRequired,
-};
+}
 
-export default LocationMap;
+export default LocationMap

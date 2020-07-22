@@ -1,16 +1,16 @@
 /* eslint-disable global-require */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import { useDispatch, useSelector } from 'react-redux'
+
+import { Dimensions, FlatList, RefreshControl, StyleSheet, View } from 'react-native'
+import { List } from 'react-native-paper'
 import { FETCH_LEADERBOARD, REFRESH_LEADERBOARD } from '../redux/actions/types'
 
-import { Dimensions, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
-import { List } from 'react-native-paper';
-
-import LeaderboardAvatar from '../components/LeaderboardAvatar';
-import LeaderboardHeader from '../components/LeaderboardHeader';
-import ScreenLoader from '../components/ScreenLoader';
+import LeaderboardAvatar from '../components/LeaderboardAvatar'
+import LeaderboardHeader from '../components/LeaderboardHeader'
+import ScreenLoader from '../components/ScreenLoader'
 
 const styles = StyleSheet.create({
   container: {
@@ -39,24 +39,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-});
+})
 
 const Leaderboard = () => {
   const dispatch = useDispatch()
 
-  const isLoading = useSelector(state => state.ui.isLoading)
+  const isLoading = useSelector((state) => state.ui.isLoading)
 
-  const isRefreshing = useSelector(state => state.leaderboard.isRefreshing)
+  const isRefreshing = useSelector((state) => state.leaderboard.isRefreshing)
 
-  const leaders = useSelector(state => state.leaderboard.leaders)
+  const leaders = useSelector((state) => state.leaderboard.leaders)
 
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user)
 
-  const keyExtractor = item => `Leaderboard-${item.id}`;
+  const keyExtractor = (item) => `Leaderboard-${item.id}`
 
   const onRefresh = () => {
     dispatch({ type: REFRESH_LEADERBOARD })
-  };
+  }
 
   const renderItem = ({ item }) => {
     return (
@@ -68,8 +68,8 @@ const Leaderboard = () => {
         titleStyle={styles.listTitle}
         style={styles.listItem}
       />
-    );
-  };
+    )
+  }
 
   renderItem.propTypes = {
     item: PropTypes.shape({
@@ -78,9 +78,9 @@ const Leaderboard = () => {
       points: PropTypes.number,
       username: PropTypes.string,
     }).isRequired,
-  };
+  }
 
-  const loading = isLoading.some(item => item.loadingType === FETCH_LEADERBOARD);
+  const loading = isLoading.some((item) => item.loadingType === FETCH_LEADERBOARD) && !isRefreshing
 
   return (
     <View style={styles.container}>
@@ -97,7 +97,7 @@ const Leaderboard = () => {
         />
       </ScreenLoader>
     </View>
-  );
-};
+  )
+}
 
-export default Leaderboard;
+export default Leaderboard

@@ -6,7 +6,9 @@ import { StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import PostList from '../components/PostList'
-import { REFRESH_MY_FEED } from '../redux/actions/types'
+import ScreenLoader from '../components/ScreenLoader'
+
+import { REFRESH_MY_FEED, FETCH_FEED } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +28,8 @@ const styles = StyleSheet.create({
 const MyFeedScreen = () => {
   const dispatch = useDispatch()
 
+  const isLoading = useSelector((state) => state.ui.isLoading)
+
   const isRefreshing = useSelector((state) => state.myPosts.isRefreshing)
 
   const posts = useSelector((state) => state.myPosts.posts)
@@ -34,15 +38,19 @@ const MyFeedScreen = () => {
 
   const onRefresh = () => dispatch({ type: REFRESH_MY_FEED })
 
+  const loading = isLoading.some((item) => item.loadingType === FETCH_FEED) && !isRefreshing
+
   return (
     <View style={styles.container}>
-      <PostList
-        detailPath="MyFeedDetail"
-        onRefresh={onRefresh}
-        posts={posts}
-        ref={postListRef}
-        refreshing={isRefreshing}
-      />
+      <ScreenLoader loading={loading}>
+        <PostList
+          detailPath="MyFeedDetail"
+          onRefresh={onRefresh}
+          posts={posts}
+          ref={postListRef}
+          refreshing={isRefreshing}
+        />
+      </ScreenLoader>
     </View>
   )
 }
