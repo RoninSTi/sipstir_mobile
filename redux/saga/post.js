@@ -22,6 +22,9 @@ function onCreatePostSuccess() {
       screen: 'FeedStack',
       params: {
         screen: 'Feed',
+        params: {
+          action: 'scrollUp',
+        },
       },
     },
   })

@@ -62,7 +62,7 @@ const GuessAddComment = ({ navigation }) => {
           multiline
           onChangeText={handleOnChangeText}
           placeholder="Type a comment..."
-          style={{ flex: 1, fontSize: 16 }}
+          style={{ color: 'black', flex: 1, fontSize: 16 }}
           value={text}
         />
       </View>

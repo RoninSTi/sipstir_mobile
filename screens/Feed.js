@@ -38,11 +38,11 @@ const FeedScreen = () => {
 
   // useEffect(() => {
   //   if (shouldScrollUp) {
-  //     postListRef.current.scrollUp();
+  //     postListRef.current.scrollUp()
 
-  //     setShouldScrollUp(false);
+  //     setShouldScrollUp(false)
   //   }
-  // }, [shouldScrollUp]);
+  // }, [shouldScrollUp])
 
   useEffect(() => {
     switch (action) {

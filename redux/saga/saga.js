@@ -10,6 +10,7 @@ import { watchMyPosts } from './myPosts'
 import { watchPlaces } from './places'
 import { watchPost } from './post'
 import { watchUI } from './ui'
+import { watchUser } from './user'
 
 export default function* rootSaga() {
   yield all([
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     watchPlaces(),
     watchPost(),
     watchUI(),
+    watchUser(),
   ])
 }

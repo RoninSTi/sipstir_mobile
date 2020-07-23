@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useRef } from 'react'
+import PropTypes from 'prop-types'
 
-import useKeyboard from '../hooks/useKeyboard';
+import { Animated, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-import { Animated, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-
-import { Button, ActivityIndicator } from 'react-native-paper';
+import { Button, ActivityIndicator } from 'react-native-paper'
+import useKeyboard from '../hooks/useKeyboard'
 
 const styles = StyleSheet.create({
   animatedButton: {
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: '#FFFFFF',
     borderRadius: 22,
+    color: 'black',
     height: 44,
     paddingLeft: 22,
   },
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-});
+})
 
 const CaptionInput = ({
   autoFocus,
@@ -53,51 +53,51 @@ const CaptionInput = ({
   title,
   value,
 }) => {
-  const [buttonWidth, setButtonWidth] = useState(0);
-  const [showButton, setShowButton] = useState(false);
+  const [buttonWidth, setButtonWidth] = useState(0)
+  const [showButton, setShowButton] = useState(false)
 
-  const animatedWidth = useRef(new Animated.Value(0)).current;
+  const animatedWidth = useRef(new Animated.Value(0)).current
 
-  const [visible] = useKeyboard();
+  const [visible] = useKeyboard()
 
   useEffect(() => {
     if (!visible && !isLoading) {
-      setShowButton(false);
+      setShowButton(false)
     }
-  }, [visible]);
+  }, [visible])
 
   useEffect(() => {
     Animated.timing(animatedWidth, {
       toValue: showButton ? buttonWidth : 0,
       delay: showButton ? 400 : 0,
       duration: 400,
-      useNativeDriver: false
-    }).start();
-  }, [showButton]);
+      useNativeDriver: false,
+    }).start()
+  }, [showButton])
 
   const onFocus = () => {
     if (showButtonOnFocus) {
-      setShowButton(true);
+      setShowButton(true)
     }
-  };
+  }
 
-  const onLayout = event => {
-    const { width } = event.nativeEvent.layout;
+  const onLayout = (event) => {
+    const { width } = event.nativeEvent.layout
 
-    setButtonWidth(width);
-  };
+    setButtonWidth(width)
+  }
 
   const AnimatedButton = () => (
     <TouchableOpacity onPress={onPress} style={[styles.button, styles.animatedButton]}>
       {isLoading ? (
         <ActivityIndicator color="#FFFFFF" size="small" />
       ) : (
-          <Text ellipsizeMode="clip" numberOfLines={1} style={styles.buttonText}>
-            {title}
-          </Text>
-        )}
+        <Text ellipsizeMode="clip" numberOfLines={1} style={styles.buttonText}>
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
-  );
+  )
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
@@ -133,8 +133,8 @@ const CaptionInput = ({
         </>
       )}
     </View>
-  );
-};
+  )
+}
 
 CaptionInput.defaultProps = {
   autoFocus: false,
@@ -142,12 +142,12 @@ CaptionInput.defaultProps = {
   hideButton: false,
   isLoading: false,
   placeholder: '',
-  onChangeText: () => { },
-  onPress: () => { },
+  onChangeText: () => {},
+  onPress: () => {},
   showButtonOnFocus: false,
   title: '',
   value: '',
-};
+}
 
 CaptionInput.propTypes = {
   autoFocus: PropTypes.bool,
@@ -160,6 +160,6 @@ CaptionInput.propTypes = {
   showButtonOnFocus: PropTypes.bool,
   title: PropTypes.string,
   value: PropTypes.string,
-};
+}
 
-export default CaptionInput;
+export default CaptionInput

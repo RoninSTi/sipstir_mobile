@@ -1,4 +1,4 @@
-import { CREATE_USER, FOLLOW_USER, UPDATE_USER,  } from "./types"
+import { CREATE_USER, FOLLOW_USER, UPDATE_USER, FETCH_MY_USER } from './types'
 
 export const createUserAction = ({ token, ...userData }) => ({
   type: CREATE_USER,
@@ -7,13 +7,26 @@ export const createUserAction = ({ token, ...userData }) => ({
       method: 'post',
       url: 'user',
       data: {
-        ...userData
+        ...userData,
       },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  },
+})
+
+export const fetchMyUserAction = ({ userId, token }) => ({
+  type: FETCH_MY_USER,
+  payload: {
+    request: {
+      method: 'get',
+      url: `user/${userId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  },
 })
 
 export const followUserAction = ({ followingId, token, userId }) => ({
@@ -23,16 +36,16 @@ export const followUserAction = ({ followingId, token, userId }) => ({
       method: 'post',
       url: `user/${followingId}/follow`,
       data: {
-        userId
+        userId,
       },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     },
     setLoading: {
-      meta: followingId
-    }
-  }
+      meta: followingId,
+    },
+  },
 })
 
 export const updateUserAction = ({ userId, token, ...userData }) => ({
@@ -42,11 +55,11 @@ export const updateUserAction = ({ userId, token, ...userData }) => ({
       method: 'put',
       url: `user/${userId}`,
       data: {
-        ...userData
+        ...userData,
       },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  },
 })
