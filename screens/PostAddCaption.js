@@ -82,7 +82,8 @@ const PostAddCaption = () => {
           multiline
           onChangeText={handleOnChangeText}
           placeholder="Type a hint..."
-          style={{ color: 'black', flex: 1, fontSize: 16 }}
+          placeholderTextColor="#979797"
+          style={{ color: '#434343', flex: 1, fontSize: 16 }}
           value={caption}
         />
       </View>

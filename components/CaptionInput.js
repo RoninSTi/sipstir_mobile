@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: '#FFFFFF',
     borderRadius: 22,
-    color: 'black',
+    color: '#434343',
     height: 44,
     paddingLeft: 22,
   },
@@ -108,6 +108,7 @@ const CaptionInput = ({
           onChangeText={onChangeText}
           onSubmitEditing={onPress}
           placeholder={placeholder}
+          placeholderTextColor="#979797"
           style={styles.textInput}
           value={value}
         />

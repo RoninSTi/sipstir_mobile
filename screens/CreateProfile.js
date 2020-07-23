@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
-    color: '#000000',
+    color: '#434343',
     marginBottom: 14,
     padding: 14,
     shadowColor: '#000000',
@@ -184,6 +184,7 @@ const CreateProfile = () => {
             autoFocus
             onChangeText={onChangeText}
             placeholder="Select username..."
+            placeholderTextColor="#979797"
             style={styles.input}
             value={username}
           />
