@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { StyleSheet, View, ViewPropTypes } from 'react-native';
-import { Avatar } from 'react-native-paper';
+import { StyleSheet, View, ViewPropTypes } from 'react-native'
+import { Avatar } from 'react-native-paper'
 
 const styles = StyleSheet.create({
   container: {
@@ -15,28 +15,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 80,
   },
-});
+})
 
 const LeaderboardHeaderAvatar = ({ containerStyle }) => {
-  const { avatar, username } = useSelector(state => state.user);
+  const avatar = useSelector((state) => state.user?.avatar)
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {avatar ? (
-        <Avatar.Image size={75} source={{ uri: avatar }} />
-      ) : (
-          <Avatar.Text label={username[0]} size={75} />
-        )}
+      {avatar && <Avatar.Image size={75} source={{ uri: avatar }} />}
     </View>
-  );
-};
+  )
+}
 
 LeaderboardHeaderAvatar.defaultProps = {
   containerStyle: {},
-};
+}
 
 LeaderboardHeaderAvatar.propTypes = {
   containerStyle: ViewPropTypes.style,
-};
+}
 
-export default LeaderboardHeaderAvatar;
+export default LeaderboardHeaderAvatar

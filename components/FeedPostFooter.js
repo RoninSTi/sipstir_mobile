@@ -114,13 +114,13 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
   const showLocation = post.revealed || isGuessed || user.id === post.createdById
 
-  // const showGuess = true;
+  // const showGuess = true
 
   const onPressGuess = () => {
     const params = {
       postId: post.id,
-      username: post.createdBy.username,
     }
+
     if (showGuess) {
       dispatch({ type: ATTEMPT_GUESS, payload: params })
     } else {

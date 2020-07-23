@@ -23,7 +23,7 @@ export default function BottomTabNavigator() {
       // eslint-disable-next-line react/jsx-props-no-spreading
       tabBar={(props) => <TabBar {...props} />}
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
-      <BottomTab.Screen name="Feed" component={FeedStack} />
+      <BottomTab.Screen name="FeedStack" component={FeedStack} />
       <BottomTab.Screen name="Activity" component={ActivityStack} />
       <BottomTab.Screen name="CreatePost" component={Empty} />
       <BottomTab.Screen name="Leaderboard" component={LeaderboardStack} />

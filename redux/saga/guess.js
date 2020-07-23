@@ -21,9 +21,20 @@ function onAttemptGuess(action) {
   })
 }
 
-function onCreateGuessSuccess() {
+function onCreateGuessSuccess(action) {
+  const { data: post } = action.payload
+
   navigate('Main', {
     screen: 'Root',
+    params: {
+      screen: 'FeedStack',
+      params: {
+        screen: 'Detail',
+        params: {
+          postId: post.id,
+        },
+      },
+    },
   })
 }
 

@@ -26,23 +26,13 @@ const GuessStack = () => {
         },
         headerTintColor: '#FFFFFF',
       }}>
-      <Stack.Screen
-        component={GuessSelectLocationScreen}
-        name="GuessSelectLocation"
-        options={({ route }) => {
-          console.log({ route })
-          return {
-            title: `Where is ${route.params?.username}?`,
-          }
-        }}
-      />
+      <Stack.Screen component={GuessSelectLocationScreen} name="GuessSelectLocation" />
       <Stack.Screen
         component={GuessAddCommentScreen}
         name="GuessAddComment"
-        options={({ route }) => ({
+        options={{
           headerRight: () => <GuessButton />,
-          title: `Where is ${route.params?.username}?`,
-        })}
+        }}
       />
     </Stack.Navigator>
   )

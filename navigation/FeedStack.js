@@ -32,13 +32,7 @@ const FeedStack = () => {
           headerTitle: () => <HeaderTitle />,
         }}
       />
-      <Stack.Screen
-        component={DetailScreen}
-        name="Detail"
-        options={({ route }) => ({
-          title: `${route.params.username}'s BarSnap`,
-        })}
-      />
+      <Stack.Screen component={DetailScreen} name="Detail" />
       <Stack.Screen
         component={PostCheersScreen}
         name="PostCheers"

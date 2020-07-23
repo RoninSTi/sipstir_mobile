@@ -155,6 +155,9 @@ const ProfileHeader = () => {
           />
         </PhotoUploader>
       </View>
+      <View>
+        <Text>{user.username}</Text>
+      </View>
       <View style={styles.statsContainer}>
         <View style={styles.statContainer}>
           <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>

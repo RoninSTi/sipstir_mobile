@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   Dimensions,
   Image,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -77,7 +76,6 @@ const Post = ({ detailPath, isDetail, post }) => {
 
     const params = {
       postId: post.id,
-      username: post.createdBy.username,
     }
 
     if (navigateToDetail) {
@@ -126,8 +124,8 @@ const Post = ({ detailPath, isDetail, post }) => {
   }
 
   const onPressZoom = () => {
-    navigate('ZoomedImageScreen', {
-      remoteUri: image,
+    navigate('Zoom', {
+      url: image,
     })
   }
 
@@ -151,11 +149,9 @@ const Post = ({ detailPath, isDetail, post }) => {
             </View>
             <FeedPostFooter detailPath={detailPath} post={post} />
             <FeedPostHeader post={post} />
-            {Platform.OS === 'ios' && (
-              <TouchableOpacity onPress={onPressZoom} style={styles.zoom}>
-                <Icon color="#D8D8D8" name="magnify" size={30} />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity onPress={onPressZoom} style={styles.zoom}>
+              <Icon color="#D8D8D8" name="magnify" size={30} />
+            </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
       </View>

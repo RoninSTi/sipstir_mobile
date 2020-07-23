@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useLayoutEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { useFocusEffect } from '@react-navigation/native'
@@ -37,11 +37,17 @@ const GuessSelectLocationScreen = ({ navigation }) => {
     }, [])
   )
 
+  useLayoutEffect(() => {
+    if (post) {
+      navigation.setOptions({ title: `Where is ${post?.createdBy.username}?` })
+    }
+  }, [navigation, post])
+
   if (!post) return null
 
   const onPressListItem = async ({ place }) => {
     if (place.type === 'NO_GUESS') {
-      navigate('GuessAddComment', { username: post.createdBy.username })
+      navigate('GuessAddComment')
     } else {
       dispatch({ type: SELECT_PLACE, payload: place.place_id })
     }
@@ -72,6 +78,7 @@ const GuessSelectLocationScreen = ({ navigation }) => {
 GuessSelectLocationScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    setOptions: PropTypes.func,
   }).isRequired,
 }
 

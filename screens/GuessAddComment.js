@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
+import PropTypes from 'prop-types'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -26,12 +27,22 @@ const styles = StyleSheet.create({
   },
 })
 
-const GuessAddComment = () => {
+const GuessAddComment = ({ navigation }) => {
   const dispatch = useDispatch()
 
   const text = useSelector((state) => state.createGuess.text)
 
   const location = useSelector((state) => state.createGuess.location)
+
+  const postId = useSelector((state) => state.createGuess.postId)
+
+  const post = useSelector((state) => state.feed.posts.find((p) => p.id === postId))
+
+  useLayoutEffect(() => {
+    if (post) {
+      navigation.setOptions({ title: `Where is ${post?.createdBy.username}?` })
+    }
+  }, [navigation, post])
 
   const handleOnChangeText = (guessText) => {
     dispatch({
@@ -58,6 +69,12 @@ const GuessAddComment = () => {
       <AddCommentHeader selectedPlace={location} />
     </KeyboardAvoidingView>
   )
+}
+
+GuessAddComment.propTypes = {
+  navigation: PropTypes.shape({
+    setOptions: PropTypes.func,
+  }).isRequired,
 }
 
 export default GuessAddComment

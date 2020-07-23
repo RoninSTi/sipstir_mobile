@@ -1,12 +1,13 @@
-import React from 'react';
+/* eslint-disable global-require */
+import React from 'react'
 
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 // import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Button } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { ATTEMPT_LOGIN } from '../redux/actions/types';
+import { useDispatch, useSelector } from 'react-redux'
+import { ATTEMPT_LOGIN } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
   button: {
@@ -45,18 +46,15 @@ const styles = StyleSheet.create({
     marginBottom: 21,
     textAlign: 'center',
   },
-});
+})
 
-const Auth = ({ navigation }) => {
-  const isLoading = useSelector(state => state.ui.isLoading)
+const Auth = () => {
+  const isLoading = useSelector((state) => state.ui.isLoading)
   const dispatch = useDispatch()
-
-  const { navigate } = navigation;
 
   const login = () => {
     dispatch({ type: ATTEMPT_LOGIN })
-// navigate('Root')
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -76,7 +74,7 @@ const Auth = ({ navigation }) => {
           <Button
             color="#5177FF"
             icon={() => <Icon color="#FFFFFF" name="facebook-box" size={18} />}
-            loading={isLoading.some(item => item.loadingType === ATTEMPT_LOGIN)}
+            loading={isLoading.some((item) => item.loadingType === ATTEMPT_LOGIN)}
             mode="contained"
             onPress={login}
             style={styles.button}>
@@ -85,16 +83,7 @@ const Auth = ({ navigation }) => {
         </View>
       </ImageBackground>
     </View>
-  );
-};
+  )
+}
 
-// LoginScreen.navigationOptions = {
-//   headerBackTitle: null,
-//   headerStyle: {
-//     borderBottomWidth: 0,
-//     elevation: 0,
-//   },
-//   title: 'Welcome!',
-// };
-
-export default Auth;
+export default Auth

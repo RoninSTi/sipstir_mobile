@@ -11,6 +11,7 @@ import LinkingConfiguration from './LinkingConfiguration'
 import Auth from '../screens/Auth'
 import AuthLoading from '../screens/AuthLoading'
 import CreateProfile from '../screens/CreateProfile'
+import ZoomedImageScreen from '../screens/ZoomedImage'
 
 import { navigationRef, isReadyRef } from './rootNavigation'
 
@@ -49,6 +50,7 @@ function RootNavigator() {
       <Stack.Screen name="Main" component={MainNavigator} />
       <Stack.Screen name="Create" component={CreateStack} />
       <Stack.Screen name="Guess" component={GuessStack} />
+      <Stack.Screen name="Zoom" component={ZoomedImageScreen} />
     </Stack.Navigator>
   )
 }

@@ -18,6 +18,12 @@ const getIsCreatingPost = (state) => state.createPost.isCreatingPost
 function onCreatePostSuccess() {
   navigate('Main', {
     screen: 'Root',
+    params: {
+      screen: 'FeedStack',
+      params: {
+        screen: 'Feed',
+      },
+    },
   })
 }
 

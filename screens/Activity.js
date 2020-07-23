@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useCallback } from 'react'
 import moment from 'moment'
 
 import { Dimensions, FlatList, RefreshControl, StyleSheet, View } from 'react-native'
 import { List } from 'react-native-paper'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native'
 import { FETCH_ACTIVITY, REFRESH_ACTIVITY } from '../redux/actions/types'
+import { fetchActivityAction } from '../redux/actions/activity'
 
 import Avatar from '../components/Avatar'
 import ScreenLoader from '../components/ScreenLoader'
@@ -47,7 +49,26 @@ const ActivityScreen = ({ navigation }) => {
 
   const isRefreshing = useSelector((state) => state.activity.isRefreshing)
 
-  const loading = isLoading.some((item) => item.loadingType === FETCH_ACTIVITY) && !isRefreshing
+  const loading =
+    isLoading.some((item) => item.loadingType === FETCH_ACTIVITY) &&
+    !isRefreshing &&
+    activities.length === 0
+
+  const userId = useSelector((state) => state.auth.user?.id)
+
+  const token = useSelector((state) => state.auth.user?.token)
+
+  const activityParams = useSelector((state) => {
+    const { page, pageSize } = state.activity
+
+    return { page, pageSize }
+  })
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchActivityAction({ ...activityParams, token, userId }))
+    }, [userId, token])
+  )
 
   const keyExtractor = (_, index) => `activity-${index}`
 
@@ -67,7 +88,6 @@ const ActivityScreen = ({ navigation }) => {
         case 'postDetail':
           navigate('ActivityPostDetail', {
             postId: payload,
-            username: createdBy.username,
           })
           break
         default:
