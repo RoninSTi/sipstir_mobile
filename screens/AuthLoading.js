@@ -4,7 +4,7 @@ import { AsyncStorage, StyleSheet } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { SET_AUTH_USER, SET_AUTH_LOADING } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
 
 const AuthLoadingScreen = () => {
   const dispatch = useDispatch()
+
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+
+  const isLoading = useSelector((state) => state.auth.isLoading)
 
   const checkLoggedIn = async () => {
     const userData = await AsyncStorage.getItem('user')
@@ -40,8 +44,10 @@ const AuthLoadingScreen = () => {
   }
 
   useEffect(() => {
-    checkLoggedIn()
-  }, [checkLoggedIn])
+    if (!isLoggedIn && isLoading) {
+      checkLoggedIn()
+    }
+  }, [checkLoggedIn, isLoggedIn, isLoading])
 
   return (
     <SafeAreaView style={styles.container}>

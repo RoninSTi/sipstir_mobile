@@ -3,7 +3,7 @@
     "name": "BarSnap",
     "slug": "barsnap-mobile",
     "scheme": "barsnap",
-    "version": "1.2.9",
+    "version": "1.2.10",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -25,10 +25,10 @@
         }
       },
       "package": "com.barsnap.barsnap",
-      "versionCode": 19
+      "versionCode": 20
     },
     "ios": {
-      "buildNumber": "1.2.9",
+      "buildNumber": "1.2.10",
       "bundleIdentifier": "com.barsnap.barsnap",
       "config": {
         "usesNonExemptEncryption": false
