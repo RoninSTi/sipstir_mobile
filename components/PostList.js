@@ -1,35 +1,36 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { Dimensions, FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { Dimensions, FlatList, RefreshControl, StyleSheet } from 'react-native'
 
-import FeedPostContainer from './FeedPostContainer';
-import PostSeparator from './PostSeparator';
+import FeedPostContainer from './FeedPostContainer'
+import PostSeparator from './PostSeparator'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#E6E6EB',
+    overflow: 'visible',
     width,
   },
-});
+})
 
 class PostList extends Component {
   scrollUp = () => {
-    this.listRef.scrollToIndex({ animated: true, index: 0 });
-  };
+    this.listRef.scrollToIndex({ animated: true, index: 0 })
+  }
 
-  keyExtractor = item => `Post-${item.id}`;
+  keyExtractor = (item) => `Post-${item.id}`
 
   renderItem = ({ item }) => {
-    const { detailPath } = this.props;
+    const { detailPath } = this.props
 
-    return <FeedPostContainer detailPath={detailPath} post={item} />;
-  };
+    return <FeedPostContainer detailPath={detailPath} post={item} />
+  }
 
   render() {
-    const { onRefresh, refreshing, posts } = this.props;
+    const { onRefresh, refreshing, posts } = this.props
 
     return (
       <FlatList
@@ -37,8 +38,8 @@ class PostList extends Component {
         data={posts}
         ItemSeparatorComponent={() => <PostSeparator />}
         keyExtractor={this.keyExtractor}
-        ref={ref => {
-          this.listRef = ref;
+        ref={(ref) => {
+          this.listRef = ref
         }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#5177FF" />
@@ -46,7 +47,7 @@ class PostList extends Component {
         renderItem={this.renderItem}
         style={styles.container}
       />
-    );
+    )
   }
 }
 
@@ -55,6 +56,6 @@ PostList.propTypes = {
   onRefresh: PropTypes.func.isRequired,
   refreshing: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+}
 
-export default PostList;
+export default PostList

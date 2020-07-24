@@ -4,10 +4,8 @@ import { AsyncStorage, StyleSheet } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { useNavigation } from '@react-navigation/native'
-
 import { useDispatch } from 'react-redux'
-import { SET_AUTH_USER } from '../redux/actions/types'
+import { SET_AUTH_USER, SET_AUTH_LOADING } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,8 +17,6 @@ const styles = StyleSheet.create({
 })
 
 const AuthLoadingScreen = () => {
-  const { navigate } = useNavigation()
-
   const dispatch = useDispatch()
 
   const checkLoggedIn = async () => {
@@ -39,7 +35,7 @@ const AuthLoadingScreen = () => {
         },
       })
     } else {
-      navigate('Auth')
+      dispatch({ type: SET_AUTH_LOADING, payload: false })
     }
   }
 

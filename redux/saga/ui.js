@@ -1,9 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { put, select, takeEvery } from 'redux-saga/effects'
 
-import { SET_LOADING, UPDATE_LOADING } from '../actions/types'
-
-import { navigate } from '../../navigation/rootNavigation'
+import { LOGOUT, SET_LOADING, UPDATE_LOADING } from '../actions/types'
 
 const getLoaders = (state) => state.ui.isLoading
 
@@ -70,8 +68,8 @@ function* checkLoading(action) {
   }
 }
 
-function onUnAuthorized() {
-  navigate('Auth')
+function* onUnAuthorized() {
+  yield put({ type: LOGOUT })
 }
 
 export function* watchUI() {

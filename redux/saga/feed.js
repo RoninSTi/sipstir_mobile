@@ -11,6 +11,7 @@ import {
   SET_AUTH_USER,
   SET_POSTS,
   CREATE_POST_SUCCESS,
+  SET_FEED_TYPE,
 } from '../actions/types'
 import { fetchFeedAction } from '../actions/feed'
 
@@ -116,6 +117,10 @@ function* onSetAuthUser() {
   yield fetchFeed()
 }
 
+function* onSetFeedType() {
+  yield fetchFeed()
+}
+
 export function* watchFeed() {
   yield takeEvery(CHEERS_POST_SUCCESS, onCheersPostSuccess)
   yield takeEvery(CREATE_COMMENT_SUCCESS, onCreateCommentSuccess)
@@ -125,4 +130,5 @@ export function* watchFeed() {
   yield takeEvery(FETCH_SINGLE_POST_SUCCESS, onFetchSinglePostSuccess)
   yield takeEvery(REFRESH_FEED, onRefreshFeed)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)
+  yield takeEvery(SET_FEED_TYPE, onSetFeedType)
 }

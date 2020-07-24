@@ -4,6 +4,14 @@ export const isReadyRef = React.createRef()
 
 export const navigationRef = React.createRef()
 
+export function reset(params) {
+  if (isReadyRef.current && navigationRef.current) {
+    navigationRef.current.reset(params)
+  } else {
+    console.log('navigator not ready')
+  }
+}
+
 export function navigate(name, params) {
   if (isReadyRef.current && navigationRef.current) {
     navigationRef.current.navigate(name, params)

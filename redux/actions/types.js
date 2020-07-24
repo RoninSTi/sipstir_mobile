@@ -6,10 +6,12 @@ export const REFRESH_ACTIVITY = 'REFRESH_ACTIVITY'
 // Auth
 export const ATTEMPT_LOGIN = 'ATTEMPT_LOGIN'
 export const ATTEMPT_LOGOUT = 'ATTEMPT_LOGOUT'
-export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const GET_USER_BY_EMAIL = 'GET_USER_BY_EMAIL'
 export const GET_USER_BY_EMAIL_SUCCESS = 'GET_USER_BY_EMAIL_SUCCESS'
 export const LOGOUT = 'LOGOUT'
+export const SET_AUTH_LOADING = 'SET_AUTH_LOADING'
+export const SET_AUTH_USER = 'SET_AUTH_USER'
+export const SET_LOGGED_IN = 'SET_LOGGED_IN'
 
 // CreateProfile
 export const CHECK_USERNAME = 'CHECK_USERNAME'

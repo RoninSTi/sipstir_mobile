@@ -14,6 +14,7 @@ import {
   LOGOUT,
   SET_AUTH_USER,
   UPDATE_LOADING,
+  SET_LOGGED_IN,
 } from '../actions/types'
 import { getUserByEmailAction } from '../actions/auth'
 import { createUserAction } from '../actions/user'
@@ -101,8 +102,6 @@ function* onAttemptLogout() {
   yield put({ type: LOGOUT })
 
   yield AsyncStorage.removeItem('user')
-
-  navigate('Auth')
 }
 
 function* onSetAuthUser() {
@@ -124,7 +123,7 @@ function* onSetAuthUser() {
 
   yield AsyncStorage.setItem('user', JSON.stringify(user))
 
-  navigate('Root')
+  yield put({ type: SET_LOGGED_IN, payload: true })
 }
 
 function* onCreateUserSuccess(action) {

@@ -7,7 +7,7 @@ import { StyleSheet, View } from 'react-native'
 
 import { useDispatch, useSelector } from 'react-redux'
 import BackgroundHeader from '../components/BackgroundHeader'
-// import FeedSelector from '@components/FeedSelector';
+import FeedSelector from '../components/FeedSelector'
 import HeaderTitle from '../components/HeaderTitle'
 import PostList from '../components/PostList'
 import ScreenLoader from '../components/ScreenLoader'
@@ -62,6 +62,7 @@ const FeedScreen = () => {
 
   return (
     <View style={styles.container}>
+      <FeedSelector />
       <ScreenLoader loading={isLoadingFeed}>
         <PostList
           detailPath="Detail"

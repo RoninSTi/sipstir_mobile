@@ -2,7 +2,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack'
 import * as React from 'react'
 
-import NotFoundScreen from '../screens/NotFoundScreen'
+import { useSelector } from 'react-redux'
 import BottomTabNavigator from './BottomTabNavigator'
 import CreateStack from './CreateStack'
 import GuessStack from './GuessStack'
@@ -32,14 +32,29 @@ export default function Navigation({ colorScheme }) {
 
 const Stack = createStackNavigator()
 
-function MainNavigator() {
+function AuthStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="AuthLoading" component={AuthLoading} />
+    <Stack.Navigator>
       <Stack.Screen name="Auth" component={Auth} />
       <Stack.Screen name="CreateProfile" component={CreateProfile} />
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+    </Stack.Navigator>
+  )
+}
+
+function MainNavigator() {
+  const isLoading = useSelector((state) => state.auth.isLoading)
+
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+
+  if (isLoading) return <AuthLoading />
+
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {isLoggedIn ? (
+        <Stack.Screen name="Root" component={BottomTabNavigator} />
+      ) : (
+        <Stack.Screen name="AuthStack" component={AuthStack} />
+      )}
     </Stack.Navigator>
   )
 }
