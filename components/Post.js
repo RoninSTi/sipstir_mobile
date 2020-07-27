@@ -76,6 +76,7 @@ const Post = ({ detailPath, isDetail, post }) => {
 
     const params = {
       postId: post.id,
+      showPointsModal: false,
     }
 
     if (navigateToDetail) {

@@ -32,6 +32,7 @@ function onCreateGuessSuccess(action) {
         screen: 'Detail',
         params: {
           postId: post.id,
+          showPointsModal: true,
         },
       },
     },

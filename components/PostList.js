@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Dimensions, FlatList, RefreshControl, StyleSheet } from 'react-native'
+import { Animated, Dimensions, FlatList, RefreshControl, StyleSheet } from 'react-native'
 
 import FeedPostContainer from './FeedPostContainer'
 import PostSeparator from './PostSeparator'
 
 const { width } = Dimensions.get('window')
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 const styles = StyleSheet.create({
   container: {
@@ -30,14 +32,15 @@ class PostList extends Component {
   }
 
   render() {
-    const { onRefresh, refreshing, posts } = this.props
+    const { onRefresh, onScroll, refreshing, posts } = this.props
 
     return (
-      <FlatList
+      <AnimatedFlatList
         contentContainerStyle={{ paddingVertical: 21 }}
         data={posts}
         ItemSeparatorComponent={() => <PostSeparator />}
         keyExtractor={this.keyExtractor}
+        onScroll={onScroll}
         ref={(ref) => {
           this.listRef = ref
         }}
@@ -54,6 +57,7 @@ class PostList extends Component {
 PostList.propTypes = {
   detailPath: PropTypes.string.isRequired,
   onRefresh: PropTypes.func.isRequired,
+  onScroll: PropTypes.func.isRequired,
   refreshing: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

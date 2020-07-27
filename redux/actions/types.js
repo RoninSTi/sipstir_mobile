@@ -29,6 +29,10 @@ export const REFRESH_FEED = 'REFRESH_FEED'
 export const SET_FEED_TYPE = 'SET_FEED_TYPE'
 export const SET_POSTS = 'SET_POSTS'
 
+// Follow Tray
+export const CLOSE_FOLLOWTRAY = 'CLOSE_FOLLOWTRAY'
+export const SET_FOLLOWTRAY_USER = 'SET_FOLLOWTRAY_USER'
+
 // Guess
 export const ATTEMPT_GUESS = 'ATTEMPT_GUESS'
 export const CREATE_GUESS = 'CREATE_GUESS'
@@ -37,6 +41,7 @@ export const SET_GUESS_LOCATION = 'SET_GUESS_LOCATION'
 export const SET_GUESS_POST_ID = 'SET_GUESS_POST_ID'
 export const SET_GUESS_TEXT = 'SET_GUESS_TEXT'
 export const SET_IS_GUESSING = 'SET_IS_GUESSING'
+export const RESET_GUESS = 'RESET_GUESS'
 
 // Leaderboard
 export const FETCH_LEADERBOARD = 'FETCH_LEADERBOARD'

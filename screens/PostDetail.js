@@ -13,7 +13,7 @@ import { fetchSinglePostAction } from '../redux/actions/post'
 import { REFRESH_DETAIL } from '../redux/actions/types'
 
 import GuessList from '../components/GuessList'
-// import PointsModal from '@components/PointsModal';
+import PointsModal from '../components/PointsModal'
 import Post from '../components/Post'
 
 const PostDetail = ({ navigation }) => {
@@ -23,7 +23,11 @@ const PostDetail = ({ navigation }) => {
 
   const postId = route.params?.postId
 
-  const post = useSelector((state) => state.feed.posts.find((p) => p.id === postId))
+  const showPointsModal = route.params?.showPointsModal
+
+  const post = useSelector((state) =>
+    state.feed.posts[state.feed.feedType].find((p) => p.id === postId)
+  )
 
   const authUser = useSelector((state) => state.auth.user)
 
@@ -47,6 +51,10 @@ const PostDetail = ({ navigation }) => {
     dispatch({ type: REFRESH_DETAIL, payload: postId })
   }
 
+  console.log({ showPointsModal })
+
+  console.log({ params: route.params })
+
   return (
     <KeyboardAwareScrollView
       extraScrollHeight={-40}
@@ -61,7 +69,9 @@ const PostDetail = ({ navigation }) => {
       style={{ backgroundColor: '#E8E8E8' }}>
       <Post isDetail post={post} />
       <GuessList guesses={post.guesses} />
-      <Portal>{/* <PointsModal /> */}</Portal>
+      <Portal>
+        <PointsModal isVisible={showPointsModal} post={post} />
+      </Portal>
     </KeyboardAwareScrollView>
   )
 }

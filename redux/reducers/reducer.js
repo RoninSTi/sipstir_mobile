@@ -6,6 +6,7 @@ import createGuess from './createGuess'
 import createPost from './createPost'
 import createProfile from './createProfile'
 import feed from './feed'
+import followTray from './followTray'
 import leaderboard from './leaderboard'
 import myPosts from './myPosts'
 import places from './places'
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   createPost,
   createProfile,
   feed,
+  followTray,
   leaderboard,
   myPosts,
   places,

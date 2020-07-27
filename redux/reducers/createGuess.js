@@ -1,7 +1,7 @@
 import {
   ATTEMPT_GUESS,
-  CREATE_GUESS_SUCCESS,
   LOGOUT,
+  RESET_GUESS,
   SET_GUESS_LOCATION,
   SET_GUESS_TEXT,
   SET_IS_GUESSING,
@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
         isGuessing: true,
         postId: payload.postId,
       }
-    case CREATE_GUESS_SUCCESS:
+    case RESET_GUESS:
     case LOGOUT:
       return {
         ...initialState,

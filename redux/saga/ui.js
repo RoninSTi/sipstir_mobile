@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { put, select, takeEvery } from 'redux-saga/effects'
 
+import { AsyncStorage } from 'react-native'
 import { LOGOUT, SET_LOADING, UPDATE_LOADING } from '../actions/types'
 
 const getLoaders = (state) => state.ui.isLoading
@@ -69,6 +70,8 @@ function* checkLoading(action) {
 }
 
 function* onUnAuthorized() {
+  yield AsyncStorage.removeItem('user')
+
   yield put({ type: LOGOUT })
 }
 

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { useActionSheet } from '@expo/react-native-action-sheet';
+import { useActionSheet } from '@expo/react-native-action-sheet'
 
-import { StyleSheet, Text, View } from 'react-native';
-import { LongPressGestureHandler, State } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View } from 'react-native'
+import { LongPressGestureHandler, State } from 'react-native-gesture-handler'
 
-import Avatar from './Avatar';
+import Avatar from './Avatar'
 
 const styles = StyleSheet.create({
   container: {
@@ -32,25 +32,25 @@ const styles = StyleSheet.create({
     color: '#999999',
     marginBottom: 6,
   },
-});
+})
 
 const Comment = ({ comment, isOwner, isPreviousCommentSameUser, isNextCommentSameUser }) => {
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user)
 
-  const { createdBy, id, text } = comment;
+  const { createdBy, id, text } = comment
 
-  const { showActionSheetWithOptions } = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet()
 
   const handleDeleteComment = () => {
     // deleteComment(id);
-  };
+  }
 
   const openActionSheet = () => {
-    const options = ['Delete Comment', 'Cancel'];
-    const cancelButtonIndex = 1;
+    const options = ['Delete Comment', 'Cancel']
+    const cancelButtonIndex = 1
 
-    const title = 'Admin Menu';
-    const message = 'Admin actions you can take';
+    const title = 'Admin Menu'
+    const message = 'Admin actions you can take'
 
     showActionSheetWithOptions(
       {
@@ -59,25 +59,25 @@ const Comment = ({ comment, isOwner, isPreviousCommentSameUser, isNextCommentSam
         options,
         title,
       },
-      buttonIndex => {
+      (buttonIndex) => {
         switch (buttonIndex) {
           case 0:
-            handleDeleteComment();
-            break;
+            handleDeleteComment()
+            break
           default:
-            break;
+            break
         }
       }
-    );
-  };
+    )
+  }
 
-  const onHandlerStateChange = event => {
+  const onHandlerStateChange = (event) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       if (user.role === 'admin') {
-        openActionSheet();
+        openActionSheet()
       }
     }
-  };
+  }
 
   return (
     <LongPressGestureHandler onHandlerStateChange={onHandlerStateChange}>
@@ -90,14 +90,12 @@ const Comment = ({ comment, isOwner, isPreviousCommentSameUser, isNextCommentSam
         ]}>
         {!isPreviousCommentSameUser && <Avatar user={createdBy} />}
         <View style={[styles.bubble, isOwner ? undefined : styles.bubbleReply]}>
-          {!isPreviousCommentSameUser && (
-            <Text style={styles.username}>{createdBy.username}</Text>
-          )}
+          {!isPreviousCommentSameUser && <Text style={styles.username}>{createdBy.username}</Text>}
           <Text>{text}</Text>
         </View>
       </View>
     </LongPressGestureHandler>
-  );
-};
+  )
+}
 
-export default Comment;
+export default Comment

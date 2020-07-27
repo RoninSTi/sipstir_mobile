@@ -58,12 +58,23 @@ const styles = StyleSheet.create({
   },
 })
 
-const FeedSelector = () => {
+const FeedSelector = ({ offsetY }) => {
   const dispatch = useDispatch()
 
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const index = useRef(new Animated.Value(0)).current
+
+  const clampedOffsetY = offsetY.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+    extrapolateLeft: 'clamp',
+  })
+
+  const headerTranslate = Animated.diffClamp(clampedOffsetY, 0, 83).interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -1],
+  })
 
   const position = index.interpolate({
     inputRange: [0, 1],
@@ -82,7 +93,8 @@ const FeedSelector = () => {
   }
 
   return (
-    <View style={styles.wrapper}>
+    <Animated.View style={[styles.wrapper, { transform: [{ translateY: headerTranslate }] }]}>
+      {/* <Animated.View style={[styles.wrapper]}> */}
       <View style={styles.container}>
         <Animated.View style={[styles.switcher, { left: position }]} />
         <FeedButton
@@ -96,9 +108,17 @@ const FeedSelector = () => {
           title="Following"
         />
       </View>
-    </View>
+    </Animated.View>
   )
 }
+
+// FeedSelector.defaultProps = {
+//   offsetY: 0,
+// }
+
+// FeedSelector.propTypes = {
+//   offsetY: PropTypes.number,
+// }
 
 const FeedButton = ({ selected, onPress, title }) => {
   const index = useRef(new Animated.Value(0)).current

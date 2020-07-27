@@ -12,6 +12,7 @@ import store from './redux/store'
 import useCachedResources from './hooks/useCachedResources'
 import useColorScheme from './hooks/useColorScheme'
 import Navigation from './navigation'
+import FollowTray from './components/FollowTray'
 
 global.Buffer = Buffer
 
@@ -33,6 +34,7 @@ export default function App() {
           <PaperProvider>
             <Navigation colorScheme={colorScheme} />
             <StatusBar style="light" />
+            <FollowTray />
           </PaperProvider>
         </ActionSheetProvider>
       </SafeAreaProvider>

@@ -20,7 +20,9 @@ const GuessSelectLocationScreen = ({ navigation }) => {
 
   const postId = useSelector((state) => state.createGuess.postId)
 
-  const post = useSelector((state) => state.feed.posts.find((p) => p.id === postId))
+  const post = useSelector((state) =>
+    state.feed.posts[state.feed.feedType].find((p) => p.id === postId)
+  )
 
   const places = useSelector((state) => state.places.places)
 

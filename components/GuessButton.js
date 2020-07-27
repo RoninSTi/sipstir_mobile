@@ -24,13 +24,14 @@ const GuessButton = () => {
   const onPress = () => {
     Keyboard.dismiss()
 
+    if (loading) return
+
     dispatch(createGuessAction({ createdById, placeId, postId, text, token }))
   }
 
   return (
     <Button
       color="#FFFFFF"
-      disabled={loading}
       labelStyle={{ fontSize: 18 }}
       loading={loading}
       onPress={onPress}

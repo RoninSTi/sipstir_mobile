@@ -17,7 +17,7 @@ import { fetchFeedAction } from '../actions/feed'
 
 const getAuthUser = (state) => state.auth.user
 
-const getPosts = (state) => state.feed.posts
+const getPosts = (state) => state.feed.posts[state.feed.feedType]
 
 const getFeedParams = (state) => {
   const { feedType, page, pageSize } = state.feed

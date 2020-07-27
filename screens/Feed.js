@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 
 import { useRoute } from '@react-navigation/native'
 
-import { StyleSheet, View } from 'react-native'
+import { Animated, StyleSheet, View } from 'react-native'
 
 import { useDispatch, useSelector } from 'react-redux'
 import BackgroundHeader from '../components/BackgroundHeader'
@@ -26,23 +26,17 @@ const FeedScreen = () => {
 
   const postListRef = useRef(null)
 
+  const offsetRef = useRef(new Animated.Value(0)).current
+
   const route = useRoute()
 
   const isLoading = useSelector((state) => state.ui.isLoading)
 
   const isRefreshing = useSelector((state) => state.feed.isRefreshing)
 
-  const posts = useSelector((state) => state.feed.posts)
+  const posts = useSelector((state) => state.feed.posts[state.feed.feedType])
 
   const action = route.params?.action
-
-  // useEffect(() => {
-  //   if (shouldScrollUp) {
-  //     postListRef.current.scrollUp()
-
-  //     setShouldScrollUp(false)
-  //   }
-  // }, [shouldScrollUp])
 
   useEffect(() => {
     switch (action) {
@@ -58,15 +52,24 @@ const FeedScreen = () => {
     dispatch({ type: REFRESH_FEED })
   }
 
-  const isLoadingFeed = isLoading.some((item) => item.loadingType === FETCH_FEED) && !isRefreshing
+  const isLoadingFeed =
+    isLoading.some((item) => item.loadingType === FETCH_FEED) && !isRefreshing && posts.length === 0
 
   return (
     <View style={styles.container}>
-      <FeedSelector />
+      <FeedSelector offsetY={offsetRef} />
       <ScreenLoader loading={isLoadingFeed}>
         <PostList
           detailPath="Detail"
           onRefresh={onRefresh}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: { contentOffset: { y: offsetRef } },
+              },
+            ],
+            { useNativeDriver: true } // <-- Add this
+          )}
           posts={posts}
           ref={postListRef}
           refreshing={isRefreshing}

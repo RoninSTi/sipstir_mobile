@@ -24,6 +24,8 @@ const PostButton = () => {
   const allowPost = useSelector((state) => !!(state.createPost.location && state.createPost.image))
 
   const onPress = () => {
+    if (loading) return
+
     dispatch(
       createPostAction({
         createdById: authUser.id,

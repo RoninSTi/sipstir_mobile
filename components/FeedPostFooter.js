@@ -119,6 +119,7 @@ const FeedPostFooter = ({ detailPath, post }) => {
   const onPressGuess = () => {
     const params = {
       postId: post.id,
+      showPointsModal: false,
     }
 
     if (showGuess) {

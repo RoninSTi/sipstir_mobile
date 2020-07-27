@@ -8,7 +8,7 @@ import reducer from './reducers/reducer'
 import rootSaga from './saga/saga'
 import clients from '../services/api'
 
-import env from '../environment';
+import env from '../environment'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -18,11 +18,7 @@ if (env.reduxLoggerEnabled) {
   middleware.push(logger)
 }
 
-const store = createStore(
-  reducer,
-  applyMiddleware(...middleware)
-)
-
+const store = createStore(reducer, applyMiddleware(...middleware))
 
 sagaMiddleware.run(rootSaga)
 

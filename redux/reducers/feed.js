@@ -5,7 +5,10 @@ const initialState = {
   feedType: 'main',
   page: 1,
   pageSize: 100,
-  posts: [],
+  posts: {
+    main: [],
+    following: [],
+  },
 }
 
 const reducer = (state = initialState, action) => {
@@ -31,7 +34,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isRefreshing: false,
-        posts: payload,
+        posts: {
+          ...state.posts,
+          [state.feedType]: payload,
+        },
       }
     default:
       return {

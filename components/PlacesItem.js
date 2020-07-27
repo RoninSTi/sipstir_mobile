@@ -84,6 +84,7 @@ const PlacesItem = ({ onPressListItem, place }) => {
   return (
     <List.Item
       description={formattedDescription}
+      descriptionStyle={styles.description}
       left={(props) =>
         shouldShowLoading ? (
           <ActivityIndicator color="#D7D0CF" size={24} style={{ marginHorizontal: 8 }} />
