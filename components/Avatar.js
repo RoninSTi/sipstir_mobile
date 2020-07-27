@@ -10,9 +10,11 @@ import { SET_FOLLOWTRAY_USER } from '../redux/actions/types'
 const BSAvatar = ({ size, user, containerStyle }) => {
   const dispatch = useDispatch()
 
-  const { avatar, username } = user
+  const avatar = user?.avatar
 
-  if (!username) return null
+  const username = user?.username
+
+  if (!avatar || !username) return null
 
   const handleOnPress = () => {
     dispatch({ type: SET_FOLLOWTRAY_USER, payload: user })
