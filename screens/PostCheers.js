@@ -1,16 +1,15 @@
-/* eslint-disable global-require */
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useCallback, useEffect } from 'react'
 
 import { useFocusEffect, useRoute } from '@react-navigation/native'
 
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { CLEAR_CHEERS, FETCH_POST_CHEERS } from '../redux/actions/types'
 import { fetchPostCheersAction } from '../redux/actions/post'
 
-// import BackgroundHeader from '@components/BackgroundHeader';
-import PostCheersList from '../components/PostCheersList'
+import UsersList from '../components/UsersList'
 import ScreenLoader from '../components/ScreenLoader'
 
 const styles = StyleSheet.create({
@@ -24,6 +23,12 @@ const styles = StyleSheet.create({
   },
 })
 
+const ListEmptyComponent = () => (
+  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Text>No 🍻 yet!</Text>
+  </View>
+)
+
 const PostCheers = () => {
   const dispatch = useDispatch()
 
@@ -36,6 +41,8 @@ const PostCheers = () => {
   const isLoading = useSelector((state) => state.ui.isLoading)
 
   const cheers = useSelector((state) => state.post.cheers)
+
+  const users = cheers.map((cheer) => cheer.createdBy)
 
   useEffect(() => {
     if (postId) {
@@ -56,21 +63,10 @@ const PostCheers = () => {
   return (
     <View style={styles.container}>
       <ScreenLoader loading={isLoadingCheers}>
-        <PostCheersList cheers={cheers} />
+        <UsersList users={users} ListEmptyComponent={ListEmptyComponent} />
       </ScreenLoader>
     </View>
   )
-}
-
-PostCheers.navigationOptions = {
-  // headerBackground: () => <BackgroundHeader />,
-  headerStyle: {
-    backgroundColor: 'rgba(231, 73, 62, 0.98)',
-    borderBottomWidth: 0,
-    elevation: 0,
-  },
-  headerTintColor: '#FFFFFF',
-  title: 'Cheers',
 }
 
 export default PostCheers

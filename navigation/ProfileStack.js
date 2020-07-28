@@ -2,6 +2,8 @@ import React from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
 
+import FollowersScreen from '../screens/Followers'
+import FollowingScreen from '../screens/Following'
 import MyFeedScreen from '../screens/MyFeed'
 import ProfileScreen from '../screens/Profile'
 import PostDetail from '../screens/PostDetail'
@@ -42,6 +44,8 @@ const ProfileStack = () => {
         name="MyFeedDetail"
         options={{ title: 'Your BarSnap' }}
       />
+      <Stack.Screen component={FollowersScreen} name="Followers" options={{ title: 'Followers' }} />
+      <Stack.Screen component={FollowingScreen} name="Following" options={{ title: 'Following' }} />
     </Stack.Navigator>
   )
 }

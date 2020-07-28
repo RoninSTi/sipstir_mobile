@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { Button, List } from 'react-native-paper'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const PostCheersList = ({ cheers }) => {
+const UsersList = ({ users, ListEmptyComponent }) => {
   const dispatch = useDispatch()
 
   const authUser = useSelector((state) => state.auth.user)
@@ -45,17 +45,17 @@ const PostCheersList = ({ cheers }) => {
 
   const renderItem = ({ item }) => {
     const isTryingToFollow = isLoading.some((element) => {
-      return element.loadingType === FOLLOW_USER && element.meta === item.createdBy.id
+      return element.loadingType === FOLLOW_USER && element.meta === item.id
     })
 
-    const isFollowing = user.following.some((follower) => follower.id === item.createdBy.id)
+    const isFollowing = user.following.some((follower) => follower.id === item.id)
 
     return (
       <List.Item
-        left={() => <Avatar user={item.createdBy} />}
+        left={() => <Avatar user={item} />}
         right={() => (
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            {item.createdBy.id !== user.id && (
+            {item.id !== user.id && (
               <Button
                 color="#5177FF"
                 compact
@@ -70,7 +70,7 @@ const PostCheersList = ({ cheers }) => {
           </View>
         )}
         style={styles.listItem}
-        title={item.createdBy.username}
+        title={item.username}
         titleStyle={styles.title}
       />
     )
@@ -78,31 +78,31 @@ const PostCheersList = ({ cheers }) => {
 
   renderItem.propTypes = {
     item: PropTypes.shape({
-      createdBy: PropTypes.shape({
-        id: PropTypes.number,
-        username: PropTypes.string,
-      }),
+      id: PropTypes.number,
+      username: PropTypes.string,
     }).isRequired,
   }
 
   return (
     <FlatList
       contentContainerStyle={{ flex: 1 }}
-      data={cheers}
+      data={users}
       extraData={[isLoading]}
       keyExtractor={keyExtractor}
-      ListEmptyComponent={() => (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>No 🍻 yet!</Text>
-        </View>
-      )}
+      ListEmptyComponent={() => <ListEmptyComponent />}
       renderItem={renderItem}
     />
   )
 }
 
-PostCheersList.propTypes = {
-  cheers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+UsersList.propTypes = {
+  ListEmptyComponent: PropTypes.node.isRequired,
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      username: PropTypes.string,
+    })
+  ).isRequired,
 }
 
-export default PostCheersList
+export default UsersList

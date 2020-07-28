@@ -57,7 +57,7 @@ class PostList extends Component {
 PostList.propTypes = {
   detailPath: PropTypes.string.isRequired,
   onRefresh: PropTypes.func.isRequired,
-  onScroll: PropTypes.func.isRequired,
+  onScroll: PropTypes.shape({}).isRequired,
   refreshing: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

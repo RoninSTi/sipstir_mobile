@@ -90,6 +90,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 7,
   },
+  usernameContainer: {
+    marginTop: 7,
+  },
+  username: {
+    color: '#434343',
+    fontSize: 15,
+    fontWeight: '700',
+  },
 })
 
 const ProfileHeader = () => {
@@ -155,8 +163,8 @@ const ProfileHeader = () => {
           />
         </PhotoUploader>
       </View>
-      <View>
-        <Text>{user.username}</Text>
+      <View style={styles.usernameContainer}>
+        <Text style={styles.username}>{user.username}</Text>
       </View>
       <View style={styles.statsContainer}>
         <View style={styles.statContainer}>

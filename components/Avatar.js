@@ -34,6 +34,7 @@ const BSAvatar = ({ size, user, containerStyle }) => {
 BSAvatar.defaultProps = {
   containerStyle: {},
   size: 45,
+  user: null,
 }
 
 BSAvatar.propTypes = {
@@ -42,7 +43,7 @@ BSAvatar.propTypes = {
   user: PropTypes.shape({
     avatar: PropTypes.string,
     username: PropTypes.string,
-  }).isRequired,
+  }),
 }
 
 export default BSAvatar

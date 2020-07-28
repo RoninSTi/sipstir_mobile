@@ -1,12 +1,21 @@
 /* eslint-disable import/prefer-default-export */
 import { put, takeEvery, select } from 'redux-saga/effects'
 
+import { AsyncStorage } from 'react-native'
+import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions'
+
 import {
+  ASK_LOCATION_PERMISSION,
   CHECK_LOCATION,
   FETCH_PLACES_SUCCESS,
   SELECT_PLACE,
+  SET_ASKED_LOCATION_PERMISSION,
+  SET_CURRENT_LOCATION,
+  SET_INCLUDE_NO_IDEA,
   SET_PLACES_SEARCH_STRING,
   SET_PLACES,
+  SET_SHOW_LOCATION_MODAL,
 } from '../actions/types'
 import { fetchPlaceAction, fetchPlacesAction } from '../actions/places'
 
@@ -20,8 +29,21 @@ const getAuthUser = (state) => state.auth.user
 
 const getLocation = (state) => state.places.currentLocation
 
-function* onCheckLocation(action) {
+const getIncludeNoIdea = (state) => state.places.includeNoIdea
+
+function* fetchCurrentLocation() {
+  const location = yield Location.getCurrentPositionAsync({})
+
+  yield put({
+    type: SET_CURRENT_LOCATION,
+    payload: location,
+  })
+}
+
+function* fetchPlaces() {
   const currentLocation = yield select(getLocation)
+
+  const includeNoIdea = yield select(getIncludeNoIdea)
 
   let params = {
     type: 'bar',
@@ -38,11 +60,54 @@ function* onCheckLocation(action) {
     }
   }
 
-  const { includeNoIdea } = action.payload
-
   const url = 'textsearch/json'
 
   yield put(fetchPlacesAction({ includeNoIdea, params, url }))
+}
+
+function* processPermissionStatus(status) {
+  switch (status) {
+    case 'granted':
+      return yield fetchCurrentLocation()
+    default:
+      return yield fetchPlaces()
+  }
+}
+
+function* getLocationPermissionStatus() {
+  const { status } = yield Permissions.getAsync(Permissions.LOCATION)
+
+  yield processPermissionStatus(status)
+}
+
+function* onAskLocationPermission() {
+  const { status } = yield Permissions.askAsync(Permissions.LOCATION)
+
+  yield processPermissionStatus(status)
+
+  yield AsyncStorage.setItem('PERMISSION_LOCATION', 'asked')
+
+  yield put({
+    type: SET_SHOW_LOCATION_MODAL,
+    payload: false,
+  })
+}
+
+function* onCheckLocation(action) {
+  const askedPermission = yield AsyncStorage.getItem('PERMISSION_LOCATION')
+
+  const { includeNoIdea = false } = action.payload
+
+  yield put({ type: SET_INCLUDE_NO_IDEA, payload: includeNoIdea })
+
+  if (askedPermission) {
+    yield getLocationPermissionStatus(action)
+  } else {
+    yield put({
+      type: SET_SHOW_LOCATION_MODAL,
+      payload: true,
+    })
+  }
 }
 
 function* onFetchPlacesSuccess(action) {
@@ -71,6 +136,21 @@ function* onSelectPlace(action) {
   yield put(fetchPlaceAction({ placeId, token }))
 }
 
+function* onSetAskedLocationPermission() {
+  yield AsyncStorage.setItem('PERMISSION_LOCATION', true)
+
+  yield put({
+    type: SET_SHOW_LOCATION_MODAL,
+    payload: false,
+  })
+
+  yield getLocationPermissionStatus()
+}
+
+function* onSetCurrentLocation() {
+  yield fetchPlaces()
+}
+
 function* onSetPlacesSearchString(action) {
   const currentLocation = yield select(getLocation)
 
@@ -96,8 +176,11 @@ function* onSetPlacesSearchString(action) {
 }
 
 export function* watchPlaces() {
+  yield takeEvery(ASK_LOCATION_PERMISSION, onAskLocationPermission)
   yield takeEvery(CHECK_LOCATION, onCheckLocation)
   yield takeEvery(FETCH_PLACES_SUCCESS, onFetchPlacesSuccess)
   yield takeEvery(SELECT_PLACE, onSelectPlace)
+  yield takeEvery(SET_ASKED_LOCATION_PERMISSION, onSetAskedLocationPermission)
+  yield takeEvery(SET_CURRENT_LOCATION, onSetCurrentLocation)
   yield takeEvery(SET_PLACES_SEARCH_STRING, onSetPlacesSearchString)
 }
