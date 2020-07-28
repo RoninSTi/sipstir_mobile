@@ -16,6 +16,7 @@ import Navigation from './navigation'
 
 import FollowTray from './components/FollowTray'
 import LocationModal from './components/LocationModal'
+import NotificationModal from './components/NotificationModal'
 
 global.Buffer = Buffer
 
@@ -40,7 +41,7 @@ export default function App() {
             <FollowTray />
             <Portal>
               <LocationModal />
-              {/* <NotificationModal /> */}
+              <NotificationModal />
             </Portal>
           </PaperProvider>
         </ActionSheetProvider>

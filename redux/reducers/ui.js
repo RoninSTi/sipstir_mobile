@@ -2,6 +2,7 @@ import { SET_LOADING } from '../actions/types'
 
 const initialState = {
   isLoading: [],
+  showNotificationModal: false,
 }
 
 const reducer = (state = initialState, action) => {
