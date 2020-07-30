@@ -1,9 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-import { call, put, takeEvery, select } from 'redux-saga/effects'
+import { put, takeEvery, select } from 'redux-saga/effects'
 
 import { AsyncStorage } from 'react-native'
 
-import * as WebBrowser from 'expo-web-browser'
 import jwtDecode from 'jwt-decode'
 import * as Facebook from 'expo-facebook'
 
@@ -21,9 +20,6 @@ import {
 import { facebookAuthAction, getUserByEmailAction } from '../actions/auth'
 import { createUserAction } from '../actions/user'
 
-import { toQueryString } from '../../helpers/url'
-
-import env from '../../environment'
 import { navigate } from '../../navigation/rootNavigation'
 
 const getUser = (state) => state.auth.user
