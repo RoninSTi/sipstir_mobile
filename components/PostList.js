@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
 
 class PostList extends Component {
   scrollUp = () => {
-    this.listRef.scrollToIndex({ animated: true, index: 0 })
+    const { posts } = this.props
+
+    if (posts.length > 0) this.listRef.scrollToIndex({ animated: true, index: 0 })
   }
 
   keyExtractor = (item) => `Post-${item.id}`

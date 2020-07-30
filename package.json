@@ -40,6 +40,7 @@
     "expo-asset": "~8.1.7",
     "expo-auth-session": "~1.4.0",
     "expo-constants": "~9.1.1",
+    "expo-facebook": "~8.2.1",
     "expo-file-system": "~9.0.1",
     "expo-font": "~8.2.1",
     "expo-image-manipulator": "~8.2.1",

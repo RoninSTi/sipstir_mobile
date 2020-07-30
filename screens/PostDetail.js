@@ -51,10 +51,6 @@ const PostDetail = ({ navigation }) => {
     dispatch({ type: REFRESH_DETAIL, payload: postId })
   }
 
-  console.log({ showPointsModal })
-
-  console.log({ params: route.params })
-
   return (
     <KeyboardAwareScrollView
       extraScrollHeight={-40}

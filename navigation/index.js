@@ -35,8 +35,12 @@ const Stack = createStackNavigator()
 function AuthStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Auth" component={Auth} />
-      <Stack.Screen name="CreateProfile" component={CreateProfile} />
+      <Stack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="CreateProfile"
+        component={CreateProfile}
+        options={{ title: 'Create Profile' }}
+      />
     </Stack.Navigator>
   )
 }

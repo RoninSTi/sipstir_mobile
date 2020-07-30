@@ -1,4 +1,17 @@
-import { GET_USER_BY_EMAIL } from './types'
+import { GET_USER_BY_EMAIL, FACEBOOK_AUTH } from './types'
+
+export const facebookAuthAction = ({ fbToken }) => ({
+  type: FACEBOOK_AUTH,
+  payload: {
+    request: {
+      method: 'post',
+      url: 'auth/facebook',
+      data: {
+        fbToken,
+      },
+    },
+  },
+})
 
 export const getUserByEmailAction = ({ email, token }) => ({
   type: GET_USER_BY_EMAIL,
@@ -7,8 +20,8 @@ export const getUserByEmailAction = ({ email, token }) => ({
       method: 'get',
       url: `/user/email/${email}`,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
-});
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  },
+})

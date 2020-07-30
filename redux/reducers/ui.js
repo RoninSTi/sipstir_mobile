@@ -1,4 +1,4 @@
-import { SET_LOADING } from '../actions/types'
+import { SET_LOADING, SET_SHOW_NOTIFICATION_MODAL } from '../actions/types'
 
 const initialState = {
   isLoading: [],
@@ -13,6 +13,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: payload,
+      }
+    case SET_SHOW_NOTIFICATION_MODAL:
+      return {
+        ...state,
+        showNotificationModal: payload,
       }
     default:
       return {

@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
 })
 
 const PointsModal = ({ isVisible, post }) => {
-  console.log({ isVisible })
   const dispatch = useDispatch()
 
   const [showModal, setShowModal] = useState(false)

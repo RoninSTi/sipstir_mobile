@@ -51,6 +51,8 @@ function* onAskNotificationPermission() {
   const { status } = yield Permissions.askAsync(Permissions.NOTIFICATIONS)
 
   yield processNotificationPermissionStatus(status)
+
+  yield put({ type: SET_SHOW_NOTIFICATION_MODAL, payload: false })
 }
 
 function* onCreatePostSuccess() {

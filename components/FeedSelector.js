@@ -71,9 +71,14 @@ const FeedSelector = ({ offsetY }) => {
     extrapolateLeft: 'clamp',
   })
 
-  const headerTranslate = Animated.diffClamp(clampedOffsetY, 0, 83).interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -1],
+  // const headerTranslate = Animated.diffClamp(clampedOffsetY, 0, 83).interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [0, -1],
+  // })
+
+  const headerOpacity = clampedOffsetY.interpolate({
+    inputRange: [0, 83],
+    outputRange: [1, 0],
   })
 
   const position = index.interpolate({
@@ -93,7 +98,12 @@ const FeedSelector = ({ offsetY }) => {
   }
 
   return (
-    <Animated.View style={[styles.wrapper, { transform: [{ translateY: headerTranslate }] }]}>
+    <Animated.View
+      style={[
+        styles.wrapper,
+        { opacity: headerOpacity },
+        // { transform: [{ translateY: headerTranslate }], opacity: headerOpacity },
+      ]}>
       {/* <Animated.View style={[styles.wrapper]}> */}
       <View style={styles.container}>
         <Animated.View style={[styles.switcher, { left: position }]} />

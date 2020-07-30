@@ -41,7 +41,7 @@ const FeedScreen = () => {
   useEffect(() => {
     switch (action) {
       case 'scrollUp':
-        postListRef.current.scrollUp()
+        postListRef.current?.scrollUp()
         break
       default:
         break

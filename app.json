@@ -39,6 +39,9 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
+    "facebookScheme": "fb2451578761628671",
+    "facebookAppId": "2451578761628671",
+    "facebookDisplayName": "BarSnap",
     "hooks": {
       "postPublish": [
         {
