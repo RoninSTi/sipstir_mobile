@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { Animated, Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Animated, Dimensions, StyleSheet, View, TouchableOpacity, Platform } from 'react-native'
 
 import { useDispatch } from 'react-redux'
 import { SET_FEED_TYPE } from '../redux/actions/types'
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#F3EBEA',
+    backgroundColor: '#D2CAC9',
     borderRadius: METRICS.containerBorderRadius,
     flexDirection: 'row',
     height: 55,
@@ -99,11 +99,7 @@ const FeedSelector = ({ offsetY }) => {
 
   return (
     <Animated.View
-      style={[
-        styles.wrapper,
-        { opacity: headerOpacity },
-        // { transform: [{ translateY: headerTranslate }], opacity: headerOpacity },
-      ]}>
+      style={[styles.wrapper, Platform.OS === 'ios' ? { opacity: headerOpacity } : {}]}>
       <View style={styles.container}>
         <Animated.View style={[styles.switcher, { left: position }]} />
         <FeedButton

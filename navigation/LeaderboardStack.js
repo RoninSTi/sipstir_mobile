@@ -24,6 +24,7 @@ const ActivityStack = () => {
             elevation: 0,
           },
           headerTintColor: '#FFFFFF',
+          headerTitleAlign: 'center',
           title: 'Leaderboard',
         }}
       />

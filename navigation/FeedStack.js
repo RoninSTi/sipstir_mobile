@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -23,6 +24,7 @@ const FeedStack = () => {
         },
         headerBackTitleVisible: false,
         headerTintColor: '#FFFFFF',
+        headerTitleAlign: 'center',
       }}>
       <Stack.Screen
         component={FeedScreen}

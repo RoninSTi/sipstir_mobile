@@ -25,6 +25,7 @@ const ProfileStack = () => {
           elevation: 0,
         },
         headerTintColor: '#FFFFFF',
+        headerTitleAlign: 'center',
       }}>
       <Stack.Screen
         component={ProfileScreen}

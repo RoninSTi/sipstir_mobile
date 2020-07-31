@@ -39,7 +39,7 @@ function AuthStack() {
       <Stack.Screen
         name="CreateProfile"
         component={CreateProfile}
-        options={{ headerShown: false, title: 'Create Profile' }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   )

@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Animated, Dimensions, FlatList, RefreshControl, StyleSheet } from 'react-native'
+import {
+  Animated,
+  Dimensions,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  ViewPropTypes,
+} from 'react-native'
 
 import FeedPostContainer from './FeedPostContainer'
 import PostSeparator from './PostSeparator'
@@ -34,7 +41,7 @@ class PostList extends Component {
   }
 
   render() {
-    const { onRefresh, onScroll, refreshing, posts } = this.props
+    const { containerStyle, onRefresh, onScroll, refreshing, posts } = this.props
 
     return (
       <AnimatedFlatList
@@ -50,13 +57,18 @@ class PostList extends Component {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#5177FF" />
         }
         renderItem={this.renderItem}
-        style={styles.container}
+        style={[styles.container, containerStyle]}
       />
     )
   }
 }
 
+PostList.defaultProps = {
+  containerStyle: {},
+}
+
 PostList.propTypes = {
+  containerStyle: ViewPropTypes.style,
   detailPath: PropTypes.string.isRequired,
   onRefresh: PropTypes.func.isRequired,
   onScroll: PropTypes.shape({}).isRequired,

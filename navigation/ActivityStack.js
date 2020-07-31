@@ -25,6 +25,7 @@ const ActivityStack = () => {
             elevation: 0,
           },
           headerTintColor: '#FFFFFF',
+          headerTitleAlign: 'center',
           title: 'Activity',
         }}
       />
@@ -40,6 +41,7 @@ const ActivityStack = () => {
             elevation: 0,
           },
           headerTintColor: '#FFFFFF',
+          headerTitleAlign: 'center',
         }}
       />
     </Stack.Navigator>

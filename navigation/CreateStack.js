@@ -24,6 +24,7 @@ const CreateStack = () => {
           elevation: 0,
         },
         headerTintColor: '#FFFFFF',
+        headerTitleAlign: 'center',
         title: `Where are you?`,
       }}>
       <Stack.Screen component={PostSelectLocationScreen} name="CreateSelectLocation" />

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Animated, View } from 'react-native'
+import { Animated, View, Platform } from 'react-native'
 
 import CreatePostButton from './CreatePostButton'
 import Tab from './Tab'
@@ -68,6 +68,11 @@ const TabBar = ({ descriptors, navigation, state }) => {
     // }
   }
 
+  const paddingBottom = Platform.select({
+    android: 0,
+    ios: 20,
+  })
+
   return (
     <View
       style={{
@@ -76,7 +81,7 @@ const TabBar = ({ descriptors, navigation, state }) => {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        paddingBottom: 20,
+        paddingBottom,
       }}>
       {state.routes.map((route, idx) => {
         const { options } = descriptors[route.key]
