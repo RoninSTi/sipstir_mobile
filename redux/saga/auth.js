@@ -88,11 +88,11 @@ function* onSetAuthUser() {
 }
 
 function* onCreateUserSuccess(action) {
-  const { id } = action.payload.data
+  const { avatar, email, id } = action.payload.data
 
   yield put({
     type: SET_AUTH_USER,
-    payload: { id },
+    payload: { avatar, email, id },
   })
 }
 

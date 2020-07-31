@@ -3,15 +3,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { SectionList, StyleSheet, Text, View } from 'react-native'
+import { RefreshControl, SectionList, StyleSheet, Text, View } from 'react-native'
 import { List } from 'react-native-paper'
-import { ATTEMPT_LOGOUT } from '../redux/actions/types'
+import { ATTEMPT_LOGOUT, REFRESH_USER } from '../redux/actions/types'
 
 import ProfileHeader from '../components/ProfileHeader'
 
-const VERSION = '1.2.15'
+const VERSION = '1.2.16'
 
 const styles = StyleSheet.create({
   activityContainer: {
@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch()
+
+  const isRefreshing = useSelector((state) => state.user.isRefreshing)
 
   const { navigate } = navigation
 
@@ -141,12 +143,19 @@ const ProfileScreen = ({ navigation }) => {
     }).isRequired,
   }
 
+  const onRefresh = () => {
+    dispatch({ type: REFRESH_USER })
+  }
+
   return (
     <View style={styles.container}>
       <SectionList
         ListHeaderComponent={<ProfileHeader />}
         // eslint-disable-next-line react/prop-types
         keyExtractor={(item, index) => `${item.name}-${index}`}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} tintColor="#5177FF" />
+        }
         renderItem={renderItem}
         sections={DATA}
         SectionSeparatorComponent={() => <View style={{ height: 14 }} />}

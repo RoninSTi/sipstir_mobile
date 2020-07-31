@@ -5,6 +5,7 @@ import {
   FOLLOW_USER_SUCCESS,
   GET_USER_BY_EMAIL_SUCCESS,
   LOGOUT,
+  REFRESH_USER,
   UPDATE_USER_SUCCESS,
 } from '../actions/types'
 
@@ -18,6 +19,7 @@ const initialState = {
   allTimeLeaderboardPosition: 0,
   followers: [],
   following: [],
+  isRefreshing: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -33,10 +35,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ...payload.data,
+        isRefreshing: false,
       }
     case LOGOUT:
       return {
         ...initialState,
+      }
+    case REFRESH_USER:
+      return {
+        ...state,
+        isRefreshing: true,
       }
     default:
       return {
