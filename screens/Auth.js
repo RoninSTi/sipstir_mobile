@@ -1,10 +1,11 @@
+/* eslint-disable react/style-prop-object */
 /* eslint-disable global-require */
 import React from 'react'
 
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
-// import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { StatusBar } from 'expo-status-bar'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { ATTEMPT_LOGIN } from '../redux/actions/types'
@@ -58,6 +59,7 @@ const Auth = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" />
       <ImageBackground
         source={require('../assets/images/background.png')}
         style={{ width: '100%', height: '100%' }}>

@@ -12,7 +12,9 @@ import { fetchLeaderboardAction } from '../actions/leaderboard'
 const getAuthUser = (state) => state.auth.user
 
 function* fetchLeaderboard() {
-  const { token } = yield select(getAuthUser)
+  const authUser = yield select(getAuthUser)
+
+  const token = authUser?.token
 
   yield put(fetchLeaderboardAction({ token }))
 }
@@ -30,6 +32,12 @@ function* onRefreshLeaderboard() {
 }
 
 function* onSetAuthUser() {
+  const authUser = yield select(getAuthUser)
+
+  const id = authUser?.id
+
+  if (!id) return
+
   yield fetchLeaderboard()
 }
 

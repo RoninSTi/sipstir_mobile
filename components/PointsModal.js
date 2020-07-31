@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -93,6 +94,19 @@ const PointsModal = ({ isVisible, post }) => {
       </View>
     </Modal>
   )
+}
+
+PointsModal.defaultProps = {
+  isVisible: false,
+}
+
+PointsModal.propTypes = {
+  isVisible: PropTypes.bool,
+  post: PropTypes.shape({
+    location: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }).isRequired,
 }
 
 export default PointsModal

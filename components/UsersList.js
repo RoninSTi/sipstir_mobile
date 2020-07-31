@@ -36,7 +36,7 @@ const UsersList = ({ users, ListEmptyComponent }) => {
   const onPress = (item) => {
     dispatch(
       followUserAction({
-        followingId: item.createdBy.id,
+        followingId: item.id,
         userId: authUser.id,
         token: authUser.token,
       })

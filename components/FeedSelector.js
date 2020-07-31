@@ -104,7 +104,6 @@ const FeedSelector = ({ offsetY }) => {
         { opacity: headerOpacity },
         // { transform: [{ translateY: headerTranslate }], opacity: headerOpacity },
       ]}>
-      {/* <Animated.View style={[styles.wrapper]}> */}
       <View style={styles.container}>
         <Animated.View style={[styles.switcher, { left: position }]} />
         <FeedButton
@@ -122,13 +121,10 @@ const FeedSelector = ({ offsetY }) => {
   )
 }
 
-// FeedSelector.defaultProps = {
-//   offsetY: 0,
-// }
-
-// FeedSelector.propTypes = {
-//   offsetY: PropTypes.number,
-// }
+FeedSelector.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  offsetY: PropTypes.any.isRequired,
+}
 
 const FeedButton = ({ selected, onPress, title }) => {
   const index = useRef(new Animated.Value(0)).current

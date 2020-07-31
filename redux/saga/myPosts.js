@@ -122,6 +122,12 @@ function* onRefreshFeed() {
 }
 
 function* onSetAuthUser() {
+  const authUser = yield select(getAuthUser)
+
+  const id = authUser?.id
+
+  if (!id) return
+
   yield fetchFeed()
 }
 

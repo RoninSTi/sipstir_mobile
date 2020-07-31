@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
@@ -8,6 +9,7 @@ import { Avatar, Button, ActivityIndicator } from 'react-native-paper'
 
 import { useDispatch, useSelector } from 'react-redux'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
+import { StatusBar } from 'expo-status-bar'
 
 import { CREATE_PROFILE, SET_AVATAR, SET_USERNAME } from '../redux/actions/types'
 import { createProfileAction } from '../redux/actions/createProfile'
@@ -143,6 +145,7 @@ const CreateProfile = () => {
 
   return (
     <View>
+      <StatusBar style="dark" />
       <ImageBackground
         source={require('../assets/images/background.png')}
         style={{ width: WIDTH, height: HEIGHT }}>
@@ -198,7 +201,7 @@ const CreateProfile = () => {
             Continue
           </Button>
         </View>
-        <KeyboardSpacer topSpacing={20} />
+        <KeyboardSpacer />
       </ImageBackground>
     </View>
   )

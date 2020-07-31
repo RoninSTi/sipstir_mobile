@@ -24,7 +24,7 @@ const PostButton = () => {
   const allowPost = useSelector((state) => !!(state.createPost.location && state.createPost.image))
 
   const onPress = () => {
-    if (loading) return
+    if (loading || !allowPost) return
 
     dispatch(
       createPostAction({
@@ -40,7 +40,6 @@ const PostButton = () => {
   return (
     <Button
       color="#FFFFFF"
-      disabled={!allowPost}
       labelStyle={{ fontSize: 18, letterSpacing: 0 }}
       loading={loading}
       onPress={onPress}

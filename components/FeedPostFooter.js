@@ -7,12 +7,11 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Button } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { cheersPostAction } from '../redux/actions/post'
-import { ATTEMPT_GUESS, CHEERS_POST } from '../redux/actions/types'
+import { ATTEMPT_GUESS } from '../redux/actions/types'
 
 import BackgroundButton from './BackgroundButton'
+import CheersButton from './CheersButton'
 
 const styles = StyleSheet.create({
   bubble: {
@@ -31,17 +30,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
   },
-  cheersButton: {
-    padding: 0,
-    borderRadius: 20,
-  },
   buttonLabel: {
     fontSize: 15,
     fontWeight: '700',
-    paddingLeft: 8,
-  },
-  cheersLabel: {
-    fontSize: 12,
     paddingLeft: 8,
   },
   cheersText: {
@@ -92,19 +83,11 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
   const { navigate } = useNavigation()
 
-  const isLoading = useSelector((state) => state.ui.isLoading)
-
   const user = useSelector((state) => state.user)
 
-  const authUser = useSelector((state) => state.auth.user)
-
-  const { caption, id: postId, cheers, guesses = [], isCheered, isGuessed } = post
+  const { caption, id: postId, cheers, guesses = [], isGuessed } = post
 
   const isOwner = user.id === post.createdById
-
-  const onPressCheers = () => {
-    dispatch(cheersPostAction({ createdById: user.id, postId, token: authUser.token }))
-  }
 
   const onPressCheersLabel = () => {
     navigate('PostCheers', { postId })
@@ -132,28 +115,7 @@ const FeedPostFooter = ({ detailPath, post }) => {
   return (
     <View>
       <View style={styles.metaContainer}>
-        <Button
-          color="#676767"
-          compact
-          disabled={isLoading.some(
-            (item) => item.loadingType === CHEERS_POST && item.meta === post.id
-          )}
-          icon={() => (
-            <Image
-              source={require('../assets/images/icon_cheers_dark.png')}
-              style={{
-                width: 20,
-                height: 16,
-                tintColor: isCheered ? '#5177FF' : '#676767',
-              }}
-            />
-          )}
-          labelStyle={styles.cheersLabel}
-          onPress={onPressCheers}
-          style={styles.cheersButton}
-          uppercase={false}>
-          Cheers!
-        </Button>
+        <CheersButton post={post} />
         <View style={styles.metaData}>
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
@@ -177,13 +139,13 @@ const FeedPostFooter = ({ detailPath, post }) => {
           </View>
         </View>
       </View>
-      {caption && (
+      {caption ? (
         <View style={{ flexDirection: 'row', paddingBottom: 14, paddingHorizontal: 21 }}>
           <View style={styles.bubble}>
             <Text style={styles.caption}>{caption}</Text>
           </View>
         </View>
-      )}
+      ) : null}
       {showLocation && (
         <View style={styles.locationContainer}>
           <Icon color="#CFCFCF" name="map-marker" size={36} style={{ margin: 0, padding: 0 }} />

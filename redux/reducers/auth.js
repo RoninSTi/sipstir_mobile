@@ -23,7 +23,6 @@ const reducer = (state = initialState, action) => {
     case SET_AUTH_USER:
       return {
         ...state,
-        isLoading: false,
         user: {
           ...state.user,
           ...payload,
@@ -32,6 +31,7 @@ const reducer = (state = initialState, action) => {
     case SET_LOGGED_IN:
       return {
         ...state,
+        isLoading: false,
         isLoggedIn: payload,
       }
     default:
