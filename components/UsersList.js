@@ -96,7 +96,7 @@ const UsersList = ({ users, ListEmptyComponent }) => {
 }
 
 UsersList.propTypes = {
-  ListEmptyComponent: PropTypes.node.isRequired,
+  ListEmptyComponent: PropTypes.element.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,

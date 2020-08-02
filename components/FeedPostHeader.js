@@ -49,9 +49,9 @@ const FeedPostHeader = ({ post }) => {
   const { createdBy } = post
   const { username } = createdBy
 
-  const timeString = post.revealed
-    ? 'Revealed!'
-    : moment().to(moment(post.createdAt).add(12, 'hours'))
+  const createdAt = moment.utc(post.createdAt).local()
+
+  const timeString = post.revealed ? 'Revealed!' : moment().to(createdAt.add(12, 'hours'))
 
   return (
     <View style={styles.container}>

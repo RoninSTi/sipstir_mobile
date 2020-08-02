@@ -79,7 +79,7 @@ const ActivityScreen = ({ navigation }) => {
   const renderItem = ({ item }) => {
     const { createdAt, createdBy, message, onClick } = item
 
-    const description = moment(createdAt).fromNow()
+    const description = moment.utc(createdAt).local().fromNow()
 
     const onPress = () => {
       const { action, payload } = onClick
