@@ -2,7 +2,7 @@
 import { put, select, takeEvery } from 'redux-saga/effects'
 
 import { AsyncStorage } from 'react-native'
-import { LOGOUT, SET_LOADING, UPDATE_LOADING } from '../actions/types'
+import { LOGOUT, SET_LOADING, UPDATE_LOADING, SET_DROPDOWN_DATA } from '../actions/types'
 
 const getLoaders = (state) => state.ui.isLoading
 
@@ -69,6 +69,25 @@ function* checkLoading(action) {
   }
 }
 
+function* onError(action) {
+  const { error } = action
+
+  const title = 'An Error Occurred'
+
+  let message = 'error'
+
+  message = error.response?.data?.message ? error.response.data.message : JSON.stringify(error)
+
+  yield put({
+    type: SET_DROPDOWN_DATA,
+    payload: {
+      alertType: 'error',
+      message,
+      title,
+    },
+  })
+}
+
 function* onUnAuthorized() {
   yield AsyncStorage.removeItem('user')
 
@@ -76,6 +95,7 @@ function* onUnAuthorized() {
 }
 
 export function* watchUI() {
+  yield takeEvery((action) => action.error, onError)
   yield takeEvery((action) => action.error?.response?.data?.statusCode === 401, onUnAuthorized)
   yield takeEvery((action) => action.payload?.setLoading, checkLoading)
   yield takeEvery((action) => action.meta?.previousAction, checkLoading)

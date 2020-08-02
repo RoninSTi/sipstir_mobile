@@ -7,6 +7,7 @@ import * as Permissions from 'expo-permissions'
 
 import {
   ASK_LOCATION_PERMISSION,
+  CAUGHT_ERROR,
   CHECK_LOCATION,
   FETCH_PLACES_SUCCESS,
   SELECT_PLACE,
@@ -75,22 +76,36 @@ function* processPermissionStatus(status) {
 }
 
 function* getLocationPermissionStatus() {
-  const { status } = yield Permissions.getAsync(Permissions.LOCATION)
+  try {
+    const { status } = yield Permissions.getAsync(Permissions.LOCATION)
 
-  yield processPermissionStatus(status)
+    yield processPermissionStatus(status)
+  } catch (error) {
+    yield put({
+      type: CAUGHT_ERROR,
+      error,
+    })
+  }
 }
 
 function* onAskLocationPermission() {
-  const { status } = yield Permissions.askAsync(Permissions.LOCATION)
+  try {
+    const { status } = yield Permissions.askAsync(Permissions.LOCATION)
 
-  yield processPermissionStatus(status)
+    yield processPermissionStatus(status)
 
-  yield AsyncStorage.setItem('PERMISSION_LOCATION', 'asked')
+    yield AsyncStorage.setItem('PERMISSION_LOCATION', 'asked')
 
-  yield put({
-    type: SET_SHOW_LOCATION_MODAL,
-    payload: false,
-  })
+    yield put({
+      type: SET_SHOW_LOCATION_MODAL,
+      payload: false,
+    })
+  } catch (error) {
+    yield put({
+      type: CAUGHT_ERROR,
+      error,
+    })
+  }
 }
 
 function* onCheckLocation(action) {
