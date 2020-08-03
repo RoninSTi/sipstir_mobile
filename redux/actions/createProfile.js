@@ -1,4 +1,4 @@
-import { CHECK_USERNAME, CREATE_PROFILE } from '../actions/types'
+import { CHECK_USERNAME, CREATE_PROFILE } from './types'
 
 export const checkUsernameAction = ({ username, token }) => ({
   type: CHECK_USERNAME,
@@ -7,10 +7,10 @@ export const checkUsernameAction = ({ username, token }) => ({
       method: 'get',
       url: `user/checkusername/${username}`,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  },
 })
 
 export const createProfileAction = ({ userId, token, ...userData }) => ({
@@ -20,11 +20,14 @@ export const createProfileAction = ({ userId, token, ...userData }) => ({
       method: 'put',
       url: `user/${userId}`,
       data: {
-        ...userData
+        ...userData,
       },
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    setLoading: {
+      meta: null,
+    },
+  },
 })

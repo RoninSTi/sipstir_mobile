@@ -29,7 +29,7 @@ class PostList extends Component {
   scrollUp = () => {
     const { posts } = this.props
 
-    if (posts.length > 0) this.listRef.scrollToIndex({ animated: true, index: 0 })
+    if (posts.length > 0) this.listRef.scrollToOffset({ animated: true, offset: 0 })
   }
 
   keyExtractor = (item) => `Post-${item.id}`

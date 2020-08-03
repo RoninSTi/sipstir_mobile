@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 })
 
 const LocationMap = ({ location }) => {
-  const { lat, lng } = location.geometry.location
+  const [lng, lat] = location.geometry.coordinates
 
   const region = {
     latitude: lat,
@@ -40,10 +40,7 @@ const LocationMap = ({ location }) => {
 LocationMap.propTypes = {
   location: PropTypes.shape({
     geometry: PropTypes.shape({
-      location: PropTypes.shape({
-        lat: PropTypes.number,
-        lng: PropTypes.number,
-      }),
+      coordinates: PropTypes.arrayOf(PropTypes.number),
     }),
   }).isRequired,
 }

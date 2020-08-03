@@ -52,7 +52,7 @@ function* fetchPlaces() {
   }
 
   if (currentLocation) {
-    const { latitude, longitude } = this.currentLocation.coords
+    const { latitude, longitude } = currentLocation.coords
 
     params = {
       ...params,
@@ -176,7 +176,7 @@ function* onSetPlacesSearchString(action) {
   }
 
   if (currentLocation) {
-    const { latitude, longitude } = this.currentLocation.coords
+    const { latitude, longitude } = currentLocation.coords
 
     params = {
       ...params,

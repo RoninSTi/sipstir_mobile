@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, Text, View } from 'react-native'
+import { Button } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import LocationMap from './LocationMap';
+import LocationMap from './LocationMap'
 
 const styles = StyleSheet.create({
   container: {
@@ -45,14 +46,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.05)',
   },
-});
+})
 
 const AddCommentHeader = ({ selectedPlace }) => {
-  const { goBack } = useNavigation();
+  const { goBack } = useNavigation()
 
   const onPress = () => {
-    goBack();
-  };
+    goBack()
+  }
 
   return (
     <View style={styles.wrapper}>
@@ -88,7 +89,14 @@ const AddCommentHeader = ({ selectedPlace }) => {
         </View>
       )}
     </View>
-  );
-};
+  )
+}
 
-export default AddCommentHeader;
+AddCommentHeader.propTypes = {
+  selectedPlace: PropTypes.shape({
+    name: PropTypes.string,
+    vicinity: PropTypes.string,
+  }).isRequired,
+}
+
+export default AddCommentHeader

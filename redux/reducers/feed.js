@@ -6,8 +6,9 @@ const initialState = {
   page: 1,
   pageSize: 100,
   posts: {
-    main: [],
     following: [],
+    main: [],
+    nearby: [],
   },
 }
 

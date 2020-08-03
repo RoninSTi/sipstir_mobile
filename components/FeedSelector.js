@@ -10,11 +10,11 @@ const { width } = Dimensions.get('window')
 
 const METRICS = {
   buttonHeight: 54,
-  buttonWidth: (width - 28) / 2,
+  buttonWidth: (width - 28) / 3,
   containerHeight: 55,
   containerWidth: width - 28,
   containerBorderRadius: 55 / 2,
-  sliderWidth: (width - 30) / 2,
+  sliderWidth: (width - 30) / 3,
 }
 
 const styles = StyleSheet.create({
@@ -32,8 +32,6 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#D2CAC9',
-    borderRadius: METRICS.containerBorderRadius,
     flexDirection: 'row',
     height: 55,
     justifyContent: 'center',
@@ -42,19 +40,19 @@ const styles = StyleSheet.create({
   switcher: {
     alignItems: 'center',
     backgroundColor: 'rgba(231, 73, 62, 0.98)',
-    borderRadius: 53 / 2,
+    borderRadius: 40 / 2,
     flexDirection: 'row',
-    height: 53,
+    height: 40,
     justifyContent: 'center',
-    left: 1,
+    left: 0,
     position: 'absolute',
     width: METRICS.sliderWidth,
-    top: 1,
+    top: 7.5,
   },
   wrapper: {
     alignItems: 'center',
+    backgroundColor: '#D2CAC9',
     justifyContent: 'center',
-    paddingVertical: 14,
   },
 })
 
@@ -82,14 +80,27 @@ const FeedSelector = ({ offsetY }) => {
   })
 
   const position = index.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 1 + METRICS.sliderWidth],
+    inputRange: [0, 1, 2],
+    outputRange: [0, METRICS.sliderWidth, 2 * METRICS.sliderWidth],
   })
 
   const handleOnPress = (idx) => {
     setSelectedIndex(idx)
 
-    dispatch({ type: SET_FEED_TYPE, payload: idx === 0 ? 'main' : 'following' })
+    let feedType = 'main'
+
+    switch (idx) {
+      case 1:
+        feedType = 'following'
+        break
+      case 2:
+        feedType = 'nearby'
+        break
+      default:
+        break
+    }
+
+    dispatch({ type: SET_FEED_TYPE, payload: feedType })
 
     Animated.spring(index, {
       toValue: idx,
@@ -105,12 +116,17 @@ const FeedSelector = ({ offsetY }) => {
         <FeedButton
           selected={selectedIndex === 0}
           onPress={() => handleOnPress(0)}
-          title="Global"
+          title="Everyone"
         />
         <FeedButton
           selected={selectedIndex === 1}
           onPress={() => handleOnPress(1)}
-          title="Following"
+          title="Friends"
+        />
+        <FeedButton
+          selected={selectedIndex === 2}
+          onPress={() => handleOnPress(2)}
+          title="Nearby"
         />
       </View>
     </Animated.View>

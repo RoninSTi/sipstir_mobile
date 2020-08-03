@@ -2,6 +2,7 @@
 import { put, takeEvery, select } from 'redux-saga/effects'
 
 import {
+  CHECK_LOCATION,
   CHEERS_POST_SUCCESS,
   CREATE_COMMENT_SUCCESS,
   CREATE_GUESS_SUCCESS,
@@ -11,11 +12,14 @@ import {
   SET_AUTH_USER,
   SET_POSTS,
   CREATE_POST_SUCCESS,
+  SET_CURRENT_LOCATION,
   SET_FEED_TYPE,
 } from '../actions/types'
 import { fetchFeedAction } from '../actions/feed'
 
 const getAuthUser = (state) => state.auth.user
+
+const getCurrentLocation = (state) => state.places.currentLocation
 
 const getPosts = (state) => state.feed.posts[state.feed.feedType]
 
@@ -30,7 +34,22 @@ function* fetchFeed() {
 
   if (!userId) return
 
-  const feedParams = yield select(getFeedParams)
+  let feedParams = yield select(getFeedParams)
+
+  const { feedType } = feedParams
+
+  if (feedType === 'nearby') {
+    const currentLocation = yield select(getCurrentLocation)
+
+    const { latitude: lat, longitude: lng } = currentLocation.coords
+
+    feedParams = {
+      ...feedParams,
+      lat,
+      lng,
+      radius: 40000,
+    }
+  }
 
   yield put(fetchFeedAction({ ...feedParams, token, userId }))
 }
@@ -110,7 +129,13 @@ function* onFetchSinglePostSuccess(action) {
 }
 
 function* onRefreshFeed() {
-  yield fetchFeed()
+  const { feedType } = yield select(getFeedParams)
+
+  if (feedType === 'nearby') {
+    yield put({ type: CHECK_LOCATION, payload: {} })
+  } else {
+    yield fetchFeed()
+  }
 }
 
 function* onSetAuthUser() {
@@ -123,8 +148,18 @@ function* onSetAuthUser() {
   yield fetchFeed()
 }
 
-function* onSetFeedType() {
+function* onSetCurrentLocation() {
   yield fetchFeed()
+}
+
+function* onSetFeedType(action) {
+  const { payload: feedType } = action
+
+  if (feedType === 'nearby') {
+    yield put({ type: CHECK_LOCATION, payload: {} })
+  } else {
+    yield fetchFeed()
+  }
 }
 
 export function* watchFeed() {
@@ -136,5 +171,6 @@ export function* watchFeed() {
   yield takeEvery(FETCH_SINGLE_POST_SUCCESS, onFetchSinglePostSuccess)
   yield takeEvery(REFRESH_FEED, onRefreshFeed)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)
+  yield takeEvery(SET_CURRENT_LOCATION, onSetCurrentLocation)
   yield takeEvery(SET_FEED_TYPE, onSetFeedType)
 }

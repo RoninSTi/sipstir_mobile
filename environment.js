@@ -14,7 +14,7 @@ const ENV = {
     reduxLoggerEnabled: false,
   },
   dev: {
-    apiUrl: 'https://pure-temple-78419.herokuapp.com/',
+    apiUrl: 'http://localhost:8080/',
     auth0: {
       audience: 'https://api.barsnap.com',
       clientId: '22GIQsEFlXvQluSJ0exktX2wdX66LMKb',

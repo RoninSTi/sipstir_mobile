@@ -1,4 +1,10 @@
-import { FETCH_PLACE_SUCCESS, LOGOUT, SET_PLACES, SET_SHOW_LOCATION_MODAL } from '../actions/types'
+import {
+  FETCH_PLACE_SUCCESS,
+  LOGOUT,
+  SET_CURRENT_LOCATION,
+  SET_PLACES,
+  SET_SHOW_LOCATION_MODAL,
+} from '../actions/types'
 
 const initialState = {
   currentLocation: null,
@@ -15,6 +21,11 @@ const reducer = (state = initialState, action) => {
     case FETCH_PLACE_SUCCESS:
       return {
         ...initialState,
+      }
+    case SET_CURRENT_LOCATION:
+      return {
+        ...initialState,
+        currentLocation: payload,
       }
     case SET_PLACES: {
       return {
