@@ -29,7 +29,7 @@ const Followers = () => {
 
   return (
     <View style={styles.container}>
-      <UsersList users={users || []} ListEmptyComponent={ListEmptyComponent} />
+      <UsersList users={users || []} ListEmptyComponent={() => <ListEmptyComponent />} />
     </View>
   )
 }

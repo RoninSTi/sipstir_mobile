@@ -95,7 +95,7 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
   const showGuess = !post.revealed && !isOwner && !isGuessed
 
-  const showLocation = post.revealed || isGuessed || user.id === post.createdById
+  const showLocation = post.revealed
 
   // const showGuess = true
 

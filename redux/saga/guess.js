@@ -22,7 +22,9 @@ function onAttemptGuess(action) {
 }
 
 function onCreateGuessSuccess(action) {
-  const { data: post } = action.payload
+  const { data: response } = action.payload
+
+  const { post, reward } = response
 
   navigate('Main', {
     screen: 'Root',
@@ -33,6 +35,7 @@ function onCreateGuessSuccess(action) {
         params: {
           postId: post.id,
           showPointsModal: true,
+          reward,
         },
       },
     },

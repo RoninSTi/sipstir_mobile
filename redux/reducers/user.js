@@ -1,9 +1,7 @@
 import {
   CREATE_PROFILE_SUCCESS,
-  CREATE_USER_SUCCESS,
   FETCH_MY_USER_SUCCESS,
   FOLLOW_USER_SUCCESS,
-  GET_USER_BY_EMAIL_SUCCESS,
   LOGOUT,
   REFRESH_USER,
   UPDATE_USER_SUCCESS,
@@ -27,10 +25,8 @@ const reducer = (state = initialState, action) => {
 
   switch (type) {
     case CREATE_PROFILE_SUCCESS:
-    case CREATE_USER_SUCCESS:
     case FETCH_MY_USER_SUCCESS:
     case FOLLOW_USER_SUCCESS:
-    case GET_USER_BY_EMAIL_SUCCESS:
     case UPDATE_USER_SUCCESS:
       return {
         ...state,

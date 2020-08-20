@@ -2,6 +2,7 @@ import {
   FETCH_PLACE_SUCCESS,
   LOGOUT,
   SET_CURRENT_LOCATION,
+  SET_INCLUDE_NO_IDEA,
   SET_PLACES,
   SET_SHOW_LOCATION_MODAL,
 } from '../actions/types'
@@ -24,8 +25,13 @@ const reducer = (state = initialState, action) => {
       }
     case SET_CURRENT_LOCATION:
       return {
-        ...initialState,
+        ...state,
         currentLocation: payload,
+      }
+    case SET_INCLUDE_NO_IDEA:
+      return {
+        ...state,
+        includeNoIdea: payload,
       }
     case SET_PLACES: {
       return {

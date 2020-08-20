@@ -14,6 +14,7 @@ import { REFRESH_DETAIL } from '../redux/actions/types'
 
 import GuessList from '../components/GuessList'
 import PointsModal from '../components/PointsModal'
+import PointsRewardModal from '../components/PointsRewardModal'
 import Post from '../components/Post'
 
 const PostDetail = ({ navigation }) => {
@@ -24,6 +25,8 @@ const PostDetail = ({ navigation }) => {
   const postId = route.params?.postId
 
   const showPointsModal = route.params?.showPointsModal
+
+  const reward = route.params?.reward
 
   const post = useSelector((state) =>
     state.feed.posts[state.feed.feedType].find((p) => p.id === postId)
@@ -66,7 +69,11 @@ const PostDetail = ({ navigation }) => {
       <Post isDetail post={post} />
       <GuessList guesses={post.guesses} />
       <Portal>
-        <PointsModal isVisible={showPointsModal} post={post} />
+        {reward ? (
+          <PointsRewardModal isVisible={showPointsModal} post={post} reward={reward} />
+        ) : (
+          <PointsModal isVisible={showPointsModal} post={post} />
+        )}
       </Portal>
     </KeyboardAwareScrollView>
   )

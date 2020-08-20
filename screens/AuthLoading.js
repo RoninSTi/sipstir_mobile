@@ -23,13 +23,14 @@ const AuthLoadingScreen = () => {
     const userData = await AsyncStorage.getItem('user')
 
     if (userData) {
-      const { avatar, email, token, username } = JSON.parse(userData)
+      const { avatar, email, id, token, username } = JSON.parse(userData)
 
       dispatch({
         type: SET_AUTH_USER,
         payload: {
           avatar,
           email,
+          id,
           token,
           username,
         },

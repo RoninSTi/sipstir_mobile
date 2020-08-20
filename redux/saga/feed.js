@@ -93,7 +93,7 @@ function* onCreateCommentSuccess(action) {
 }
 
 function* onCreateGuessSuccess(action) {
-  const { data: post } = action.payload
+  const { post } = action.payload.data
 
   yield replacePost(post)
 }
