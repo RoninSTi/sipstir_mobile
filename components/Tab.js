@@ -6,20 +6,6 @@ import { Animated, TouchableOpacity, View } from 'react-native'
 
 const Tab = ({ focusAnim, routeKey, onPress }) => {
   const icon = () => {
-    if (routeKey.startsWith('Activity'))
-      return (
-        <Animated.Image
-          style={{
-            width: 32,
-            height: 28,
-            tintColor: focusAnim.interpolate({
-              inputRange: [0, 1],
-              outputRange: ['rgba(255, 255, 255, 0.6)', '#FFFFFF'],
-            }),
-          }}
-          source={require('../assets/images/tab_icon_activity.png')}
-        />
-      )
     if (routeKey.startsWith('Feed'))
       return (
         <Animated.Image
@@ -61,6 +47,21 @@ const Tab = ({ focusAnim, routeKey, onPress }) => {
             }),
           }}
           source={require('../assets/images/tab_icon_profile.png')}
+        />
+      )
+
+    if (routeKey.startsWith('Rewards'))
+      return (
+        <Animated.Image
+          style={{
+            width: 35,
+            height: 30,
+            tintColor: focusAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: ['rgba(255, 255, 255, 0.6)', '#FFFFFF'],
+            }),
+          }}
+          source={require('../assets/images/tab_icon_rewards.png')}
         />
       )
 

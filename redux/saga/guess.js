@@ -31,10 +31,9 @@ function onCreateGuessSuccess(action) {
     params: {
       screen: 'FeedStack',
       params: {
-        screen: 'Detail',
+        screen: 'GuessInterstitial',
         params: {
           postId: post.id,
-          showPointsModal: true,
           reward,
         },
       },

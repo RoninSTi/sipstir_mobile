@@ -1,7 +1,5 @@
 /* eslint-disable global-require */
-import React, { useEffect, useRef } from 'react'
-
-import { useRoute } from '@react-navigation/native'
+import React, { useRef } from 'react'
 
 import { Animated, StyleSheet, View } from 'react-native'
 
@@ -24,29 +22,13 @@ const styles = StyleSheet.create({
 const FeedScreen = () => {
   const dispatch = useDispatch()
 
-  const postListRef = useRef(null)
-
   const offsetRef = useRef(new Animated.Value(0)).current
-
-  const route = useRoute()
 
   const isLoading = useSelector((state) => state.ui.isLoading)
 
   const isRefreshing = useSelector((state) => state.feed.isRefreshing)
 
   const posts = useSelector((state) => state.feed.posts[state.feed.feedType])
-
-  const action = route.params?.action
-
-  useEffect(() => {
-    switch (action) {
-      case 'scrollUp':
-        postListRef.current?.scrollUp()
-        break
-      default:
-        break
-    }
-  }, [action])
 
   const onRefresh = () => {
     dispatch({ type: REFRESH_FEED })
@@ -71,7 +53,6 @@ const FeedScreen = () => {
             { useNativeDriver: true } // <-- Add this
           )}
           posts={posts}
-          ref={postListRef}
           refreshing={isRefreshing}
         />
       </ScreenLoader>

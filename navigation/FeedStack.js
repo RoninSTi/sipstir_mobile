@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import DetailScreen from '../screens/PostDetail'
 import FeedScreen from '../screens/Feed'
+import GuessInterstitialScreen from '../screens/GuessInterstitial'
 import PostCheersScreen from '../screens/PostCheers'
 
 import BackgroundHeader from '../components/BackgroundHeader'
@@ -35,6 +36,13 @@ const FeedStack = () => {
         }}
       />
       <Stack.Screen component={DetailScreen} name="Detail" />
+      <Stack.Screen
+        component={GuessInterstitialScreen}
+        name="GuessInterstitial"
+        options={{
+          headerLeft: () => null,
+        }}
+      />
       <Stack.Screen
         component={PostCheersScreen}
         name="PostCheers"

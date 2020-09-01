@@ -11,6 +11,7 @@ import {
   REFRESH_DETAIL,
   SET_POST_LOCATION,
   SET_SHOW_NOTIFICATION_MODAL,
+  SET_SHOULD_SCROLL_UP,
 } from '../actions/types'
 import { fetchSinglePostAction } from '../actions/post'
 
@@ -64,11 +65,13 @@ function* onCreatePostSuccess() {
       screen: 'FeedStack',
       params: {
         screen: 'Feed',
-        params: {
-          action: 'scrollUp',
-        },
       },
     },
+  })
+
+  yield put({
+    type: SET_SHOULD_SCROLL_UP,
+    payload: true,
   })
 }
 

@@ -9,6 +9,7 @@ import { watchLeaderboard } from './leaderboard'
 import { watchMyPosts } from './myPosts'
 import { watchPlaces } from './places'
 import { watchPost } from './post'
+import watchRewards from './rewards'
 import { watchUI } from './ui'
 import { watchUser } from './user'
 
@@ -23,6 +24,7 @@ export default function* rootSaga() {
     watchMyPosts(),
     watchPlaces(),
     watchPost(),
+    watchRewards(),
     watchUI(),
     watchUser(),
   ])

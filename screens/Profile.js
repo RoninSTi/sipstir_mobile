@@ -63,6 +63,19 @@ const ProfileScreen = ({ navigation }) => {
       name: 'buttons',
       data: [
         {
+          onPress: () => navigate('Activity'),
+          title: 'Activity',
+          type: 'button',
+          right: (props) => (
+            <List.Icon
+              {...props}
+              color="#000000"
+              icon="chevron-right"
+              style={{ marginHorizontal: 0, height: 24 }}
+            />
+          ),
+        },
+        {
           onPress: () => navigate('Following'),
           title: 'Following',
           type: 'button',

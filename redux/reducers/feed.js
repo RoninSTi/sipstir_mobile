@@ -1,4 +1,10 @@
-import { LOGOUT, REFRESH_FEED, SET_FEED_TYPE, SET_POSTS } from '../actions/types'
+import {
+  LOGOUT,
+  REFRESH_FEED,
+  SET_FEED_TYPE,
+  SET_POSTS,
+  SET_SHOULD_SCROLL_UP,
+} from '../actions/types'
 
 const initialState = {
   isRefreshing: false,
@@ -10,6 +16,7 @@ const initialState = {
     main: [],
     nearby: [],
   },
+  shouldScrollUp: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -39,6 +46,11 @@ const reducer = (state = initialState, action) => {
           ...state.posts,
           [state.feedType]: payload,
         },
+      }
+    case SET_SHOULD_SCROLL_UP:
+      return {
+        ...state,
+        shouldScrollUp: payload,
       }
     default:
       return {

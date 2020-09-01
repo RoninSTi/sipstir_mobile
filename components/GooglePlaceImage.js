@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
 })
 
 const GooglePlaceImage = ({ containerStyle, image }) => {
+  if (!image) return null
+
   const { photoReference } = image
 
   const uri = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&maxheight=100&key=${API_KEY}`
@@ -28,13 +30,14 @@ const GooglePlaceImage = ({ containerStyle, image }) => {
 
 GooglePlaceImage.defaultProps = {
   containerStyle: {},
+  image: null,
 }
 
 GooglePlaceImage.propTypes = {
   containerStyle: ViewPropTypes.style,
   image: PropTypes.shape({
     photoReference: PropTypes.string,
-  }).isRequired,
+  }),
 }
 
 export default GooglePlaceImage

@@ -10,6 +10,7 @@ import {
   CAUGHT_ERROR,
   CHECK_LOCATION,
   FETCH_PLACES_SUCCESS,
+  NO_LOCATION,
   SELECT_PLACE,
   SET_ASKED_LOCATION_PERMISSION,
   SET_CURRENT_LOCATION,
@@ -71,6 +72,7 @@ function* processPermissionStatus(status) {
     case 'granted':
       return yield fetchCurrentLocation()
     default:
+      yield put({ type: NO_LOCATION })
       return yield fetchPlaces()
   }
 }

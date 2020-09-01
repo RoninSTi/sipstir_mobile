@@ -3,29 +3,36 @@ import PropTypes from 'prop-types'
 
 import { Animated, View, Platform } from 'react-native'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { SET_SHOULD_SCROLL_UP } from '../redux/actions/types'
+
 import CreatePostButton from './CreatePostButton'
 import Tab from './Tab'
 
 const TabBar = ({ descriptors, navigation, state }) => {
-  // const { setShouldScrollUp } = feedStore;
+  const dispatch = useDispatch()
 
-  // const index = useNavigationState(state => state.index);
-
-  // const routes = useNavigationState(state => state.routes)
-
-  // const state = useNavigationState(state => state)
+  const currentRouteName = useSelector((reduxState) => reduxState.nav.currentRouteName)
 
   const position = new Animated.Value(state.index)
 
   const onPress = (key) => {
-    const { navigate } = navigation
+    const { navigate, popToTop } = navigation
 
     if (key.startsWith('Activity')) {
-      navigate('Activity')
+      if (currentRouteName === 'ActivityPostDetail') {
+        popToTop()
+      } else {
+        navigate('Activity')
+      }
     }
 
     if (key.startsWith('Feed')) {
-      navigate('Feed')
+      if (currentRouteName === 'Feed') {
+        dispatch({ type: SET_SHOULD_SCROLL_UP, payload: true })
+      } else {
+        navigate('Feed')
+      }
     }
 
     if (key.startsWith('Leaderboard')) {
@@ -33,39 +40,27 @@ const TabBar = ({ descriptors, navigation, state }) => {
     }
 
     if (key.startsWith('Profile')) {
-      navigate('Profile')
+      switch (currentRouteName) {
+        case 'Following':
+        case 'ActivityScreen':
+        case 'Followers':
+        case 'MyFeedScreen':
+        case 'ActivityPostDetail':
+        case 'MyFeedDetail':
+          popToTop()
+          break
+        default:
+          navigate('Profile')
+      }
     }
 
-    // const feedRoute = navigation.state.routes.find(route => route.routeName === 'FeedStack');
-
-    // const activityRoute = navigation.state.routes.find(
-    //   route => route.routeName === 'ActivityStack'
-    // );
-
-    // switch (routeName) {
-    //   case 'FeedStack':
-    //     if (feedRoute.index > 0) {
-    //       popToTop();
-    //       break;
-    //     }
-
-    //     if (navigation.state.index === 0) {
-    //       setShouldScrollUp(true);
-    //     }
-
-    //     navigate(routeName);
-    //     break;
-    //   case 'ActivityStack':
-    //     if (activityRoute.index > 0) {
-    //       popToTop();
-    //       break;
-    //     }
-    //     navigate(routeName);
-    //     break;
-    //   default:
-    //     navigate(routeName);
-    //     break;
-    // }
+    if (key.startsWith('Rewards')) {
+      if (currentRouteName === 'RewardDetailScreen') {
+        popToTop()
+      } else {
+        navigate('Rewards')
+      }
+    }
   }
 
   const paddingBottom = Platform.select({
@@ -117,7 +112,9 @@ const TabBar = ({ descriptors, navigation, state }) => {
 TabBar.propTypes = {
   descriptors: PropTypes.shape({}).isRequired,
   navigation: PropTypes.shape({
+    goBack: PropTypes.func,
     navigate: PropTypes.func,
+    popToTop: PropTypes.func,
   }).isRequired,
   state: PropTypes.shape({
     index: PropTypes.number,

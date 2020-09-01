@@ -3,7 +3,6 @@ import React, { useEffect, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { RefreshControl } from 'react-native'
-import { Portal } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { useRoute } from '@react-navigation/native'
@@ -13,8 +12,6 @@ import { fetchSinglePostAction } from '../redux/actions/post'
 import { REFRESH_DETAIL } from '../redux/actions/types'
 
 import GuessList from '../components/GuessList'
-import PointsModal from '../components/PointsModal'
-import PointsRewardModal from '../components/PointsRewardModal'
 import Post from '../components/Post'
 
 const PostDetail = ({ navigation }) => {
@@ -23,10 +20,6 @@ const PostDetail = ({ navigation }) => {
   const route = useRoute()
 
   const postId = route.params?.postId
-
-  const showPointsModal = route.params?.showPointsModal
-
-  const reward = route.params?.reward
 
   const post = useSelector((state) =>
     state.feed.posts[state.feed.feedType].find((p) => p.id === postId)
@@ -68,13 +61,6 @@ const PostDetail = ({ navigation }) => {
       style={{ backgroundColor: '#E8E8E8' }}>
       <Post isDetail post={post} />
       <GuessList guesses={post.guesses} />
-      <Portal>
-        {reward ? (
-          <PointsRewardModal isVisible={showPointsModal} post={post} reward={reward} />
-        ) : (
-          <PointsModal isVisible={showPointsModal} post={post} />
-        )}
-      </Portal>
     </KeyboardAwareScrollView>
   )
 }

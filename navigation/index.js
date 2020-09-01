@@ -2,7 +2,9 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack'
 import * as React from 'react'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { SET_CURRENT_ROUTE_NAME } from '../redux/actions/types'
+
 import BottomTabNavigator from './BottomTabNavigator'
 import CreateStack from './CreateStack'
 import GuessStack from './GuessStack'
@@ -17,11 +19,25 @@ import { navigationRef, isReadyRef } from './rootNavigation'
 
 // eslint-disable-next-line react/prop-types
 export default function Navigation({ colorScheme }) {
+  const dispatch = useDispatch()
+
+  const routeNameRef = React.useRef()
+
   return (
     <NavigationContainer
       ref={navigationRef}
       onReady={() => {
         isReadyRef.current = true
+      }}
+      onStateChange={() => {
+        const previousRouteName = routeNameRef.current
+        const currentRouteName = navigationRef.current.getCurrentRoute().name
+
+        if (previousRouteName !== currentRouteName) {
+          dispatch({ type: SET_CURRENT_ROUTE_NAME, payload: currentRouteName })
+        }
+
+        routeNameRef.current = currentRouteName
       }}
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
