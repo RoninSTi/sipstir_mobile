@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "BarSnap",
-    "slug": "barsnap-mobile",
-    "scheme": "barsnap",
+    "name": "SipStir",
+    "slug": "sipstir-mobile",
+    "scheme": "sipstir",
     "version": "1.2.18",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -24,12 +24,12 @@
           "apiKey": "AIzaSyDx6FH8-_uPJuRzYqgWEUFoI9v0fVWUYQo"
         }
       },
-      "package": "com.barsnap.barsnap",
+      "package": "com.sipstir.sipstir",
       "versionCode": 28
     },
     "ios": {
-      "buildNumber": "1.2.18",
-      "bundleIdentifier": "com.barsnap.barsnap",
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.sipstir.sipstir",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -41,14 +41,14 @@
     },
     "facebookScheme": "fb2451578761628671",
     "facebookAppId": "2451578761628671",
-    "facebookDisplayName": "BarSnap",
+    "facebookDisplayName": "SipStir",
     "hooks": {
       "postPublish": [
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "barsnap",
-            "project": "barsnap",
+            "organization": "sipstir",
+            "project": "stipstir",
             "authToken": "9215769ed85243a888d2f8b5d1b4cbeb74a19bd69fbc44cc9db47e52927b051c"
           }
         }
