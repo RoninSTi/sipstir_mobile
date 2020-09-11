@@ -30,15 +30,15 @@ const styles = StyleSheet.create({
 })
 
 const RewardsItem = ({ reward }) => {
-  const { account, id } = reward
+  const { account } = reward
   const { image, location, name } = account
   const { photo, vicinity } = location
 
   const { navigate } = useNavigation()
 
   const onPress = () => {
-    navigate('RewardDetailScreen', {
-      rewardId: id,
+    navigate('BusinessDetailScreen', {
+      rewardId: reward.id,
     })
   }
 
@@ -76,6 +76,7 @@ const RewardsItem = ({ reward }) => {
 RewardsItem.propTypes = {
   reward: PropTypes.shape({
     account: PropTypes.shape({
+      id: PropTypes.number,
       image: PropTypes.string,
       location: PropTypes.shape({
         photo: PropTypes.shape({}),
