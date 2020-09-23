@@ -55,11 +55,7 @@ const TabBar = ({ descriptors, navigation, state }) => {
     }
 
     if (key.startsWith('Rewards')) {
-      if (currentRouteName === 'RewardDetailScreen') {
-        popToTop()
-      } else {
-        navigate('Rewards')
-      }
+      navigate('Rewards')
     }
   }
 

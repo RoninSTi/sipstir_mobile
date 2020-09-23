@@ -37,7 +37,7 @@ const PostDetail = ({ navigation }) => {
 
   useLayoutEffect(() => {
     if (post) {
-      navigation.setOptions({ title: `${post?.createdBy.username}'s BarSnap` })
+      navigation.setOptions({ title: `${post?.createdBy.username}'s Post` })
     }
   }, [navigation, post])
 

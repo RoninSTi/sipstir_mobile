@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { SET_CURRENT_ROUTE_NAME } from '../redux/actions/types'
 
 import BottomTabNavigator from './BottomTabNavigator'
+import BusinessDetailStack from './BusinessDetailStack'
 import CreateStack from './CreateStack'
 import GuessStack from './GuessStack'
 import LinkingConfiguration from './LinkingConfiguration'
@@ -83,6 +84,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator mode="modal" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Main" component={MainNavigator} />
+      <Stack.Screen name="Business" component={BusinessDetailStack} />
       <Stack.Screen name="Create" component={CreateStack} />
       <Stack.Screen name="Guess" component={GuessStack} />
       <Stack.Screen name="Zoom" component={ZoomedImageScreen} />

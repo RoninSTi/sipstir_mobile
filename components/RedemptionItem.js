@@ -3,6 +3,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import moment from 'moment'
+
 import { Image, StyleSheet } from 'react-native'
 import { List } from 'react-native-paper'
 
@@ -29,10 +31,11 @@ const styles = StyleSheet.create({
   },
 })
 
-const RewardsItem = ({ reward }) => {
-  const { account } = reward
+const RedemptionItem = ({ redemption }) => {
+  const { createdAt, reward } = redemption
+  const { account, title } = reward
   const { image, location, name } = account
-  const { photo, vicinity } = location
+  const { photo } = location
 
   const { navigate } = useNavigation()
 
@@ -47,7 +50,7 @@ const RewardsItem = ({ reward }) => {
 
   return (
     <List.Item
-      description={vicinity}
+      description={moment(createdAt).fromNow()}
       descriptionStyle={styles.description}
       left={() =>
         image ? (
@@ -56,7 +59,7 @@ const RewardsItem = ({ reward }) => {
             style={{ height: 60, marginHorizontal: 8, width: 60 }}
           />
         ) : (
-          <GooglePlaceImage image={photo} height={60} style={{ marginHorizontal: 0 }} />
+          <GooglePlaceImage image={photo} height={60} containerStyle={{ marginHorizontal: 0 }} />
         )
       }
       onPress={onPress}
@@ -69,26 +72,30 @@ const RewardsItem = ({ reward }) => {
         />
       )}
       style={styles.listItem}
-      title={name}
+      title={`${name} - ${title}`}
       titleNumberOfLines={2}
       titleStyle={styles.title}
     />
   )
 }
 
-RewardsItem.propTypes = {
-  reward: PropTypes.shape({
-    account: PropTypes.shape({
-      id: PropTypes.number,
-      image: PropTypes.string,
-      location: PropTypes.shape({
-        photo: PropTypes.shape({}),
-        vicinity: PropTypes.string,
+RedemptionItem.propTypes = {
+  redemption: PropTypes.shape({
+    createdAt: PropTypes.string,
+    reward: PropTypes.shape({
+      account: PropTypes.shape({
+        id: PropTypes.number,
+        image: PropTypes.string,
+        location: PropTypes.shape({
+          photo: PropTypes.shape({}),
+          vicinity: PropTypes.string,
+        }),
+        name: PropTypes.string,
       }),
-      name: PropTypes.string,
+      id: PropTypes.number,
+      title: PropTypes.string,
     }),
-    id: PropTypes.number,
   }).isRequired,
 }
 
-export default RewardsItem
+export default RedemptionItem

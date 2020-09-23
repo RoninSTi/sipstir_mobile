@@ -46,7 +46,7 @@ function* onAttemptLogin() {
     },
   })
 
-  yield Facebook.initializeAsync('2451578761628671')
+  yield Facebook.initializeAsync('358673965266057')
 
   const { token } = yield Facebook.logInWithReadPermissionsAsync({
     permissions: ['public_profile, email'],

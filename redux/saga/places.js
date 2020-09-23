@@ -9,17 +9,22 @@ import {
   ASK_LOCATION_PERMISSION,
   CAUGHT_ERROR,
   CHECK_LOCATION,
+  FETCH_LOCATION_DETAILS_SUCCESS,
+  FETCH_FEED_SUCCESS,
   FETCH_PLACES_SUCCESS,
   NO_LOCATION,
   SELECT_PLACE,
   SET_ASKED_LOCATION_PERMISSION,
   SET_CURRENT_LOCATION,
   SET_INCLUDE_NO_IDEA,
+  SET_LOCATION_POSTS,
   SET_PLACES_SEARCH_STRING,
   SET_PLACES,
   SET_SHOW_LOCATION_MODAL,
 } from '../actions/types'
 import { fetchPlaceAction, fetchPlacesAction } from '../actions/places'
+
+import { navigate } from '../../navigation/rootNavigation'
 
 import env from '../../environment'
 
@@ -127,6 +132,47 @@ function* onCheckLocation(action) {
   }
 }
 
+function* onFetchFeedSuccess(action) {
+  const { url } = action.meta.previousAction.payload.request
+
+  const parts = url.split('/')
+
+  const isLocationFeed = parts[1] === 'location'
+
+  if (!isLocationFeed) return
+
+  const { data: posts } = action.payload
+
+  yield put({
+    type: SET_LOCATION_POSTS,
+    payload: posts,
+  })
+}
+
+function onFetchLocationDetailsSuccess(action) {
+  const { location, reward } = action.payload.data
+
+  if (reward) {
+    navigate('Business', {
+      screen: 'BusinessDetailScreen',
+      params: {
+        reward,
+      },
+    })
+
+    return
+  }
+
+  if (location) {
+    navigate('Business', {
+      screen: 'LocationDetailScreen',
+      params: {
+        location,
+      },
+    })
+  }
+}
+
 function* onFetchPlacesSuccess(action) {
   const { meta, payload } = action
 
@@ -195,6 +241,8 @@ function* onSetPlacesSearchString(action) {
 export function* watchPlaces() {
   yield takeEvery(ASK_LOCATION_PERMISSION, onAskLocationPermission)
   yield takeEvery(CHECK_LOCATION, onCheckLocation)
+  yield takeEvery(FETCH_FEED_SUCCESS, onFetchFeedSuccess)
+  yield takeEvery(FETCH_LOCATION_DETAILS_SUCCESS, onFetchLocationDetailsSuccess)
   yield takeEvery(FETCH_PLACES_SUCCESS, onFetchPlacesSuccess)
   yield takeEvery(SELECT_PLACE, onSelectPlace)
   yield takeEvery(SET_ASKED_LOCATION_PERMISSION, onSetAskedLocationPermission)

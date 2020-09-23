@@ -192,9 +192,15 @@ const ProfileHeader = () => {
           </Text>
         </View>
         <View style={styles.statContainer}>
+          <Text style={styles.statTitle}>{user.pointsBalance}</Text>
+          <Text adjustsFontSizeToFit numberOfLines={1} style={styles.statLabel}>
+            BALANCE
+          </Text>
+        </View>
+        <View style={styles.statContainer}>
           <Text style={styles.statTitle}>{myPosts.length}</Text>
           <Text adjustsFontSizeToFit numberOfLines={1} style={styles.statLabel}>
-            BARSNAPS
+            {`POST${myPosts.length === 1 ? '' : 'S'}`}
           </Text>
         </View>
       </View>

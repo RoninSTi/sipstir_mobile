@@ -1,7 +1,8 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { ImageBackground, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import { ImageBackground, StyleSheet, TouchableOpacity, Text, ViewPropTypes } from 'react-native'
+import { ActivityIndicator } from 'react-native-paper'
 
 const styles = StyleSheet.create({
   background: {
@@ -11,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 40,
     justifyContent: 'center',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   container: {
     borderRadius: 20,
@@ -29,20 +30,50 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
-});
+})
 
-const BackgroundButton = ({ containerStyle, icon, isLoading, onPress, source, title }) => {
-  const showIcon = icon && !isLoading;
+const BackgroundButton = ({
+  containerStyle,
+  disabled,
+  icon,
+  isLoading,
+  onPress,
+  source,
+  title,
+}) => {
+  const showIcon = icon && !isLoading
 
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container, containerStyle]}>
+    <TouchableOpacity
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.container, containerStyle]}>
       <ImageBackground source={source} style={styles.background}>
         {showIcon && icon()}
         {isLoading && <ActivityIndicator color="#FFFFFF" size={20} style={{ marginRight: 7 }} />}
         <Text style={styles.text}>{title}</Text>
       </ImageBackground>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default BackgroundButton;
+BackgroundButton.defaultProps = {
+  containerStyle: {},
+  disabled: false,
+  icon: () => {},
+  isLoading: false,
+  onPress: () => {},
+  title: '',
+}
+
+BackgroundButton.propTypes = {
+  containerStyle: ViewPropTypes.style,
+  disabled: PropTypes.bool,
+  icon: PropTypes.func,
+  isLoading: PropTypes.bool,
+  onPress: PropTypes.func,
+  source: PropTypes.number.isRequired,
+  title: PropTypes.string,
+}
+
+export default BackgroundButton

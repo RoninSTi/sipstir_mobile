@@ -6,14 +6,14 @@ import {
   CHEERS_POST_SUCCESS,
   CREATE_COMMENT_SUCCESS,
   CREATE_GUESS_SUCCESS,
+  CREATE_POST_SUCCESS,
   FETCH_FEED_SUCCESS,
   FETCH_SINGLE_POST_SUCCESS,
   REFRESH_FEED,
   SET_AUTH_USER,
-  SET_POSTS,
-  CREATE_POST_SUCCESS,
   SET_CURRENT_LOCATION,
   SET_FEED_TYPE,
+  SET_POSTS,
 } from '../actions/types'
 import { fetchFeedAction } from '../actions/feed'
 
@@ -112,7 +112,9 @@ function* onFetchFeedSuccess(action) {
 
   const isUserFeed = parts[1] === 'user' && parts[3] === `${id}`
 
-  if (isUserFeed) return
+  const isLocationFeed = parts[1] === 'location'
+
+  if (isUserFeed || isLocationFeed) return
 
   const { data: posts } = action.payload
 

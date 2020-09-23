@@ -1,7 +1,15 @@
 import { put, takeEvery, select } from 'redux-saga/effects'
 
-import { CHECK_LOCATION, NO_LOCATION, SET_AUTH_USER, SET_CURRENT_LOCATION } from '../actions/types'
-import { fetchRewardsAction } from '../actions/rewards'
+import {
+  CHECK_LOCATION,
+  NO_LOCATION,
+  REDEEM_REWARD_SUCCESS,
+  SET_AUTH_USER,
+  SET_CURRENT_LOCATION,
+} from '../actions/types'
+import { fetchRedemptionsAction, fetchRewardsAction } from '../actions/rewards'
+
+import { navigate } from '../../navigation/rootNavigation'
 
 const getAuthUser = (state) => state.auth.user
 
@@ -15,6 +23,8 @@ function* onSetAuthUser() {
   if (!id) return
 
   yield put({ type: CHECK_LOCATION, payload: {} })
+
+  yield put(fetchRedemptionsAction({ token: authUser.token, userId: id }))
 }
 
 function* fetchRewards({ includeLocation = false, search = null }) {
@@ -41,6 +51,10 @@ function* fetchRewards({ includeLocation = false, search = null }) {
   yield put(fetchRewardsAction({ token, ...params }))
 }
 
+function onRedeemRewardSuccess() {
+  navigate('RewardSuccess')
+}
+
 function* onSetCurrentLocation() {
   yield fetchRewards({ includeLocation: true })
 }
@@ -51,6 +65,7 @@ function* onNoLocation() {
 
 function* watchRewards() {
   yield takeEvery(NO_LOCATION, onNoLocation)
+  yield takeEvery(REDEEM_REWARD_SUCCESS, onRedeemRewardSuccess)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)
   yield takeEvery(SET_CURRENT_LOCATION, onSetCurrentLocation)
 }

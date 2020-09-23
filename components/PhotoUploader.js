@@ -12,12 +12,14 @@ import * as Permissions from 'expo-permissions'
 import * as mime from 'react-native-mime-types'
 
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import axios from 'axios'
 
 import { nanoid } from 'nanoid/async/index.native'
 import * as FileSystem from 'expo-file-system'
+import { CAUGHT_ERROR } from '../redux/actions/types'
+
 import clients from '../services/api'
 
 const api = clients.default.client
@@ -31,6 +33,8 @@ const PhotoUploader = ({
   photoDimensions,
   style,
 }) => {
+  const dispatch = useDispatch()
+
   const { showActionSheetWithOptions } = useActionSheet()
 
   const authUser = useSelector((state) => state.auth.user)
@@ -96,7 +100,7 @@ const PhotoUploader = ({
         onUploadComplete({ url })
       }
     } catch (error) {
-      console.log({ error })
+      dispatch({ type: CAUGHT_ERROR, error })
     }
   }
 

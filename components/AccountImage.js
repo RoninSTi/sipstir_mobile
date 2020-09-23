@@ -10,13 +10,19 @@ const AccountImage = ({ account, containerStyle, height, width }) => {
 
   const { photo } = location
 
+  console.log({ image, location, photo })
+
   return image ? (
     <Image
       source={{ uri: `${image}?w=${width}&h=${height}&fit=crop` }}
       style={[containerStyle, { height, width }]}
     />
   ) : (
-    <GooglePlaceImage photo={photo} style={containerStyle} />
+    <GooglePlaceImage
+      height={height}
+      image={photo}
+      containerStyle={[{ height, width }, containerStyle]}
+    />
   )
 }
 

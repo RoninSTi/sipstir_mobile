@@ -2,45 +2,42 @@ import Constants from 'expo-constants'
 
 const ENV = {
   default: {
-    apiUrl: 'https://prospector.omnilert.io/v1/',
-    auth0: {
-      audience: 'https://api.barsnap.com',
-      clientId: '22GIQsEFlXvQluSJ0exktX2wdX66LMKb',
-      domain: 'dev-f4i21swa.us.auth0.com',
-    },
+    apiUrl: 'http://localhost:8080/',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },
     reduxLoggerEnabled: false,
+    sentry: {
+      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
+    },
   },
   dev: {
     apiUrl: 'http://localhost:8080/',
-    auth0: {
-      audience: 'https://api.barsnap.com',
-      clientId: '22GIQsEFlXvQluSJ0exktX2wdX66LMKb',
-      domain: 'dev-f4i21swa.us.auth0.com',
-    },
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },
     reduxLoggerEnabled: true,
+    sentry: {
+      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
+    },
   },
   staging: {
-    apiUrl: 'https://pure-temple-78419.herokuapp.com/',
-    auth0: {
-      audience: 'https://api.barsnap.com',
-      clientId: '22GIQsEFlXvQluSJ0exktX2wdX66LMKb',
-      domain: 'dev-f4i21swa.us.auth0.com',
-    },
+    apiUrl: 'https://sipstir-api-staging.herokuapp.com//',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },
     reduxLoggerEnabled: false,
+    sentry: {
+      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
+    },
   },
   prod: {
-    apiUrl: 'https://prospector.omnilert.io/v1/',
+    apiUrl: 'https://sipstir-api-prod.herokuapp.com/',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
+    },
+    sentry: {
+      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
     },
   },
 }

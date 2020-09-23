@@ -2,6 +2,7 @@ import {
   LOGOUT,
   REFRESH_FEED,
   SET_FEED_TYPE,
+  SET_LOCATION_POSTS,
   SET_POSTS,
   SET_SHOULD_SCROLL_UP,
 } from '../actions/types'
@@ -13,6 +14,7 @@ const initialState = {
   pageSize: 100,
   posts: {
     following: [],
+    location: [],
     main: [],
     nearby: [],
   },
@@ -37,6 +39,15 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         feedType: payload,
+      }
+    case SET_LOCATION_POSTS:
+      return {
+        ...state,
+        isRefreshing: false,
+        posts: {
+          ...state.posts,
+          location: payload,
+        },
       }
     case SET_POSTS:
       return {

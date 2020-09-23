@@ -3,6 +3,7 @@ import {
   FETCH_MY_USER_SUCCESS,
   FOLLOW_USER_SUCCESS,
   LOGOUT,
+  REDEEM_REWARD_SUCCESS,
   REFRESH_USER,
   UPDATE_USER_SUCCESS,
 } from '../actions/types'
@@ -27,6 +28,7 @@ const reducer = (state = initialState, action) => {
     case CREATE_PROFILE_SUCCESS:
     case FETCH_MY_USER_SUCCESS:
     case FOLLOW_USER_SUCCESS:
+    case REDEEM_REWARD_SUCCESS:
     case UPDATE_USER_SUCCESS:
       return {
         ...state,

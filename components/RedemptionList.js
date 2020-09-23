@@ -4,20 +4,20 @@ import PropTypes from 'prop-types'
 import { FlatList } from 'react-native'
 
 import { useSelector } from 'react-redux'
-import { FETCH_REWARDS } from '../redux/actions/types'
+import { FETCH_REDEMPTIONS } from '../redux/actions/types'
 
 import ScreenLoader from './ScreenLoader'
-import RewardsItem from './RewardsItem'
+import RedemptionItem from './RedemptionItem'
 
-const RewardsList = ({ rewards: data }) => {
+const RedemptionList = ({ redemptions: data }) => {
   const isLoading = useSelector((state) => state.ui.isLoading)
 
-  const loading = isLoading.some((item) => item.loadingType === FETCH_REWARDS)
+  const loading = isLoading.some((item) => item.loadingType === FETCH_REDEMPTIONS)
 
   const keyExtractor = (item) => `${item.id}`
 
   // eslint-disable-next-line react/prop-types
-  const renderItem = ({ item: reward }) => <RewardsItem reward={reward} />
+  const renderItem = ({ item: redemption }) => <RedemptionItem redemption={redemption} />
 
   return (
     <ScreenLoader loading={loading}>
@@ -33,8 +33,8 @@ const RewardsList = ({ rewards: data }) => {
   )
 }
 
-RewardsList.propTypes = {
-  rewards: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+RedemptionList.propTypes = {
+  redemptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 }
 
-export default RewardsList
+export default RedemptionList

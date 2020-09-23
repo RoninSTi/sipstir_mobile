@@ -8,7 +8,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { ATTEMPT_GUESS } from '../redux/actions/types'
+
+import { ActivityIndicator } from 'react-native-paper'
+import { fetchLocationDetailsAction } from '../redux/actions/places'
+import { ATTEMPT_GUESS, FETCH_LOCATION_DETAILS } from '../redux/actions/types'
 
 import BackgroundButton from './BackgroundButton'
 import CheersButton from './CheersButton'
@@ -85,6 +88,15 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
   const user = useSelector((state) => state.user)
 
+  const token = useSelector((state) => state.auth.user?.token)
+
+  const isLoadingDetails = useSelector((state) =>
+    state.ui.isLoading.some(
+      (element) =>
+        element.loadingType === FETCH_LOCATION_DETAILS && element.meta === post.location.id
+    )
+  )
+
   const { caption, id: postId, cheers, guesses = [], isGuessed } = post
 
   const isOwner = user.id === post.createdById
@@ -95,7 +107,9 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
   const showGuess = !post.revealed && !isOwner && !isGuessed
 
-  const showLocation = post.revealed
+  // const showLocation = post.revealed
+
+  const showLocation = true
 
   // const showGuess = true
 
@@ -110,6 +124,10 @@ const FeedPostFooter = ({ detailPath, post }) => {
     } else {
       navigate(detailPath, params)
     }
+  }
+
+  const onPressLocation = () => {
+    dispatch(fetchLocationDetailsAction({ locationId: post.location.id, token }))
   }
 
   return (
@@ -147,13 +165,17 @@ const FeedPostFooter = ({ detailPath, post }) => {
         </View>
       ) : null}
       {showLocation && (
-        <View style={styles.locationContainer}>
-          <Icon color="#CFCFCF" name="map-marker" size={36} style={{ margin: 0, padding: 0 }} />
+        <TouchableOpacity onPress={onPressLocation} style={styles.locationContainer}>
+          {isLoadingDetails ? (
+            <ActivityIndicator color="#5177FF" size="small" />
+          ) : (
+            <Icon color="#CFCFCF" name="map-marker" size={36} style={{ margin: 0, padding: 0 }} />
+          )}
           <View style={styles.locationMeta}>
             <Text style={styles.locationName}>{post.location.name}</Text>
             <Text style={styles.locationVicinity}>{post.location.vicinity}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
       {showGuess && (
         <View style={styles.locationContainer}>
@@ -192,6 +214,7 @@ FeedPostFooter.propTypes = {
     isCheered: PropTypes.bool,
     isGuessed: PropTypes.bool,
     location: PropTypes.shape({
+      id: PropTypes.number,
       name: PropTypes.string,
       vicinity: PropTypes.string,
     }),

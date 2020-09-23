@@ -14,15 +14,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const GooglePlaceImage = ({ containerStyle, image }) => {
+const GooglePlaceImage = ({ containerStyle, image, height }) => {
   if (!image) return null
 
-  const { photoReference } = image
+  const { photo_reference: photoReference } = image
 
-  const uri = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&maxheight=100&key=${API_KEY}`
+  const uri = `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference}&maxheight=${height}&key=${API_KEY}`
 
   return (
-    <View style={containerStyle}>
+    <View style={[containerStyle, { height, width: height }]}>
       <Image resizeMode="cover" style={styles.image} source={{ uri }} />
     </View>
   )
@@ -31,13 +31,15 @@ const GooglePlaceImage = ({ containerStyle, image }) => {
 GooglePlaceImage.defaultProps = {
   containerStyle: {},
   image: null,
+  height: 100,
 }
 
 GooglePlaceImage.propTypes = {
   containerStyle: ViewPropTypes.style,
   image: PropTypes.shape({
-    photoReference: PropTypes.string,
+    photo_reference: PropTypes.string,
   }),
+  height: PropTypes.number,
 }
 
 export default GooglePlaceImage

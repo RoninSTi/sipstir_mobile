@@ -13,9 +13,11 @@ import store from './redux/store'
 import useCachedResources from './hooks/useCachedResources'
 import AppContainer from './components/AppContainer'
 
+import env from './environment'
+
 Sentry.init({
   debug: true,
-  dsn: 'https://456a64e5cf4040b1bfcb6535ed5fb2c2@sentry.io/2556954',
+  dsn: env.sentry.dsn,
   enableInExpoDevelopment: true,
 })
 

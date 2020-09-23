@@ -2,7 +2,6 @@ import React from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
 
-import BusinessDetailScreen from '../screens/BusinessDetail'
 import RewardsScreen from '../screens/Rewards'
 
 import BackgroundHeader from '../components/BackgroundHeader'
@@ -29,13 +28,6 @@ const RewardsStack = () => {
         name="RewardsScreen"
         options={{
           title: 'Rewards',
-        }}
-      />
-      <Stack.Screen
-        component={BusinessDetailScreen}
-        name="BusinessDetailScreen"
-        options={{
-          title: 'Reward',
         }}
       />
     </Stack.Navigator>

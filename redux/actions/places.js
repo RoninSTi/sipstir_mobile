@@ -1,4 +1,20 @@
-import { FETCH_PLACES, FETCH_PLACE } from './types'
+import { FETCH_LOCATION_DETAILS, FETCH_PLACES, FETCH_PLACE } from './types'
+
+export const fetchLocationDetailsAction = ({ locationId, token }) => ({
+  type: FETCH_LOCATION_DETAILS,
+  payload: {
+    request: {
+      method: 'get',
+      url: `location/${locationId}/details`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    isLoading: {
+      meta: locationId,
+    },
+  },
+})
 
 export const fetchPlaceAction = ({ placeId, token }) => ({
   type: FETCH_PLACE,

@@ -8,6 +8,7 @@ import FollowingScreen from '../screens/Following'
 import MyFeedScreen from '../screens/MyFeed'
 import PostDetail from '../screens/PostDetail'
 import ProfileScreen from '../screens/Profile'
+import RewardRedemptionsScreen from '../screens/RewardRedemptions'
 
 import BackgroundHeader from '../components/BackgroundHeader'
 
@@ -39,13 +40,9 @@ const ProfileStack = () => {
       <Stack.Screen
         component={MyFeedScreen}
         name="MyFeedScreen"
-        options={{ title: 'Your BarSnaps' }}
+        options={{ title: 'Your Posts' }}
       />
-      <Stack.Screen
-        component={PostDetail}
-        name="MyFeedDetail"
-        options={{ title: 'Your BarSnap' }}
-      />
+      <Stack.Screen component={PostDetail} name="MyFeedDetail" options={{ title: 'Your Post' }} />
       <Stack.Screen
         component={ActivityScreen}
         name="ActivityScreen"
@@ -56,6 +53,11 @@ const ProfileStack = () => {
       <Stack.Screen component={PostDetail} name="ActivityPostDetail" />
       <Stack.Screen component={FollowersScreen} name="Followers" options={{ title: 'Followers' }} />
       <Stack.Screen component={FollowingScreen} name="Following" options={{ title: 'Following' }} />
+      <Stack.Screen
+        component={RewardRedemptionsScreen}
+        name="RewardRedemptionsScreen"
+        options={{ title: 'Reward Redemptions' }}
+      />
     </Stack.Navigator>
   )
 }

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const LocationMap = ({ location }) => {
+const LocationMap = ({ location, onPress }) => {
   const [lng, lat] = location.geometry.coordinates
 
   const region = {
@@ -30,11 +30,20 @@ const LocationMap = ({ location }) => {
 
   return (
     <View style={styles.container}>
-      <MapView initialRegion={region} scrollEnabled={false} style={styles.map} zoomEnabled={false}>
+      <MapView
+        initialRegion={region}
+        onPress={onPress}
+        scrollEnabled={false}
+        style={styles.map}
+        zoomEnabled={false}>
         <Marker coordinate={{ latitude: lat, longitude: lng }} />
       </MapView>
     </View>
   )
+}
+
+LocationMap.defaultProps = {
+  onPress: () => {},
 }
 
 LocationMap.propTypes = {
@@ -43,6 +52,7 @@ LocationMap.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number),
     }),
   }).isRequired,
+  onPress: PropTypes.func,
 }
 
 export default LocationMap

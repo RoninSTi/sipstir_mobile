@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
-import React from 'react';
+import React from 'react'
 
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native'
 
 const styles = StyleSheet.create({
   absolute: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
   },
-});
+})
 
 const HeaderTitle = () => {
   return (
@@ -29,9 +29,9 @@ const HeaderTitle = () => {
           style={{ height: 33, tintColor: '#EFA6A0', width: 40 }}
         />
       </View>
-      <Text style={styles.title}>BarSnap</Text>
+      <Text style={styles.title}>SipStir</Text>
     </View>
-  );
-};
+  )
+}
 
-export default HeaderTitle;
+export default HeaderTitle

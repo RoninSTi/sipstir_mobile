@@ -66,7 +66,7 @@ const Auth = () => {
         <View style={styles.contentContainer}>
           <Image source={require('../assets/images/icon_login.png')} style={styles.image} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Welcome to BarSnap</Text>
+            <Text style={styles.title}>Welcome to SipStir</Text>
             <Text style={styles.subtitle}>
               Discover new places and win prizes by guessing where people are eating and drinking!
             </Text>

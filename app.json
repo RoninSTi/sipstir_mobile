@@ -3,7 +3,7 @@
     "name": "SipStir",
     "slug": "sipstir-mobile",
     "scheme": "sipstir",
-    "version": "1.2.18",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -25,10 +25,10 @@
         }
       },
       "package": "com.sipstir.sipstir",
-      "versionCode": 28
+      "versionCode": 2
     },
     "ios": {
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.2",
       "bundleIdentifier": "com.sipstir.sipstir",
       "config": {
         "usesNonExemptEncryption": false
@@ -39,17 +39,18 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "facebookScheme": "fb2451578761628671",
-    "facebookAppId": "2451578761628671",
+    "facebookScheme": "fb358673965266057",
+    "facebookAppId": "358673965266057",
     "facebookDisplayName": "SipStir",
     "hooks": {
       "postPublish": [
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "sipstir",
+            "organization": "#sipstir",
             "project": "stipstir",
-            "authToken": "9215769ed85243a888d2f8b5d1b4cbeb74a19bd69fbc44cc9db47e52927b051c"
+            "authToken": "7cd9f4b34af94434b1ff782db2b3c2b8c3947f1e27e548d5a7c95cd5e328fe1a",
+            "setCommits": true
           }
         }
       ]

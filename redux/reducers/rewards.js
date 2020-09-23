@@ -1,13 +1,19 @@
-import { FETCH_REWARDS_SUCCESS } from '../actions/types'
+import { FETCH_REDEMPTIONS_SUCCESS, FETCH_REWARDS_SUCCESS } from '../actions/types'
 
 const initialState = {
   rewards: [],
+  redemptions: [],
 }
 
 const reducer = (state = initialState, action) => {
   const { payload, type } = action
 
   switch (type) {
+    case FETCH_REDEMPTIONS_SUCCESS:
+      return {
+        ...state,
+        redemptions: payload.data,
+      }
     case FETCH_REWARDS_SUCCESS:
       return {
         ...state,
