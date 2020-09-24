@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { put, select, takeEvery } from 'redux-saga/effects'
 
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import * as Sentry from 'sentry-expo'
 import { LOGOUT, SET_LOADING, UPDATE_LOADING, SET_DROPDOWN_DATA } from '../actions/types'
 

@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { put, takeEvery, select } from 'redux-saga/effects'
 
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+
 import * as Location from 'expo-location'
 import * as Permissions from 'expo-permissions'
 
@@ -200,7 +201,7 @@ function* onSelectPlace(action) {
 }
 
 function* onSetAskedLocationPermission() {
-  yield AsyncStorage.setItem('PERMISSION_LOCATION', true)
+  yield AsyncStorage.setItem('PERMISSION_LOCATION', 'asked')
 
   yield put({
     type: SET_SHOW_LOCATION_MODAL,

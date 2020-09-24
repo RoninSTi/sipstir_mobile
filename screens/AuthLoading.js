@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 
-import { AsyncStorage, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+
 import { ActivityIndicator } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
