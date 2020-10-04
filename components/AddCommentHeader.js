@@ -92,11 +92,15 @@ const AddCommentHeader = ({ selectedPlace }) => {
   )
 }
 
+AddCommentHeader.defaultProps = {
+  selectedPlace: null,
+}
+
 AddCommentHeader.propTypes = {
   selectedPlace: PropTypes.shape({
     name: PropTypes.string,
     vicinity: PropTypes.string,
-  }).isRequired,
+  }),
 }
 
 export default AddCommentHeader

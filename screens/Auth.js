@@ -1,6 +1,7 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable global-require */
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-paper'
@@ -49,12 +50,19 @@ const styles = StyleSheet.create({
   },
 })
 
-const Auth = () => {
+const Auth = ({ navigation }) => {
   const isLoading = useSelector((state) => state.ui.isLoading)
+
   const dispatch = useDispatch()
+
+  const { navigate } = navigation
 
   const login = () => {
     dispatch({ type: ATTEMPT_LOGIN })
+  }
+
+  const handleEmailLogin = () => {
+    navigate('AuthEmail')
   }
 
   return (
@@ -79,13 +87,27 @@ const Auth = () => {
             loading={isLoading.some((item) => item.loadingType === ATTEMPT_LOGIN)}
             mode="contained"
             onPress={login}
-            style={styles.button}>
+            style={[styles.button, { marginBottom: 8 }]}>
             Log In With Facebook
+          </Button>
+          <Button
+            color="#5177FF"
+            icon={() => <Icon color="#FFFFFF" name="mail" size={18} />}
+            mode="contained"
+            onPress={handleEmailLogin}
+            style={styles.button}>
+            Log In With Email
           </Button>
         </View>
       </ImageBackground>
     </View>
   )
+}
+
+Auth.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 }
 
 export default Auth

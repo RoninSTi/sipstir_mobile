@@ -27,7 +27,7 @@ function* onSetAuthUser() {
   yield put(fetchRedemptionsAction({ token: authUser.token, userId: id }))
 }
 
-function* fetchRewards({ includeLocation = false, search = null }) {
+function* fetchRewards({ includeLocation, search }) {
   const { token } = yield select(getAuthUser)
 
   if (!token) return
@@ -56,11 +56,11 @@ function onRedeemRewardSuccess() {
 }
 
 function* onSetCurrentLocation() {
-  yield fetchRewards({ includeLocation: true })
+  yield fetchRewards({ includeLocation: true, search: null })
 }
 
 function* onNoLocation() {
-  yield fetchRewards()
+  yield fetchRewards({ includeLocation: false, search: null })
 }
 
 function* watchRewards() {

@@ -12,7 +12,9 @@ import GuessStack from './GuessStack'
 import LinkingConfiguration from './LinkingConfiguration'
 
 import Auth from '../screens/Auth'
+import AuthEmail from '../screens/AuthEmail'
 import AuthLoading from '../screens/AuthLoading'
+import AuthRegister from '../screens/AuthRegister'
 import CreateProfile from '../screens/CreateProfile'
 import ZoomedImageScreen from '../screens/ZoomedImage'
 
@@ -51,13 +53,11 @@ const Stack = createStackNavigator()
 
 function AuthStack() {
   return (
-    <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
-      <Stack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
-      <Stack.Screen
-        name="CreateProfile"
-        component={CreateProfile}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator screenOptions={{ gestureEnabled: false, headerShown: false }}>
+      <Stack.Screen name="Auth" component={Auth} />
+      <Stack.Screen name="CreateProfile" component={CreateProfile} />
+      <Stack.Screen name="AuthEmail" component={AuthEmail} />
+      <Stack.Screen name="AuthRegister" component={AuthRegister} />
     </Stack.Navigator>
   )
 }
