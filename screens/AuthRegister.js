@@ -118,7 +118,7 @@ const AuthRegister = () => {
         </View>
         <Button
           color="#5177FF"
-          icon={() => <Icon color="#FFFFFF" name="profile" size={18} />}
+          icon={() => <Icon color="#FFFFFF" name="account-plus" size={18} />}
           loading={isLoading}
           mode="contained"
           onPress={handleSubmit}

@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const FeedPostFooter = ({ detailPath, post }) => {
+const FeedPostFooter = ({ detailPath, isDetail, post }) => {
   const dispatch = useDispatch()
 
   const { navigate } = useNavigation()
@@ -92,8 +92,7 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
   const isLoadingDetails = useSelector((state) =>
     state.ui.isLoading.some(
-      (element) =>
-        element.loadingType === FETCH_LOCATION_DETAILS && element.meta === post.location.id
+      ({ loadingType, meta }) => loadingType === FETCH_LOCATION_DETAILS && meta === post.location.id
     )
   )
 
@@ -107,7 +106,9 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
   const showGuess = !post.revealed && !isOwner && !isGuessed
 
-  const showLocation = post.revealed
+  const showLocation = isDetail || post.revealed
+
+  console.log({ isDetail, showLocation })
 
   // const showLocation = true
 
@@ -198,10 +199,12 @@ const FeedPostFooter = ({ detailPath, post }) => {
 
 FeedPostFooter.defaultProps = {
   detailPath: 'Detail',
+  isDetail: false,
 }
 
 FeedPostFooter.propTypes = {
   detailPath: PropTypes.string,
+  isDetail: PropTypes.bool,
   post: PropTypes.shape({
     caption: PropTypes.string,
     cheers: PropTypes.number,

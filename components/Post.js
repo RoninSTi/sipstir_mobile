@@ -148,7 +148,7 @@ const Post = ({ detailPath, isDetail, post }) => {
                 </View>
               )}
             </View>
-            <FeedPostFooter detailPath={detailPath} post={post} />
+            <FeedPostFooter isDetail={isDetail} detailPath={detailPath} post={post} />
             <FeedPostHeader post={post} />
             <TouchableOpacity onPress={onPressZoom} style={styles.zoom}>
               <Icon color="#D8D8D8" name="magnify" size={30} />

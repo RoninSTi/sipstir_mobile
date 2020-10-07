@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native'
 
-import Post from './Post';
+import Post from './Post'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 30,
   },
-});
+})
 
 const FeedPostContainer = ({ detailPath, post }) => {
   return (
@@ -30,16 +30,16 @@ const FeedPostContainer = ({ detailPath, post }) => {
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
 FeedPostContainer.defaultProps = {
   detailPath: '',
-};
+}
 
 FeedPostContainer.propTypes = {
   detailPath: PropTypes.string,
   post: PropTypes.shape({}).isRequired,
-};
+}
 
-export default FeedPostContainer;
+export default FeedPostContainer
