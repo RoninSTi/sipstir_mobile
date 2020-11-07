@@ -3,7 +3,7 @@
     "name": "SipStir",
     "slug": "sipstir-mobile",
     "scheme": "sipstir",
-    "version": "1.0.8",
+    "version": "1.0.8" ,
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -34,7 +34,14 @@
         "usesNonExemptEncryption": false
       },
       "icon": "./assets/images/icon.png",
-      "supportsTablet": true
+      "infoPlist": {
+        "NSCameraUsageDescription": "Enable SipStir to access your Camera so we can upload your photos and save photos you've taken with the app.",
+        "NSLocationAlwaysUsageDescription": "This allows us to more easily suggest venues and friends in your area.  It personalizes the discovery and guessing process.",
+        "NSLocationWhenInUseUsageDescription": "This allows us to more easily suggest venues and friends in your area.  It personalizes the discovery and guessing process.",
+        "NSPhotoLibraryUsageDescription": "Enable SipStir to access your Photo Library so we can upload your photos and save photos you've taken with the app."
+      },
+      "supportsTablet": true,
+      "usesAppleSignIn": true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

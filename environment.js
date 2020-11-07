@@ -2,7 +2,7 @@ import Constants from 'expo-constants'
 
 const ENV = {
   default: {
-    apiUrl: 'https://sipstir-api-prod.herokuapp.com/',
+    apiUrl: 'hhttp://3a44ed513654.ngrok.io/',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },
@@ -12,7 +12,7 @@ const ENV = {
     },
   },
   dev: {
-    apiUrl: 'https://sipstir-api-prod.herokuapp.com/',
+    apiUrl: 'http://3a44ed513654.ngrok.io/',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },

@@ -3,13 +3,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import * as AppleAuthentication from 'expo-apple-authentication'
+
+import { Image, ImageBackground, Platform, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { StatusBar } from 'expo-status-bar'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { ATTEMPT_LOGIN } from '../redux/actions/types'
+import { ATTEMPT_APPLE_LOGIN, ATTEMPT_LOGIN } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
   button: {
@@ -61,6 +63,10 @@ const Auth = ({ navigation }) => {
     dispatch({ type: ATTEMPT_LOGIN })
   }
 
+  const handleAppleLogin = () => {
+    dispatch({ type: ATTEMPT_APPLE_LOGIN })
+  }
+
   const handleEmailLogin = () => {
     navigate('AuthEmail')
   }
@@ -90,6 +96,15 @@ const Auth = ({ navigation }) => {
             style={[styles.button, { marginBottom: 8 }]}>
             Log In With Facebook
           </Button>
+          {Platform.OS === 'ios' && (
+            <AppleAuthentication.AppleAuthenticationButton
+              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+              cornerRadius={22}
+              style={[styles.button, { height: 46, marginBottom: 8 }]}
+              onPress={handleAppleLogin}
+            />
+          )}
           <Button
             color="#5177FF"
             icon={() => <Icon color="#FFFFFF" name="mail" size={18} />}

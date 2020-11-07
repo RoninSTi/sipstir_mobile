@@ -3,21 +3,24 @@ import { put, takeEvery, select } from 'redux-saga/effects'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
+import * as AppleAuthentication from 'expo-apple-authentication'
 import * as Facebook from 'expo-facebook'
 
 import { setUser } from 'sentry-expo'
 import {
+  ATTEMPT_APPLE_LOGIN,
   ATTEMPT_LOGIN,
   ATTEMPT_LOGOUT,
+  AUTH_APPLE_SUCCESS,
   AUTH_EMAIL_SUCCESS,
   AUTH_REGISTER_SUCCESS,
+  FACEBOOK_AUTH_SUCCESS,
   LOGOUT,
   SET_AUTH_USER,
-  UPDATE_LOADING,
   SET_LOGGED_IN,
-  FACEBOOK_AUTH_SUCCESS,
+  UPDATE_LOADING,
 } from '../actions/types'
-import { facebookAuthAction } from '../actions/auth'
+import { appleAuthAction, facebookAuthAction } from '../actions/auth'
 
 import { navigate } from '../../navigation/rootNavigation'
 
@@ -38,6 +41,12 @@ function* setAuthUser({ accessToken, user }) {
   })
 }
 
+function* onAuthAppleSuccess(action) {
+  const { accessToken, user } = action.payload.data
+
+  yield setAuthUser({ accessToken, user })
+}
+
 function* onAuthEmailSuccess(action) {
   const { accessToken, user } = action.payload.data
 
@@ -56,6 +65,24 @@ function* onFacebookAuthSuccess(action) {
   yield setAuthUser({ accessToken, user })
 }
 
+function* onAttemptAppleLogin() {
+  yield put({
+    type: UPDATE_LOADING,
+    payload: {
+      loadingType: ATTEMPT_APPLE_LOGIN,
+      loadingAction: 'set',
+    },
+  })
+
+  const credential = yield AppleAuthentication.signInAsync({
+    requestedScopes: [AppleAuthentication.AppleAuthenticationScope.EMAIL],
+  })
+
+  const { identityToken } = credential
+
+  yield put(appleAuthAction({ identityToken }))
+}
+
 function* onAttemptLogin() {
   yield put({
     type: UPDATE_LOADING,
@@ -65,7 +92,7 @@ function* onAttemptLogin() {
     },
   })
 
-  yield Facebook.initializeAsync('358673965266057')
+  yield Facebook.initializeAsync({ appId: '358673965266057' })
 
   const { token } = yield Facebook.logInWithReadPermissionsAsync({
     permissions: ['public_profile, email'],
@@ -99,8 +126,10 @@ function* onSetAuthUser() {
 }
 
 export function* watchAuth() {
+  yield takeEvery(ATTEMPT_APPLE_LOGIN, onAttemptAppleLogin)
   yield takeEvery(ATTEMPT_LOGIN, onAttemptLogin)
   yield takeEvery(ATTEMPT_LOGOUT, onAttemptLogout)
+  yield takeEvery(AUTH_APPLE_SUCCESS, onAuthAppleSuccess)
   yield takeEvery(AUTH_EMAIL_SUCCESS, onAuthEmailSuccess)
   yield takeEvery(AUTH_REGISTER_SUCCESS, onAuthRegisterSuccess)
   yield takeEvery(FACEBOOK_AUTH_SUCCESS, onFacebookAuthSuccess)

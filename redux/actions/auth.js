@@ -1,4 +1,20 @@
-import { GET_USER_BY_EMAIL, FACEBOOK_AUTH, AUTH_EMAIL } from './types'
+import { AUTH_APPLE, AUTH_EMAIL, FACEBOOK_AUTH, GET_USER_BY_EMAIL } from './types'
+
+export const appleAuthAction = ({ identityToken }) => ({
+  type: AUTH_APPLE,
+  payload: {
+    request: {
+      method: 'post',
+      url: 'auth/apple',
+      data: {
+        identityToken,
+      },
+    },
+    setLoading: {
+      meta: null,
+    },
+  },
+})
 
 export const emailAuthAction = ({ email, password }) => ({
   type: AUTH_EMAIL,
