@@ -29,6 +29,7 @@ const PhotoUploader = ({
   onCancel,
   onPress,
   onProgress,
+  onSelect,
   onUploadComplete,
   photoDimensions,
   style,
@@ -41,6 +42,9 @@ const PhotoUploader = ({
 
   const processPhoto = async (result) => {
     const { uri } = result
+
+    onSelect({ uri })
+
     try {
       const { height, width } = photoDimensions
 
@@ -206,6 +210,7 @@ PhotoUploader.defaultProps = {
   onCancel: () => {},
   onPress: () => {},
   onProgress: () => {},
+  onSelect: () => {},
   onUploadComplete: () => {},
   photoDimensions: {
     height: 800,
@@ -219,6 +224,7 @@ PhotoUploader.propTypes = {
   onCancel: PropTypes.func,
   onPress: PropTypes.func,
   onProgress: PropTypes.func,
+  onSelect: PropTypes.func,
   onUploadComplete: PropTypes.func,
   photoDimensions: PropTypes.shape({
     height: PropTypes.number,

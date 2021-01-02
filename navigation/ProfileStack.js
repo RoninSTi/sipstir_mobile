@@ -3,6 +3,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import ActivityScreen from '../screens/Activity'
+import BlockedScreen from '../screens/Blocked'
 import FollowersScreen from '../screens/Followers'
 import FollowingScreen from '../screens/Following'
 import MyFeedScreen from '../screens/MyFeed'
@@ -53,6 +54,7 @@ const ProfileStack = () => {
       <Stack.Screen component={PostDetail} name="ActivityPostDetail" />
       <Stack.Screen component={FollowersScreen} name="Followers" options={{ title: 'Followers' }} />
       <Stack.Screen component={FollowingScreen} name="Following" options={{ title: 'Following' }} />
+      <Stack.Screen component={BlockedScreen} name="Blocked" options={{ title: 'Blocked' }} />
       <Stack.Screen
         component={RewardRedemptionsScreen}
         name="RewardRedemptionsScreen"

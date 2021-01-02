@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 
 import activity from './activity'
 import auth from './auth'
+import blocked from './blocked'
 import createGuess from './createGuess'
 import createPost from './createPost'
 import createProfile from './createProfile'
@@ -19,6 +20,7 @@ import ui from './ui'
 const rootReducer = combineReducers({
   activity,
   auth,
+  blocked,
   createGuess,
   createPost,
   createProfile,

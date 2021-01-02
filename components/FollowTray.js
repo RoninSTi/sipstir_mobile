@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-paper'
-// import Animated from 'react-native-reanimated'
 import BottomSheet from 'reanimated-bottom-sheet'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { FOLLOW_USER, CLOSE_FOLLOWTRAY } from '../redux/actions/types'
+import { BLOCK_USER, FOLLOW_USER, CLOSE_FOLLOWTRAY } from '../redux/actions/types'
+import { blockUserAction } from '../redux/actions/blocked'
 import { followUserAction } from '../redux/actions/user'
 
 import Avatar from './Avatar'
 
-const HEIGHT = 250
+const HEIGHT = 325
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +53,15 @@ const FollowTray = () => {
     return element.loadingType === FOLLOW_USER && element.meta === user?.id
   })
 
+  const isTryingToBlock = isLoading.some(
+    ({ loadingType, meta }) => loadingType === BLOCK_USER && meta === user?.id
+  )
+
   const isFollowing = me.following.some((follower) => follower.id === user?.id)
+
+  const isBlocked = useSelector((state) =>
+    state.blocked.blockedUsers.some(({ id, blocked }) => id === user?.id && blocked)
+  )
 
   useEffect(() => {
     if (isVisible) {
@@ -71,8 +79,12 @@ const FollowTray = () => {
     dispatch({ type: CLOSE_FOLLOWTRAY })
   }
 
-  const handleOnPress = () => {
+  const handleOnPressFollow = () => {
     dispatch(followUserAction({ followingId: user?.id, token: authUser?.token, userId: me?.id }))
+  }
+
+  const handleOnPressBlock = () => {
+    dispatch(blockUserAction({ blockedId: user?.id, token: authUser?.token }))
   }
 
   const renderContent = () => (
@@ -81,15 +93,26 @@ const FollowTray = () => {
         <Avatar size={100} user={user} />
         <Text style={styles.username}>{user?.username}</Text>
         {me?.id !== user?.id && (
-          <Button
-            color="#5177FF"
-            compact
-            loading={isTryingToFollow}
-            mode="contained"
-            onPress={handleOnPress}
-            style={{ width: '100%' }}>
-            {isFollowing ? 'Unfollow' : 'Follow'}
-          </Button>
+          <>
+            <Button
+              color="#5177FF"
+              compact
+              loading={isTryingToFollow}
+              mode="contained"
+              onPress={handleOnPressFollow}
+              style={{ width: '100%' }}>
+              {isFollowing ? 'Unfollow' : 'Follow'}
+            </Button>
+            <Button
+              color="#5177FF"
+              compact
+              loading={isTryingToBlock}
+              mode="contained"
+              onPress={handleOnPressBlock}
+              style={{ marginTop: 8, width: '100%' }}>
+              {isBlocked ? 'Unblock' : 'Block'}
+            </Button>
+          </>
         )}
       </View>
       <View style={{ height: 50, justifyContent: 'center', width: '100%' }}>

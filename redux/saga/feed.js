@@ -2,6 +2,7 @@
 import { put, takeEvery, select } from 'redux-saga/effects'
 
 import {
+  BLOCK_USER_SUCCESS,
   CHECK_LOCATION,
   CHEERS_POST_SUCCESS,
   CREATE_COMMENT_SUCCESS,
@@ -78,6 +79,10 @@ function* replacePost(post) {
       payload: posts,
     })
   }
+}
+
+function* onBlockUserSuccess() {
+  yield fetchFeed()
 }
 
 function* onCheersPostSuccess(action) {
@@ -165,6 +170,7 @@ function* onSetFeedType(action) {
 }
 
 export function* watchFeed() {
+  yield takeEvery(BLOCK_USER_SUCCESS, onBlockUserSuccess)
   yield takeEvery(CHEERS_POST_SUCCESS, onCheersPostSuccess)
   yield takeEvery(CREATE_COMMENT_SUCCESS, onCreateCommentSuccess)
   yield takeEvery(CREATE_GUESS_SUCCESS, onCreateGuessSuccess)

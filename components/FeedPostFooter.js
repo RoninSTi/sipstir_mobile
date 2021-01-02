@@ -108,8 +108,6 @@ const FeedPostFooter = ({ detailPath, isDetail, post }) => {
 
   const showLocation = isDetail || post.revealed
 
-  console.log({ isDetail, showLocation })
-
   // const showLocation = true
 
   // const showGuess = true

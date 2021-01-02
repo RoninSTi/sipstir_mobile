@@ -6,12 +6,12 @@ import { useNavigation } from '@react-navigation/native'
 import { Button } from 'react-native-paper'
 
 const CancelButton = ({ onPress, title }) => {
-  const { goBack } = useNavigation()
+  const { dangerouslyGetParent } = useNavigation()
 
   const handleOnPress = () => {
     if (onPress) onPress()
 
-    goBack(null)
+    dangerouslyGetParent()?.goBack()
   }
 
   return (

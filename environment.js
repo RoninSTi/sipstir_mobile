@@ -2,7 +2,7 @@ import Constants from 'expo-constants'
 
 const ENV = {
   default: {
-    apiUrl: 'hhttp://3a44ed513654.ngrok.io/',
+    apiUrl: 'https://1e89fbe083da.ngrok.io/',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },
@@ -12,7 +12,7 @@ const ENV = {
     },
   },
   dev: {
-    apiUrl: 'http://3a44ed513654.ngrok.io/',
+    apiUrl: 'http://localhost:8080/',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },

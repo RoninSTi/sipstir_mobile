@@ -60,7 +60,7 @@ const PostAddCaption = () => {
 
   const caption = useSelector((state) => state.createPost.caption)
 
-  const image = useSelector((state) => state.createPost.image)
+  const imageURI = useSelector((state) => state.createPost.imageURI)
 
   const location = useSelector((state) => state.createPost.location)
 
@@ -99,7 +99,7 @@ const PostAddCaption = () => {
           <Button color="#E85349">Change</Button>
         </PhotoUploader>
       </View>
-      {image && (
+      {imageURI && (
         <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
           <View
             style={{
@@ -108,7 +108,7 @@ const PostAddCaption = () => {
               width: width - 2 * 14,
               height: width - 2 * 14,
             }}>
-            <Image source={{ uri: image }} style={styles.image} />
+            <Image source={{ uri: imageURI }} style={styles.image} />
           </View>
         </View>
       )}

@@ -102,6 +102,19 @@ const ProfileScreen = ({ navigation }) => {
           ),
         },
         {
+          onPress: () => navigate('Blocked'),
+          title: 'Blocked',
+          type: 'button',
+          right: (props) => (
+            <List.Icon
+              {...props}
+              color="#000000"
+              icon="chevron-right"
+              style={{ marginHorizontal: 0, height: 24 }}
+            />
+          ),
+        },
+        {
           onPress: () => navigate('MyFeedScreen'),
           title: 'My Posts',
           type: 'button',
