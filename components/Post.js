@@ -20,6 +20,7 @@ import {
 import { Menu } from 'react-native-paper'
 import { LongPressGestureHandler, State } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { reportPostAction } from '../redux/actions/post'
 import { ATTEMPT_GUESS } from '../redux/actions/types'
 
 import FeedPostFooter from './FeedPostFooter'
@@ -64,6 +65,8 @@ const Post = ({ detailPath, isDetail, post }) => {
 
   const [menuIsVisible, setMenuIsVisible] = useState(false)
 
+  const token = useSelector((state) => state.auth.user?.token)
+
   const user = useSelector((state) => state.user)
 
   const { navigate } = useNavigation()
@@ -103,6 +106,8 @@ const Post = ({ detailPath, isDetail, post }) => {
 
   const handleOnPressReportPost = () => {
     setMenuIsVisible(false)
+
+    dispatch(reportPostAction({ postId: post.id, token }))
   }
 
   const openActionSheet = () => {
@@ -150,7 +155,10 @@ const Post = ({ detailPath, isDetail, post }) => {
       <View style={styles.container}>
         <TouchableWithoutFeedback disabled={isDetail} onPress={onPress}>
           <View style={{ position: 'relative' }}>
-            <TouchableOpacity onPress={onPressZoom} styles={styles.imageContainer}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={onPressZoom}
+              styles={styles.imageContainer}>
               <>
                 <Image
                   style={isDetail ? styles.imageDetail : styles.image}

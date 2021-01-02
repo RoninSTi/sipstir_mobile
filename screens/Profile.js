@@ -1,15 +1,16 @@
 /* eslint-disable global-require */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RefreshControl, SectionList, StyleSheet, Text, View } from 'react-native'
-import { List } from 'react-native-paper'
+import { List, Switch } from 'react-native-paper'
 import { ATTEMPT_LOGOUT, REFRESH_USER } from '../redux/actions/types'
 
 import ProfileHeader from '../components/ProfileHeader'
+import { updateUserAction } from '../redux/actions/user'
 
 const VERSION = '1.0.9'
 
@@ -53,9 +54,31 @@ const styles = StyleSheet.create({
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch()
 
+  const authUser = useSelector((state) => state.auth.user)
+
   const isRefreshing = useSelector((state) => state.user.isRefreshing)
 
+  const hideReported = useSelector((state) => state.auth.user.settings?.hideReported)
+
+  const [localHideReported, setLocalHideReported] = useState(hideReported)
+
   const { navigate } = navigation
+
+  const hideReportedPosts = () => {
+    setLocalHideReported((prev) => {
+      dispatch(
+        updateUserAction({
+          userId: authUser.id,
+          token: authUser.token,
+          settings: {
+            hideReported: !prev,
+          },
+        })
+      )
+
+      return !prev
+    })
+  }
 
   const DATA = [
     {
@@ -138,6 +161,20 @@ const ProfileScreen = ({ navigation }) => {
               icon="chevron-right"
               style={{ marginHorizontal: 0, height: 24 }}
             />
+          ),
+        },
+      ],
+    },
+    {
+      key: 'settings-section',
+      name: 'settings',
+      data: [
+        {
+          onPress: () => hideReportedPosts(),
+          title: 'Hide posts reported by others',
+          type: 'button',
+          right: (props) => (
+            <Switch {...props} value={localHideReported} onValueChange={hideReportedPosts} />
           ),
         },
       ],

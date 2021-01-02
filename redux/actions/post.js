@@ -1,4 +1,10 @@
-import { CHEERS_POST, CREATE_POST, FETCH_SINGLE_POST, FETCH_POST_CHEERS } from './types'
+import {
+  CHEERS_POST,
+  CREATE_POST,
+  FETCH_SINGLE_POST,
+  FETCH_POST_CHEERS,
+  REPORT_POST,
+} from './types'
 
 export const cheersPostAction = ({ createdById, postId, token }) => ({
   type: CHEERS_POST,
@@ -61,6 +67,19 @@ export const fetchSinglePostAction = ({ postId, token, userId }) => ({
       params: {
         userId,
       },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  },
+})
+
+export const reportPostAction = ({ postId, token }) => ({
+  type: REPORT_POST,
+  payload: {
+    request: {
+      method: 'post',
+      url: `post/${postId}/report`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

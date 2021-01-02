@@ -1,16 +1,15 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable global-require */
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import * as AppleAuthentication from 'expo-apple-authentication'
-
 import { Image, ImageBackground, Platform, StyleSheet, Text, View } from 'react-native'
-import { Button } from 'react-native-paper'
+import { Button, Switch } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { StatusBar } from 'expo-status-bar'
 
 import { useDispatch, useSelector } from 'react-redux'
+import * as Linking from 'expo-linking'
 import { ATTEMPT_APPLE_LOGIN, ATTEMPT_LOGIN } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
@@ -50,9 +49,18 @@ const styles = StyleSheet.create({
     marginBottom: 21,
     textAlign: 'center',
   },
+  tosContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    marginBottom: 8,
+  },
 })
 
 const Auth = ({ navigation }) => {
+  const [checked, setChecked] = useState(false)
+
   const isLoading = useSelector((state) => state.ui.isLoading)
 
   const dispatch = useDispatch()
@@ -64,11 +72,17 @@ const Auth = ({ navigation }) => {
   }
 
   const handleAppleLogin = () => {
+    if (!checked) return
+
     dispatch({ type: ATTEMPT_APPLE_LOGIN })
   }
 
   const handleEmailLogin = () => {
     navigate('AuthEmail')
+  }
+
+  const handleTos = () => {
+    Linking.openURL('https://www.sipstir.app/terms')
   }
 
   return (
@@ -87,9 +101,30 @@ const Auth = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.buttonContainer}>
+          <View style={styles.tosContainer}>
+            <Switch
+              color="#5177FF"
+              onValueChange={() => {
+                setChecked((prev) => !prev)
+              }}
+              style={{
+                marginRight: 8,
+              }}
+              value={checked}
+            />
+            <Text>I agree to the </Text>
+            <Button
+              color="#5177FF"
+              onPress={handleTos}
+              style={{ marginLeft: -15 }}
+              uppercase={false}>
+              Terms of Service
+            </Button>
+          </View>
           <Button
             color="#5177FF"
-            icon={() => <Icon color="#FFFFFF" name="facebook-box" size={18} />}
+            disabled={!checked}
+            icon={() => <Icon color="#FFFFFF" name="facebook" size={18} />}
             loading={isLoading.some((item) => item.loadingType === ATTEMPT_LOGIN)}
             mode="contained"
             onPress={login}
@@ -97,16 +132,19 @@ const Auth = ({ navigation }) => {
             Log In With Facebook
           </Button>
           {Platform.OS === 'ios' && (
-            <AppleAuthentication.AppleAuthenticationButton
-              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-              cornerRadius={22}
-              style={[styles.button, { height: 46, marginBottom: 8 }]}
+            <Button
+              color="#5177FF"
+              disabled={!checked}
+              icon={() => <Icon color="#FFFFFF" name="apple" size={18} />}
+              mode="contained"
               onPress={handleAppleLogin}
-            />
+              style={[styles.button, { marginBottom: 8 }]}>
+              Log In With Apple
+            </Button>
           )}
           <Button
             color="#5177FF"
+            disabled={!checked}
             icon={() => <Icon color="#FFFFFF" name="mail" size={18} />}
             mode="contained"
             onPress={handleEmailLogin}

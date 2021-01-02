@@ -11,10 +11,12 @@ import {
   FETCH_FEED_SUCCESS,
   FETCH_SINGLE_POST_SUCCESS,
   REFRESH_FEED,
+  REPORT_POST_SUCCESS,
   SET_AUTH_USER,
   SET_CURRENT_LOCATION,
   SET_FEED_TYPE,
   SET_POSTS,
+  UPDATE_USER_SUCCESS,
 } from '../actions/types'
 import { fetchFeedAction } from '../actions/feed'
 
@@ -145,6 +147,10 @@ function* onRefreshFeed() {
   }
 }
 
+function* onReportPostSuccess() {
+  yield fetchFeed()
+}
+
 function* onSetAuthUser() {
   const authUser = yield select(getAuthUser)
 
@@ -169,6 +175,10 @@ function* onSetFeedType(action) {
   }
 }
 
+function* onUpdateUserSuccess() {
+  yield fetchFeed()
+}
+
 export function* watchFeed() {
   yield takeEvery(BLOCK_USER_SUCCESS, onBlockUserSuccess)
   yield takeEvery(CHEERS_POST_SUCCESS, onCheersPostSuccess)
@@ -178,7 +188,9 @@ export function* watchFeed() {
   yield takeEvery(FETCH_FEED_SUCCESS, onFetchFeedSuccess)
   yield takeEvery(FETCH_SINGLE_POST_SUCCESS, onFetchSinglePostSuccess)
   yield takeEvery(REFRESH_FEED, onRefreshFeed)
+  yield takeEvery(REPORT_POST_SUCCESS, onReportPostSuccess)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)
   yield takeEvery(SET_CURRENT_LOCATION, onSetCurrentLocation)
   yield takeEvery(SET_FEED_TYPE, onSetFeedType)
+  yield takeEvery(UPDATE_USER_SUCCESS, onUpdateUserSuccess)
 }

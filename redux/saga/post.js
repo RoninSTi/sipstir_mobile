@@ -9,6 +9,8 @@ import {
   CREATE_POST_SUCCESS,
   FETCH_PLACE_SUCCESS,
   REFRESH_DETAIL,
+  REPORT_POST_SUCCESS,
+  SET_DROPDOWN_DATA,
   SET_POST_LOCATION,
   SET_SHOW_NOTIFICATION_MODAL,
   SET_SHOULD_SCROLL_UP,
@@ -98,9 +100,25 @@ function* onRefreshDetail(action) {
   yield put(fetchSinglePostAction({ postId, token: authUser.token, userId: authUser.id }))
 }
 
+function* onReportPostSuccess() {
+  const message = 'An admin  will review the post and remove if a violation has been found.'
+
+  const title = 'Post reported successfully'
+
+  yield put({
+    type: SET_DROPDOWN_DATA,
+    payload: {
+      alertType: 'success',
+      message,
+      title,
+    },
+  })
+}
+
 export function* watchPost() {
   yield takeEvery(ASK_NOTIFICATION_PERMISSION, onAskNotificationPermission)
   yield takeEvery(CREATE_POST_SUCCESS, onCreatePostSuccess)
   yield takeEvery(FETCH_PLACE_SUCCESS, onFetchPlaceSuccess)
   yield takeEvery(REFRESH_DETAIL, onRefreshDetail)
+  yield takeEvery(REPORT_POST_SUCCESS, onReportPostSuccess)
 }
