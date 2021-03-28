@@ -149,20 +149,22 @@ const GuessInterstitial = ({ navigation }) => {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{`🎉 +${correct ? 5 : 1} Points`}</Text>
       </View>
-      <View style={styles.adContainer}>
-        <View style={styles.imageContainer}>
-          <AccountImage account={account} height={IMAGE_HEIGHT} width={IMAGE_WIDTH} />
-          <Text style={styles.sponsored}>SPONSORED</Text>
-          <View style={styles.accountContainer}>
-            <Text style={styles.accountName}>{account.name}</Text>
-            <Text style={styles.accountVicinity}>{account.location.vicinity}</Text>
+      {reward && (
+        <View style={styles.adContainer}>
+          <View style={styles.imageContainer}>
+            <AccountImage account={account} height={IMAGE_HEIGHT} width={IMAGE_WIDTH} />
+            <Text style={styles.sponsored}>SPONSORED</Text>
+            <View style={styles.accountContainer}>
+              <Text style={styles.accountName}>{account.name}</Text>
+              <Text style={styles.accountVicinity}>{account.location.vicinity}</Text>
+            </View>
+          </View>
+          <View style={styles.adTextContainer}>
+            <Text style={styles.adTitle}>{reward.title}</Text>
+            <Text style={styles.adMessage}>{reward.message}</Text>
           </View>
         </View>
-        <View style={styles.adTextContainer}>
-          <Text style={styles.adTitle}>{reward.title}</Text>
-          <Text style={styles.adMessage}>{reward.message}</Text>
-        </View>
-      </View>
+      )}
       <View style={styles.pointsContainer}>
         <Text style={styles.points}>
           You now have <Text style={styles.pointsNumber}>{points}</Text> points!

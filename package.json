@@ -5,6 +5,7 @@
     "android": "expo start --android",
     "build:android": "expo build:android -t app-bundle",
     "build-staging:android": "expo build:android -t app-bundle --release-channel staging",
+    "build-prod:android": "expo build:android -t app-bundle --release-channel prod",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
