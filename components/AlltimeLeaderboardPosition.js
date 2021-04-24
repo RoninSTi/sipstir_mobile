@@ -24,7 +24,11 @@ const AlltimeLeaderboardPosition = ({ textStyle }) => {
     }
   }
 
-  return <Text style={textStyle}>{positionText()}</Text>
+  return (
+    <Text numberOfLines={1} style={textStyle}>
+      {positionText()}
+    </Text>
+  )
 }
 
 AlltimeLeaderboardPosition.defaultProps = {

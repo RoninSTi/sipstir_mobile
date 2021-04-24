@@ -6,7 +6,7 @@ import { Dimensions, Image, Platform, View } from 'react-native'
 const BackgroundHeader = () => {
   const headerHeight = Platform.select({
     android: 78,
-    ios: 88,
+    ios: 93,
   })
 
   return (

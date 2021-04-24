@@ -12,7 +12,7 @@ const ENV = {
     },
   },
   dev: {
-    apiUrl: 'https://sipstir-api-prod.herokuapp.com/',
+    apiUrl: 'https://6807314073ee.ngrok.io',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },

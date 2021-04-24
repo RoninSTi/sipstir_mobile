@@ -64,28 +64,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 28,
   },
-  statsContainer: {
-    flexDirection: 'row',
-    marginTop: 28,
-    paddingTop: 28,
-    paddingHorizontal: 28,
+  positionContainer: {
+    alignItems: 'center',
     borderTopColor: 'rgba(0, 0, 0, 0.05)',
     borderTopWidth: 1,
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 28,
+    paddingTop: 28,
+    width: '100%',
+  },
+  statsContainer: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 28,
   },
   statContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 28,
-    flex: 1,
   },
   statLabel: {
     color: '#CACACA',
+    flex: 1,
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: -0.5,
   },
   statTitle: {
     color: '#000000',
+    flex: 1,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 7,
@@ -130,7 +140,13 @@ const ProfileHeader = () => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <PhotoUploader
+        onProgress={handleProgress}
+        onUploadComplete={handleUploadComplete}
+        photoDimensions={{
+          height: 300,
+          width: 300,
+        }}>
         <View style={styles.avatarContainer}>
           {user.avatar ? (
             <Image style={styles.avatar} source={{ uri: user.avatar }} />
@@ -147,28 +163,24 @@ const ProfileHeader = () => {
             </View>
           )}
         </View>
-        <PhotoUploader
-          onProgress={handleProgress}
-          onUploadComplete={handleUploadComplete}
-          photoDimensions={{
-            height: 300,
-            width: 300,
-          }}
-          style={styles.button}>
+        <View style={styles.button}>
           <Icon
             color="#FFFFFF"
             name="camera"
             size={18}
             style={{ marginLeft: 1, marginTop: 2, padding: 0 }}
           />
-        </PhotoUploader>
-      </View>
+        </View>
+      </PhotoUploader>
       <View style={styles.usernameContainer}>
         <Text style={styles.username}>{user.username}</Text>
       </View>
-      <View style={styles.statsContainer}>
-        <View style={styles.statContainer}>
-          <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
+      <View style={[styles.positionContainer, {}]}>
+        <View style={[styles.statContainer, { flex: 0.6 }]}>
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
             <Image
               source={require('../assets/images/icon_wreath_left.png')}
               style={{ height: 46, width: 38 }}
@@ -185,19 +197,21 @@ const ProfileHeader = () => {
             />
           </View>
         </View>
-        <View style={styles.statContainer}>
+      </View>
+      <View style={styles.statsContainer}>
+        <View style={[styles.statContainer, { flex: 1 }]}>
           <Text style={styles.statTitle}>{user.points}</Text>
           <Text adjustsFontSizeToFit numberOfLines={1} style={styles.statLabel}>
             POINTS
           </Text>
         </View>
-        <View style={styles.statContainer}>
+        <View style={[styles.statContainer, { flex: 1 }]}>
           <Text style={styles.statTitle}>{user.pointsBalance}</Text>
           <Text adjustsFontSizeToFit numberOfLines={1} style={styles.statLabel}>
             BALANCE
           </Text>
         </View>
-        <View style={styles.statContainer}>
+        <View style={[styles.statContainer, { flex: 1 }]}>
           <Text style={styles.statTitle}>{myPosts.length}</Text>
           <Text adjustsFontSizeToFit numberOfLines={1} style={styles.statLabel}>
             {`POST${myPosts.length === 1 ? '' : 'S'}`}

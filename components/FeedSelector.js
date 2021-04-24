@@ -87,20 +87,13 @@ const FeedSelector = ({ offsetY }) => {
   const handleOnPress = (idx) => {
     setSelectedIndex(idx)
 
-    let feedType = 'main'
-
-    switch (idx) {
-      case 1:
-        feedType = 'following'
-        break
-      case 2:
-        feedType = 'nearby'
-        break
-      default:
-        break
+    const feedTypes = {
+      0: 'main',
+      1: 'following',
+      2: 'nearby',
     }
 
-    dispatch({ type: SET_FEED_TYPE, payload: feedType })
+    dispatch({ type: SET_FEED_TYPE, payload: feedTypes[idx] })
 
     Animated.spring(index, {
       toValue: idx,

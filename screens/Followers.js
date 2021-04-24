@@ -25,7 +25,9 @@ const ListEmptyComponent = () => (
 )
 
 const Followers = () => {
-  const users = useSelector((state) => state.user?.followers)
+  const users = useSelector((state) => {
+    return state.user?.followers
+  })
 
   return (
     <View style={styles.container}>

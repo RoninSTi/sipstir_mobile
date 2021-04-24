@@ -41,12 +41,14 @@ const TabBar = ({ descriptors, navigation, state }) => {
 
     if (key.startsWith('Profile')) {
       switch (currentRouteName) {
-        case 'Following':
-        case 'ActivityScreen':
-        case 'Followers':
-        case 'MyFeedScreen':
         case 'ActivityPostDetail':
+        case 'ActivityScreen':
+        case 'Blocked':
+        case 'Following':
+        case 'Followers':
         case 'MyFeedDetail':
+        case 'MyFeedScreen':
+        case 'RewardRedemptionsScreen':
           popToTop()
           break
         default:
