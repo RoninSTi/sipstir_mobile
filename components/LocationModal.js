@@ -80,7 +80,7 @@ const LocationModal = () => {
             </Button>
             <Button
               color="#5177FF"
-              loading={isLoading.some((item) => item.action === 'locationAsk')}
+              loading={isLoading.some(({ action }) => action === 'locationAsk')}
               mode="contained"
               onPress={onPressYes}
               style={styles.yesButton}>

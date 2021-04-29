@@ -12,7 +12,7 @@ const ENV = {
     },
   },
   dev: {
-    apiUrl: 'https://6807314073ee.ngrok.io',
+    apiUrl: 'http://0.0.0.0:8080',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },

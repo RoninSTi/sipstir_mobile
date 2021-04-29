@@ -18,9 +18,11 @@ const getCurrentLocation = (state) => state.places.currentLocation
 function* onSetAuthUser() {
   const authUser = yield select(getAuthUser)
 
+  const username = authUser?.username
+
   const id = authUser?.id
 
-  if (!id) return
+  if (!username) return
 
   yield put({ type: CHECK_LOCATION, payload: {} })
 

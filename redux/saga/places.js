@@ -14,6 +14,7 @@ import {
   FETCH_FEED_SUCCESS,
   FETCH_PLACES_SUCCESS,
   NO_LOCATION,
+  PERMISSION_LOADING,
   SELECT_PLACE,
   SET_ASKED_LOCATION_PERMISSION,
   SET_CURRENT_LOCATION,
@@ -22,6 +23,7 @@ import {
   SET_PLACES_SEARCH_STRING,
   SET_PLACES,
   SET_SHOW_LOCATION_MODAL,
+  UPDATE_LOADING,
 } from '../actions/types'
 import { fetchPlaceAction, fetchPlacesAction } from '../actions/places'
 
@@ -98,6 +100,14 @@ function* getLocationPermissionStatus() {
 
 function* onAskLocationPermission() {
   try {
+    yield put({
+      type: UPDATE_LOADING,
+      payload: {
+        loadingAction: 'set',
+        loadingType: PERMISSION_LOADING,
+      },
+    })
+
     const { status } = yield Permissions.askAsync(Permissions.LOCATION)
 
     yield processPermissionStatus(status)
@@ -112,6 +122,14 @@ function* onAskLocationPermission() {
     yield put({
       type: CAUGHT_ERROR,
       error,
+    })
+  } finally {
+    yield put({
+      type: UPDATE_LOADING,
+      payload: {
+        loadingAction: 'unset',
+        loadingType: PERMISSION_LOADING,
+      },
     })
   }
 }
