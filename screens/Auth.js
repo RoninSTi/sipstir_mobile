@@ -1,7 +1,9 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable global-require */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Image, ImageBackground, Platform, StyleSheet, Text, View } from 'react-native'
 import { Button, Switch } from 'react-native-paper'
@@ -68,6 +70,18 @@ const Auth = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
+  const checkAgreement = async () => {
+    const agree = await AsyncStorage.getItem('@tos_agreement')
+
+    if (agree === 'agree') {
+      setChecked(true)
+    }
+  }
+
+  useEffect(() => {
+    checkAgreement()
+  }, [checkAgreement])
+
   const { navigate } = navigation
 
   const login = () => {
@@ -82,6 +96,20 @@ const Auth = ({ navigation }) => {
 
   const handleEmailLogin = () => {
     navigate('AuthEmail')
+  }
+
+  const storeChecked = async (valueToStore) => {
+    await AsyncStorage.setItem('@tos_agreement', valueToStore ? 'agree' : 'disagree')
+  }
+
+  const handleSwitchChange = () => {
+    setChecked((prev) => {
+      const newValue = !prev
+
+      storeChecked(newValue)
+
+      return newValue
+    })
   }
 
   const handleTos = () => {
@@ -107,9 +135,7 @@ const Auth = ({ navigation }) => {
           <View style={styles.tosContainer}>
             <Switch
               color="#5177FF"
-              onValueChange={() => {
-                setChecked((prev) => !prev)
-              }}
+              onValueChange={handleSwitchChange}
               style={{
                 marginRight: 8,
               }}
