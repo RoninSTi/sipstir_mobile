@@ -1,16 +1,17 @@
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { ActivityIndicator, Avatar } from 'react-native-paper'
+import { Avatar } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { updateUserAction } from '../redux/actions/user'
+import { useNavigation } from '@react-navigation/native'
 
 import AlltimeLeaderboardPosition from './AlltimeLeaderboardPosition'
-import PhotoUploader from './PhotoUploader'
+
+import { SET_AVATAR, SET_USERNAME } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
   activityContainer: {
@@ -64,6 +65,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 28,
   },
+  editButton: {
+    marginTop: 7,
+  },
+  infoContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
   positionContainer: {
     alignItems: 'center',
     borderTopColor: 'rgba(0, 0, 0, 0.05)',
@@ -113,40 +122,36 @@ const styles = StyleSheet.create({
 const ProfileHeader = () => {
   const dispatch = useDispatch()
 
-  const authUser = useSelector((state) => state.auth.user)
-
   const user = useSelector((state) => state.user)
 
   const myPosts = useSelector((state) => state.myPosts.posts)
 
-  const [isUploading, setIsUploading] = useState(false)
+  const { navigate } = useNavigation()
 
-  const handleUploadComplete = ({ url }) => {
-    dispatch(updateUserAction({ avatar: url, token: authUser.token, userId: user.id }))
-  }
+  const handleOnPressEdit = () => {
+    dispatch({
+      type: SET_USERNAME,
+      payload: user.username,
+    })
 
-  const handleProgress = ({ progressData }) => {
-    switch (progressData) {
-      case progressData > 0 && progressData < 100 && !isUploading:
-        setIsUploading(true)
-        break
-      case progressData === 100 && isUploading:
-        setIsUploading(false)
-        break
-      default:
-        break
+    dispatch({
+      type: SET_AVATAR,
+      payload: user.avatar,
+    })
+
+    const params = {
+      isEditing: true,
     }
+
+    navigate('EditProfile', {
+      screen: 'EditProfileScreen',
+      params,
+    })
   }
 
   return (
     <View style={styles.container}>
-      <PhotoUploader
-        onProgress={handleProgress}
-        onUploadComplete={handleUploadComplete}
-        photoDimensions={{
-          height: 300,
-          width: 300,
-        }}>
+      <View style={styles.infoContainer}>
         <View style={styles.avatarContainer}>
           {user.avatar ? (
             <Image style={styles.avatar} source={{ uri: user.avatar }} />
@@ -157,23 +162,15 @@ const ProfileHeader = () => {
               style={styles.avatar}
             />
           )}
-          {isUploading && (
-            <View style={styles.activityContainer}>
-              <ActivityIndicator size="small" color="#D7D0CF" />
-            </View>
-          )}
         </View>
-        <View style={styles.button}>
-          <Icon
-            color="#FFFFFF"
-            name="camera"
-            size={18}
-            style={{ marginLeft: 1, marginTop: 2, padding: 0 }}
-          />
+        <View style={styles.usernameContainer}>
+          <Text style={styles.username}>{user.username}</Text>
         </View>
-      </PhotoUploader>
-      <View style={styles.usernameContainer}>
-        <Text style={styles.username}>{user.username}</Text>
+        <View style={styles.editButton}>
+          <Icon.Button name="pencil" backgroundColor="#5177FF" onPress={handleOnPressEdit}>
+            Edit Profile
+          </Icon.Button>
+        </View>
       </View>
       <View style={[styles.positionContainer, {}]}>
         <View style={[styles.statContainer, { flex: 0.6 }]}>

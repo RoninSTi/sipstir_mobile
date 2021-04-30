@@ -8,6 +8,7 @@ import {
   CREATE_COMMENT_SUCCESS,
   CREATE_GUESS_SUCCESS,
   CREATE_POST_SUCCESS,
+  DELETE_POST_SUCCESS,
   FETCH_FEED_SUCCESS,
   FETCH_SINGLE_POST_SUCCESS,
   REFRESH_FEED,
@@ -111,6 +112,10 @@ function* onCreatePostSuccess(action) {
   yield replacePost(post)
 }
 
+function* onDeletePostSuccess() {
+  yield fetchFeed()
+}
+
 function* onFetchFeedSuccess(action) {
   const { id } = yield select(getAuthUser)
   const { url } = action.meta.previousAction.payload.request
@@ -185,6 +190,7 @@ export function* watchFeed() {
   yield takeEvery(CREATE_COMMENT_SUCCESS, onCreateCommentSuccess)
   yield takeEvery(CREATE_GUESS_SUCCESS, onCreateGuessSuccess)
   yield takeEvery(CREATE_POST_SUCCESS, onCreatePostSuccess)
+  yield takeEvery(DELETE_POST_SUCCESS, onDeletePostSuccess)
   yield takeEvery(FETCH_FEED_SUCCESS, onFetchFeedSuccess)
   yield takeEvery(FETCH_SINGLE_POST_SUCCESS, onFetchSinglePostSuccess)
   yield takeEvery(REFRESH_FEED, onRefreshFeed)

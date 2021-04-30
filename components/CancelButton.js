@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import { useNavigation } from '@react-navigation/native'
 
-import { Button } from 'react-native-paper'
+import { IconButton } from 'react-native-paper'
 
-const CancelButton = ({ onPress, title }) => {
+const CancelButton = ({ onPress }) => {
   const { dangerouslyGetParent } = useNavigation()
 
   const handleOnPress = () => {
@@ -14,25 +14,15 @@ const CancelButton = ({ onPress, title }) => {
     dangerouslyGetParent()?.goBack()
   }
 
-  return (
-    <Button
-      color="#FFFFFF"
-      labelStyle={{ fontSize: 18, letterSpacing: 0 }}
-      onPress={handleOnPress}
-      uppercase={false}>
-      {title}
-    </Button>
-  )
+  return <IconButton color="#FFFFFF" icon="window-close" size={24} onPress={handleOnPress} />
 }
 
 CancelButton.defaultProps = {
   onPress: () => {},
-  title: 'Cancel',
 }
 
 CancelButton.propTypes = {
   onPress: PropTypes.func,
-  title: PropTypes.string,
 }
 
 export default CancelButton

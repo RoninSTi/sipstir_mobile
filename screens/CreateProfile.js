@@ -4,15 +4,26 @@
 /* eslint-disable global-require */
 import React, { useState } from 'react'
 
-import { Dimensions, Image, ImageBackground, StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  Dimensions,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import { Avatar, Button, ActivityIndicator } from 'react-native-paper'
 
 import { useDispatch, useSelector } from 'react-redux'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import { StatusBar } from 'expo-status-bar'
+import { useRoute } from '@react-navigation/native'
 
 import { CREATE_PROFILE, SET_AVATAR, SET_USERNAME } from '../redux/actions/types'
 import { createProfileAction } from '../redux/actions/createProfile'
+import { updateUserAction } from '../redux/actions/user'
 
 import PhotoUploader from '../components/PhotoUploader'
 
@@ -92,6 +103,10 @@ const styles = StyleSheet.create({
 const CreateProfile = () => {
   const dispatch = useDispatch()
 
+  const route = useRoute()
+
+  const isEditing = route.params?.isEditing
+
   const username = useSelector((state) => state.createProfile.username)
 
   const avatar = useSelector((state) => state.createProfile.avatar)
@@ -122,6 +137,10 @@ const CreateProfile = () => {
       type: SET_AVATAR,
       payload: url,
     })
+
+    if (isEditing) {
+      dispatch(updateUserAction({ avatar: url, token: authUser.token, userId: authUser.id }))
+    }
   }
 
   const handleProgress = ({ progressData }) => {
@@ -143,12 +162,19 @@ const CreateProfile = () => {
 
   const showLoadingIndicator = isLoading.some((item) => item.loadingType === CREATE_PROFILE)
 
+  const deviceAdjustment = Platform.select({
+    android: 78,
+    ios: 93,
+  })
+
+  const backgroundHeight = isEditing ? HEIGHT - deviceAdjustment : HEIGHT
+
   return (
     <View>
-      <StatusBar style="dark" />
+      <StatusBar style={isEditing ? 'light' : 'dark'} />
       <ImageBackground
         source={require('../assets/images/background.png')}
-        style={{ width: WIDTH, height: HEIGHT }}>
+        style={{ width: WIDTH, height: backgroundHeight }}>
         <View style={styles.container}>
           <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
             <Text style={styles.avatarText}>YOUR AVATAR</Text>
@@ -191,15 +217,17 @@ const CreateProfile = () => {
             style={styles.input}
             value={username}
           />
-          <Button
-            color="#5177FF"
-            disabled={usernameButtonDisabled}
-            loading={showLoadingIndicator}
-            mode="contained"
-            onPress={onPressContinue}
-            style={styles.button}>
-            Continue
-          </Button>
+          {!isEditing && (
+            <Button
+              color="#5177FF"
+              disabled={usernameButtonDisabled}
+              loading={showLoadingIndicator}
+              mode="contained"
+              onPress={onPressContinue}
+              style={styles.button}>
+              Continue
+            </Button>
+          )}
         </View>
         <KeyboardSpacer />
       </ImageBackground>

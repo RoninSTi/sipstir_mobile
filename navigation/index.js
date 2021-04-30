@@ -9,6 +9,7 @@ import BottomTabNavigator from './BottomTabNavigator'
 import BusinessDetailStack from './BusinessDetailStack'
 import CreateStack from './CreateStack'
 import GuessStack from './GuessStack'
+import EditProfileStack from './EditProfileStack'
 import LinkingConfiguration from './LinkingConfiguration'
 
 import Auth from '../screens/Auth'
@@ -88,6 +89,7 @@ function RootNavigator() {
       <Stack.Screen name="Create" component={CreateStack} />
       <Stack.Screen name="Guess" component={GuessStack} />
       <Stack.Screen name="Zoom" component={ZoomedImageScreen} />
+      <Stack.Screen name="EditProfile" component={EditProfileStack} />
     </Stack.Navigator>
   )
 }

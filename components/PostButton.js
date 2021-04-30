@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Button } from 'react-native-paper'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { createPostAction } from '../redux/actions/post'
 import { CREATE_POST } from '../redux/actions/types'
 
@@ -40,12 +41,11 @@ const PostButton = () => {
   return (
     <Button
       color="#FFFFFF"
-      labelStyle={{ fontSize: 18, letterSpacing: 0 }}
+      icon={() => <Icon color="#FFF" name="plus" size={24} />}
       loading={loading}
       onPress={onPress}
-      uppercase={false}>
-      Post
-    </Button>
+      uppercase={false}
+    />
   )
 }
 

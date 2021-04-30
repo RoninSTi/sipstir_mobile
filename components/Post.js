@@ -20,7 +20,7 @@ import {
 import { Menu } from 'react-native-paper'
 import { LongPressGestureHandler, State } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { reportPostAction } from '../redux/actions/post'
+import { deletePostAction, reportPostAction } from '../redux/actions/post'
 import { ATTEMPT_GUESS } from '../redux/actions/types'
 
 import FeedPostFooter from './FeedPostFooter'
@@ -75,9 +75,9 @@ const Post = ({ detailPath, isDetail, post }) => {
 
   const { showActionSheetWithOptions } = useActionSheet()
 
-  const onPress = () => {
-    const isOwner = post.createdById === user.id
+  const isOwner = post.createdById === user.id
 
+  const onPress = () => {
     const navigateToDetail = isOwner || post.isGuessed || post.revealed
 
     const params = {
@@ -92,8 +92,8 @@ const Post = ({ detailPath, isDetail, post }) => {
     }
   }
 
-  const handleDeletePost = () => {
-    // deletePost(post.id);
+  const handleOnPressDelete = () => {
+    dispatch(deletePostAction({ postId: post.id, token }))
   }
 
   const handleOnDismissMenu = () => {
@@ -127,7 +127,7 @@ const Post = ({ detailPath, isDetail, post }) => {
       (buttonIndex) => {
         switch (buttonIndex) {
           case 0:
-            handleDeletePost()
+            handleOnPressDelete()
             break
           default:
             break
@@ -189,6 +189,7 @@ const Post = ({ detailPath, isDetail, post }) => {
                   </TouchableOpacity>
                 }>
                 <Menu.Item onPress={handleOnPressReportPost} title="Report post as offensive" />
+                {isOwner && <Menu.Item onPress={handleOnPressDelete} title="Delete post" />}
               </Menu>
             </View>
           </View>

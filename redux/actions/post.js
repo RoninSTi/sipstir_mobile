@@ -1,6 +1,7 @@
 import {
   CHEERS_POST,
   CREATE_POST,
+  DELETE_POST,
   FETCH_SINGLE_POST,
   FETCH_POST_CHEERS,
   REPORT_POST,
@@ -32,6 +33,22 @@ export const createPostAction = ({ token, ...data }) => ({
       method: 'post',
       url: 'post',
       data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    setLoading: {
+      meta: null,
+    },
+  },
+})
+
+export const deletePostAction = ({ postId, token }) => ({
+  type: DELETE_POST,
+  payload: {
+    request: {
+      method: 'delete',
+      url: `post/${postId}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
