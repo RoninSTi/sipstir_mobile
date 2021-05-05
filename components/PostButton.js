@@ -2,8 +2,7 @@ import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Button } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { ActivityIndicator, IconButton } from 'react-native-paper'
 import { createPostAction } from '../redux/actions/post'
 import { CREATE_POST } from '../redux/actions/types'
 
@@ -24,7 +23,7 @@ const PostButton = () => {
 
   const allowPost = useSelector((state) => !!(state.createPost.location && state.createPost.image))
 
-  const onPress = () => {
+  const handleOnPress = () => {
     if (loading || !allowPost) return
 
     dispatch(
@@ -38,14 +37,10 @@ const PostButton = () => {
     )
   }
 
-  return (
-    <Button
-      color="#FFFFFF"
-      icon={() => <Icon color="#FFF" name="plus" size={24} />}
-      loading={loading}
-      onPress={onPress}
-      uppercase={false}
-    />
+  return loading ? (
+    <ActivityIndicator color="#FFFFFF" size={24} style={{ marginRight: 10 }} />
+  ) : (
+    <IconButton color="#FFFFFF" icon="plus" size={24} onPress={handleOnPress} />
   )
 }
 

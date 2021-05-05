@@ -113,7 +113,6 @@ const AuthEmail = ({ navigation }) => {
             value={email}
           />
           <TextInput
-            autoFocus
             onChangeText={onChangePassword}
             onSubmitEditing={handleSubmit}
             placeholder="Password"

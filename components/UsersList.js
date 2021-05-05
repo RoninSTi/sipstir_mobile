@@ -85,7 +85,6 @@ const UsersList = ({ users, ListEmptyComponent }) => {
 
   return (
     <FlatList
-      contentContainerStyle={{ flex: 1 }}
       data={users}
       extraData={[isLoading]}
       keyExtractor={keyExtractor}

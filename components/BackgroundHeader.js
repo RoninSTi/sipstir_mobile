@@ -3,10 +3,14 @@ import React from 'react'
 
 import { Dimensions, Image, Platform, View } from 'react-native'
 
+import { getStatusBarHeight } from 'react-native-iphone-x-helper'
+
 const BackgroundHeader = () => {
+  const statusBarHeight = getStatusBarHeight()
+
   const headerHeight = Platform.select({
     android: 78,
-    ios: 93,
+    ios: statusBarHeight > 20 ? 90 : 64,
   })
 
   return (

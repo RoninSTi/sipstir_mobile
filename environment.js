@@ -12,7 +12,8 @@ const ENV = {
     },
   },
   dev: {
-    apiUrl: 'http://0.0.0.0:8080',
+    apiUrl: 'https://sipstir-api-prod.herokuapp.com/',
+    // apiUrl: 'http://0.0.0.0:8080',
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },

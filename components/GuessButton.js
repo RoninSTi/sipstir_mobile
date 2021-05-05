@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { Keyboard } from 'react-native'
-import { Button } from 'react-native-paper'
+import { ActivityIndicator, IconButton } from 'react-native-paper'
 import { createGuessAction } from '../redux/actions/guess'
 import { CREATE_GUESS } from '../redux/actions/types'
 
@@ -19,9 +19,9 @@ const GuessButton = () => {
 
   const isLoading = useSelector((state) => state.ui.isLoading)
 
-  const loading = isLoading.some((item) => item.loadingType === CREATE_GUESS)
+  const loading = isLoading.some(({ loadingType }) => loadingType === CREATE_GUESS)
 
-  const onPress = () => {
+  const handleOnPress = () => {
     Keyboard.dismiss()
 
     if (loading) return
@@ -29,15 +29,15 @@ const GuessButton = () => {
     dispatch(createGuessAction({ createdById, placeId, postId, text, token }))
   }
 
-  return (
-    <Button
+  return loading ? (
+    <ActivityIndicator color="#FFFFFF" size={24} style={{ marginRight: 10 }} />
+  ) : (
+    <IconButton
       color="#FFFFFF"
-      labelStyle={{ fontSize: 18 }}
-      loading={loading}
-      onPress={onPress}
-      uppercase={false}>
-      Guess
-    </Button>
+      icon="map-marker-question-outline"
+      size={24}
+      onPress={handleOnPress}
+    />
   )
 }
 

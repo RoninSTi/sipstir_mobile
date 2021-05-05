@@ -26,6 +26,7 @@ const GuessStack = () => {
         },
         headerTintColor: '#FFFFFF',
         headerTitleAlign: 'center',
+        headerTitleAllowFontScaling: true,
       }}>
       <Stack.Screen component={GuessSelectLocationScreen} name="GuessSelectLocation" />
       <Stack.Screen

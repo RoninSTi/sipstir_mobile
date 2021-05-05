@@ -164,7 +164,7 @@ const CreateProfile = () => {
 
   const deviceAdjustment = Platform.select({
     android: 78,
-    ios: 93,
+    ios: 90,
   })
 
   const backgroundHeight = isEditing ? HEIGHT - deviceAdjustment : HEIGHT
