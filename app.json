@@ -3,7 +3,7 @@
     "name": "SipStir",
     "slug": "sipstir-mobile",
     "scheme": "sipstir",
-    "version": "1.0.15" ,
+    "version": "1.0.16" ,
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -25,10 +25,10 @@
         }
       },
       "package": "com.sipstir.sipstir",
-      "versionCode": 15
+      "versionCode": 16
     },
     "ios": {
-      "buildNumber": "1.0.15",
+      "buildNumber": "1.0.16",
       "bundleIdentifier": "com.sipstir.sipstir",
       "config": {
         "usesNonExemptEncryption": false
@@ -54,9 +54,9 @@
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "sipstir",
-            "project": "sipstir",
-            "authToken": "7cd9f4b34af94434b1ff782db2b3c2b8c3947f1e27e548d5a7c95cd5e328fe1a"
+            "organization": "barsnap",
+            "project": "barsnap",
+            "authToken": "9215769ed85243a888d2f8b5d1b4cbeb74a19bd69fbc44cc9db47e52927b051c"
           }
         }
       ]

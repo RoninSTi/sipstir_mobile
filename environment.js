@@ -8,7 +8,7 @@ const ENV = {
     },
     reduxLoggerEnabled: false,
     sentry: {
-      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
+      dsn: 'https://456a64e5cf4040b1bfcb6535ed5fb2c2@o353410.ingest.sentry.io/2556954',
     },
   },
   dev: {
@@ -19,7 +19,7 @@ const ENV = {
     },
     reduxLoggerEnabled: true,
     sentry: {
-      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
+      dsn: 'https://456a64e5cf4040b1bfcb6535ed5fb2c2@o353410.ingest.sentry.io/2556954',
     },
   },
   staging: {
@@ -29,7 +29,7 @@ const ENV = {
     },
     reduxLoggerEnabled: false,
     sentry: {
-      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
+      dsn: 'https://456a64e5cf4040b1bfcb6535ed5fb2c2@o353410.ingest.sentry.io/2556954',
     },
   },
   prod: {
@@ -38,7 +38,7 @@ const ENV = {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },
     sentry: {
-      dsn: 'https://050b3fdc48274c2b9d9858dffb41aa13@o446932.ingest.sentry.io/5426218',
+      dsn: 'https://456a64e5cf4040b1bfcb6535ed5fb2c2@o353410.ingest.sentry.io/2556954',
     },
   },
 }

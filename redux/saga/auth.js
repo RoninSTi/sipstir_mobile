@@ -3,10 +3,11 @@ import { put, takeEvery, select } from 'redux-saga/effects'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
+import * as Sentry from 'sentry-expo'
+
 import * as AppleAuthentication from 'expo-apple-authentication'
 import * as Facebook from 'expo-facebook'
 
-import { setUser } from 'sentry-expo'
 import {
   ATTEMPT_APPLE_LOGIN,
   ATTEMPT_LOGIN,
@@ -120,7 +121,7 @@ function* onSetAuthUser() {
 
   yield AsyncStorage.setItem('user', JSON.stringify(user))
 
-  setUser(user)
+  Sentry.Native.setUser(user)
 
   yield put({ type: SET_LOGGED_IN, payload: true })
 }
