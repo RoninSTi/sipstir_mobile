@@ -16,7 +16,7 @@ const PlacesList = ({ onPressListItem, places }) => {
 
   const showLoading = loading && places?.length < 2
 
-  const keyExtractor = (item) => item.place_id
+  const keyExtractor = ({ place_id: placeId }) => placeId
 
   const renderItem = ({ item }) => <PlacesItem onPressListItem={onPressListItem} place={item} />
 

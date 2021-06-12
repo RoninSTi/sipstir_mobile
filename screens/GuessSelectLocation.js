@@ -15,6 +15,7 @@ import PlacesList from '../components/PlacesList'
 
 const NO_IDEA = {
   type: 'NO_GUESS',
+  place_id: 'no-guess',
 }
 
 const GuessSelectLocationScreen = ({ navigation }) => {

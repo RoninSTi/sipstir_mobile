@@ -68,7 +68,7 @@ const LocationDetail = ({ location }) => {
   }
 
   const openUrl = () => {
-    Linking.openURL(url)
+    if (url) Linking.openURL(url)
   }
 
   const DATA = [
@@ -165,7 +165,7 @@ LocationDetail.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    url: PropTypes.string,
     geometry: PropTypes.shape({
       coordinates: PropTypes.arrayOf(PropTypes.any),
     }),
