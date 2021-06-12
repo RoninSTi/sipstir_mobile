@@ -32,7 +32,7 @@ export const fetchPlaceAction = ({ placeId, token }) => ({
   },
 })
 
-export const fetchPlacesAction = ({ includeNoIdea = false, params, url }) => ({
+export const fetchPlacesAction = ({ params, url }) => ({
   type: FETCH_PLACES,
   payload: {
     client: 'googlePlace',
@@ -41,7 +41,6 @@ export const fetchPlacesAction = ({ includeNoIdea = false, params, url }) => ({
       url,
       params,
     },
-    includeNoIdea,
     setLoading: {
       meta: null,
     },

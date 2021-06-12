@@ -22,9 +22,6 @@ const PostSelectLocationScreen = () => {
     useCallback(() => {
       dispatch({
         type: CHECK_LOCATION,
-        payload: {
-          includeNoIdea: false,
-        },
       })
     }, [dispatch])
   )

@@ -165,7 +165,11 @@ const Post = ({ detailPath, isDetail, post }) => {
                   source={{ uri: image }}
                 />
                 {post.revealed && (
-                  <View style={styles.revealedBubble}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    disabled={isDetail}
+                    onPress={onPress}
+                    style={styles.revealedBubble}>
                     <Text style={{ color: '#FFFFFF', fontWeight: '700' }}>Revealed 🎉</Text>
                     <Text style={{ color: '#FFFFFF' }}>
                       <Text style={{ fontWeight: '700' }}>{post.guessesCorrect || 0}</Text> correct
@@ -173,7 +177,7 @@ const Post = ({ detailPath, isDetail, post }) => {
                       {'  '}
                       <Text style={{ fontWeight: '700' }}>{post.guessesWrong || 0}</Text> Wrong 👎
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 )}
               </>
             </TouchableOpacity>

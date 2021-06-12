@@ -106,6 +106,8 @@ function* onAttemptLogout() {
   yield put({ type: LOGOUT })
 
   yield AsyncStorage.removeItem('user')
+
+  Sentry.Native.configureScope((scope) => scope.setUser(null))
 }
 
 function* onSetAuthUser() {

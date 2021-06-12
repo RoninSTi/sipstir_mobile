@@ -3,7 +3,7 @@
     "name": "SipStir",
     "slug": "sipstir-mobile",
     "scheme": "sipstir",
-    "version": "1.0.16" ,
+    "version": "1.0.17" ,
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -25,10 +25,10 @@
         }
       },
       "package": "com.sipstir.sipstir",
-      "versionCode": 16
+      "versionCode": 17
     },
     "ios": {
-      "buildNumber": "1.0.16",
+      "buildNumber": "1.0.17",
       "bundleIdentifier": "com.sipstir.sipstir",
       "config": {
         "usesNonExemptEncryption": false

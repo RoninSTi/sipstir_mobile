@@ -13,6 +13,10 @@ import { CHECK_LOCATION, SELECT_PLACE, SET_PLACES_SEARCH_STRING } from '../redux
 import CaptionInput from '../components/CaptionInput'
 import PlacesList from '../components/PlacesList'
 
+const NO_IDEA = {
+  type: 'NO_GUESS',
+}
+
 const GuessSelectLocationScreen = ({ navigation }) => {
   const dispatch = useDispatch()
 
@@ -24,7 +28,7 @@ const GuessSelectLocationScreen = ({ navigation }) => {
     state.feed.posts[state.feed.feedType].find((p) => p.id === postId)
   )
 
-  const places = useSelector((state) => state.places.places)
+  const fetchedPlaces = useSelector((state) => state.places.places)
 
   const { navigate } = navigation
 
@@ -32,9 +36,6 @@ const GuessSelectLocationScreen = ({ navigation }) => {
     useCallback(() => {
       dispatch({
         type: CHECK_LOCATION,
-        payload: {
-          includeNoIdea: true,
-        },
       })
     }, [])
   )
@@ -61,9 +62,11 @@ const GuessSelectLocationScreen = ({ navigation }) => {
     dispatch({ type: SET_PLACES_SEARCH_STRING, payload: text })
   }
 
+  const places = [NO_IDEA, ...fetchedPlaces]
+
   return (
     <View style={{ flex: 1 }}>
-      <PlacesList includeNoIdea onPressListItem={onPressListItem} places={places} />
+      <PlacesList onPressListItem={onPressListItem} places={places} />
       <CaptionInput
         autoFocus
         backgroundColor="#F3EBEA"

@@ -17,7 +17,7 @@ const ENV = {
     google: {
       placeApiKey: 'AIzaSyBpg9hQgGtVsvKLZJIwlAvSdlZW6D6RF68',
     },
-    reduxLoggerEnabled: true,
+    reduxLoggerEnabled: false,
     sentry: {
       dsn: 'https://456a64e5cf4040b1bfcb6535ed5fb2c2@o353410.ingest.sentry.io/2556954',
     },

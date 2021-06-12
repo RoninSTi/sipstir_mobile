@@ -18,7 +18,6 @@ import {
   SELECT_PLACE,
   SET_ASKED_LOCATION_PERMISSION,
   SET_CURRENT_LOCATION,
-  SET_INCLUDE_NO_IDEA,
   SET_LOCATION_POSTS,
   SET_PLACES_SEARCH_STRING,
   SET_PLACES,
@@ -31,15 +30,9 @@ import { navigate } from '../../navigation/rootNavigation'
 
 import env from '../../environment'
 
-const NO_IDEA = {
-  type: 'NO_GUESS',
-}
-
 const getAuthUser = (state) => state.auth.user
 
 const getLocation = (state) => state.places.currentLocation
-
-const getIncludeNoIdea = (state) => state.places.includeNoIdea
 
 function* fetchCurrentLocation() {
   const location = yield Location.getCurrentPositionAsync({})
@@ -52,8 +45,6 @@ function* fetchCurrentLocation() {
 
 function* fetchPlaces() {
   const currentLocation = yield select(getLocation)
-
-  const includeNoIdea = yield select(getIncludeNoIdea)
 
   let params = {
     type: 'bar',
@@ -72,7 +63,7 @@ function* fetchPlaces() {
 
   const url = 'textsearch/json'
 
-  yield put(fetchPlacesAction({ includeNoIdea, params, url }))
+  yield put(fetchPlacesAction({ params, url }))
 }
 
 function* processPermissionStatus(status) {
@@ -137,10 +128,6 @@ function* onAskLocationPermission() {
 function* onCheckLocation(action) {
   const askedPermission = yield AsyncStorage.getItem('PERMISSION_LOCATION')
 
-  const { includeNoIdea = false } = action.payload
-
-  yield put({ type: SET_INCLUDE_NO_IDEA, payload: includeNoIdea })
-
   if (askedPermission) {
     yield getLocationPermissionStatus(action)
   } else {
@@ -193,11 +180,9 @@ function onFetchLocationDetailsSuccess(action) {
 }
 
 function* onFetchPlacesSuccess(action) {
-  const { meta, payload } = action
+  const { payload } = action
 
-  const { includeNoIdea } = meta.previousAction.payload
-
-  let posts = includeNoIdea ? [NO_IDEA] : []
+  let posts = []
 
   if (payload.data.results) {
     posts = [...posts, ...payload.data.results]
