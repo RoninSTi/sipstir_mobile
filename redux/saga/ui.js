@@ -73,7 +73,7 @@ function* checkLoading(action) {
 function* onError(action) {
   const { error } = action
 
-  Sentry.Native.captureMessage(error)
+  Sentry.Native.captureException(error)
 
   const title = 'An Error Occurred'
 
