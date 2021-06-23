@@ -12,7 +12,7 @@ import { ATTEMPT_LOGOUT, REFRESH_USER } from '../redux/actions/types'
 import ProfileHeader from '../components/ProfileHeader'
 import { updateUserAction } from '../redux/actions/user'
 
-const VERSION = '1.0.18'
+const VERSION = '1.0.19'
 
 const styles = StyleSheet.create({
   activityContainer: {
