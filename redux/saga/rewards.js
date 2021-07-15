@@ -30,6 +30,7 @@ function* onSetAuthUser() {
 }
 
 function* fetchRewards({ includeLocation, search }) {
+  console.log('fetchRewards')
   const { token } = yield select(getAuthUser)
 
   if (!token) return
