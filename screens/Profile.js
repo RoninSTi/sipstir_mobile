@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { RefreshControl, SectionList, StyleSheet, Text, View } from 'react-native'
 import { List, Switch } from 'react-native-paper'
+import * as Linking from 'expo-linking'
 import { ATTEMPT_LOGOUT, REFRESH_USER } from '../redux/actions/types'
 
 import ProfileHeader from '../components/ProfileHeader'
 import { updateUserAction } from '../redux/actions/user'
 
-const VERSION = '1.0.19'
+const VERSION = '1.0.20'
 
 const styles = StyleSheet.create({
   activityContainer: {
@@ -153,6 +154,19 @@ const ProfileScreen = ({ navigation }) => {
         {
           onPress: () => navigate('RewardRedemptionsScreen'),
           title: 'Reward Redemptions',
+          type: 'button',
+          right: (props) => (
+            <List.Icon
+              {...props}
+              color="#000000"
+              icon="chevron-right"
+              style={{ marginHorizontal: 0, height: 24 }}
+            />
+          ),
+        },
+        {
+          onPress: () => Linking.openURL('https://business.sipstir.app'),
+          title: 'Feature your business',
           type: 'button',
           right: (props) => (
             <List.Icon
