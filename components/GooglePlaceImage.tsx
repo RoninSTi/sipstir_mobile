@@ -1,9 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import { Image, StyleSheet, View, ViewPropTypes } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 
 import env from '../environment'
+import { AccountPhoto } from '../types'
 
 const API_KEY = env.google.placeApiKey
 
@@ -14,7 +14,13 @@ const styles = StyleSheet.create({
   },
 })
 
-const GooglePlaceImage = ({ containerStyle, image, height }) => {
+type Props = {
+  containerStyle: object;
+  image?: AccountPhoto;
+  height: number;
+}
+
+const GooglePlaceImage: React.FC<Props> = ({ containerStyle = {}, image, height = 100 }) => {
   if (!image) return null
 
   const { photo_reference: photoReference } = image
@@ -26,20 +32,6 @@ const GooglePlaceImage = ({ containerStyle, image, height }) => {
       <Image resizeMode="cover" style={styles.image} source={{ uri }} />
     </View>
   )
-}
-
-GooglePlaceImage.defaultProps = {
-  containerStyle: {},
-  image: null,
-  height: 100,
-}
-
-GooglePlaceImage.propTypes = {
-  containerStyle: ViewPropTypes.style,
-  image: PropTypes.shape({
-    photo_reference: PropTypes.string,
-  }),
-  height: PropTypes.number,
 }
 
 export default GooglePlaceImage

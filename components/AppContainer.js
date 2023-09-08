@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar'
 import DropdownAlert from 'react-native-dropdownalert'
 import { Portal } from 'react-native-paper'
 
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import useColorScheme from '../hooks/useColorScheme'
 
 import Navigation from '../navigation'
@@ -39,7 +40,7 @@ const AppContainer = () => {
     dispatch({ type: RESET_DROPDOWN_DATA })
   }
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Navigation colorScheme={colorScheme} />
       <StatusBar style="light" />
       <DropdownAlert closeInterval={10000} onClose={onCloseDropdown} ref={dropdownAlertRef} />
@@ -48,7 +49,7 @@ const AppContainer = () => {
         <LocationModal />
         <NotificationModal />
       </Portal>
-    </>
+    </GestureHandlerRootView>
   )
 }
 

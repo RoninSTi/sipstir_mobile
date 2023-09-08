@@ -1,24 +1,25 @@
 import axios from 'axios'
 
-import env from '../environment';
+import env from '../environment'
 
 const defaultClient = axios.create({
   baseURL: env.apiUrl,
-  timeout: 10000
+  timeout: 10000,
+  withCredentials: true,
 })
 
 const googlePlaceClient = axios.create({
   baseURL: 'https://maps.googleapis.com/maps/api/place/',
-  timeout: 10000
+  timeout: 10000,
 })
 
 const clients = {
   default: {
-    client: defaultClient
+    client: defaultClient,
   },
   googlePlace: {
-    client: googlePlaceClient
-  }
+    client: googlePlaceClient,
+  },
 }
 
 export default clients

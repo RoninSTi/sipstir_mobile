@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-paper'
-import BottomSheet from 'reanimated-bottom-sheet'
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { BLOCK_USER, FOLLOW_USER, CLOSE_FOLLOWTRAY } from '../redux/actions/types'
@@ -15,7 +15,6 @@ const HEIGHT = 325
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
-    height: HEIGHT,
     padding: 14,
   },
   header: {
@@ -37,7 +36,7 @@ const FollowTray = () => {
 
   const bottomSheetRef = useRef(null)
 
-  const snapPoints = useMemo(() => [HEIGHT, 0], [])
+  const snapPoints = useMemo(() => [HEIGHT], [])
 
   const isVisible = useSelector((state) => state.followTray.isVisible)
 
@@ -65,17 +64,13 @@ const FollowTray = () => {
 
   useEffect(() => {
     if (isVisible) {
-      bottomSheetRef.current.snapTo(0)
+      bottomSheetRef.current.expand()
     } else {
-      bottomSheetRef.current.snapTo(1)
+      bottomSheetRef.current.close()
     }
   }, [bottomSheetRef, isVisible])
 
   const handleOnCancel = () => {
-    dispatch({ type: CLOSE_FOLLOWTRAY })
-  }
-
-  const handleOnCloseEnd = () => {
     dispatch({ type: CLOSE_FOLLOWTRAY })
   }
 
@@ -88,7 +83,7 @@ const FollowTray = () => {
   }
 
   const renderContent = () => (
-    <View style={styles.container}>
+    <BottomSheetView style={styles.container}>
       <View style={styles.header}>
         <Avatar size={100} user={user} />
         <Text style={styles.username}>{user?.username}</Text>
@@ -126,18 +121,13 @@ const FollowTray = () => {
           Cancel
         </Button>
       </View>
-    </View>
+    </BottomSheetView>
   )
 
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      borderRadius={28}
-      onCloseEnd={handleOnCloseEnd}
-      initialSnap={1}
-      renderContent={renderContent}
-      snapPoints={snapPoints}
-    />
+    <BottomSheet ref={bottomSheetRef} enablePanDownToClose index={-1} snapPoints={snapPoints}>
+      {renderContent()}
+    </BottomSheet>
   )
 }
 

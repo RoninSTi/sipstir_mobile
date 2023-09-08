@@ -6,12 +6,12 @@ import { useNavigation } from '@react-navigation/native'
 import { IconButton } from 'react-native-paper'
 
 const CancelButton = ({ onPress }) => {
-  const { dangerouslyGetParent } = useNavigation()
+  const navigation = useNavigation()
 
   const handleOnPress = () => {
     if (onPress) onPress()
 
-    dangerouslyGetParent()?.goBack()
+    navigation.goBack()
   }
 
   return <IconButton color="#FFFFFF" icon="window-close" size={24} onPress={handleOnPress} />

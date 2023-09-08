@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { put, takeEvery, select } from 'redux-saga/effects'
 
-import * as Permissions from 'expo-permissions'
-import { Notifications } from 'expo'
+import * as Notifications from 'expo-notifications'
+import * as Device from 'expo-device'
 
 import {
   ASK_NOTIFICATION_PERMISSION,
@@ -26,10 +26,10 @@ const getIsCreatingPost = (state) => state.createPost.isCreatingPost
 
 function* getPushToken() {
   const pushToken = yield Notifications.getExpoPushTokenAsync()
-
   const authUser = yield select(getAuthUser)
-
-  yield put(updateUserAction({ userId: authUser.id, pushToken, token: authUser.token }))
+  yield put(
+    updateUserAction({ userId: authUser.id, pushToken: pushToken.data, token: authUser.token })
+  )
 }
 
 function* processNotificationPermissionStatus(status) {
@@ -45,21 +45,18 @@ function* processNotificationPermissionStatus(status) {
 }
 
 function* checkNotificationPermissions() {
-  const { status } = yield Permissions.getAsync(Permissions.NOTIFICATIONS)
-
+  const { status } = yield Notifications.getPermissionsAsync()
   yield processNotificationPermissionStatus(status)
 }
 
 function* onAskNotificationPermission() {
-  const { status } = yield Permissions.askAsync(Permissions.NOTIFICATIONS)
-
+  const { status } = yield Notifications.requestPermissionsAsync()
   yield processNotificationPermissionStatus(status)
-
   yield put({ type: SET_SHOW_NOTIFICATION_MODAL, payload: false })
 }
 
 function* onCreatePostSuccess() {
-  yield checkNotificationPermissions()
+  if (Device.isDevice) yield checkNotificationPermissions()
 
   navigate('Main', {
     screen: 'Root',

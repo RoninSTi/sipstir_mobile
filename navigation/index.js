@@ -83,7 +83,7 @@ function MainNavigator() {
 
 function RootNavigator() {
   return (
-    <Stack.Navigator mode="modal" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, presentation: 'modal' }}>
       <Stack.Screen name="Main" component={MainNavigator} />
       <Stack.Screen name="Business" component={BusinessDetailStack} />
       <Stack.Screen name="Create" component={CreateStack} />

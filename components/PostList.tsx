@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
 
 import {
   Animated,
   Dimensions,
-  FlatList,
+  ListRenderItem,
   RefreshControl,
   StyleSheet,
-  ViewPropTypes,
 } from 'react-native'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,10 +13,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import FeedPostContainer from './FeedPostContainer'
 import PostSeparator from './PostSeparator'
 import { SET_SHOULD_SCROLL_UP } from '../redux/actions/types'
+import type { Post } from '../types'
 
 const { width } = Dimensions.get('window')
-
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 const styles = StyleSheet.create({
   container: {
@@ -28,19 +25,30 @@ const styles = StyleSheet.create({
   },
 })
 
-const PostList = ({ containerStyle, detailPath, onRefresh, onScroll, posts, refreshing }) => {
+type Props = {
+  containerStyle: object;
+  detailPath: string;
+  onRefresh: () => {};
+  onScroll: () => {};
+  posts: Post[];
+  refreshing: boolean;
+}
+
+const PostList: React.FC<Props> = ({ containerStyle = {}, detailPath, onRefresh, onScroll, posts, refreshing }) => {
   const dispatch = useDispatch()
 
   const listRef = useRef(null)
 
   const scrollUp = () => {
     if (posts.length > 0) {
+      // @ts-ignore
       listRef.current?.scrollToOffset({ animated: true, offset: 0 })
 
       dispatch({ type: SET_SHOULD_SCROLL_UP, payload: false })
     }
   }
 
+  // @ts-ignore
   const shouldScrollUp = useSelector((state) => state.feed.shouldScrollUp)
 
   useEffect(() => {
@@ -49,15 +57,15 @@ const PostList = ({ containerStyle, detailPath, onRefresh, onScroll, posts, refr
     }
   }, [shouldScrollUp])
 
-  const keyExtractor = (item) => `Post-${item.id}`
+  const keyExtractor = (item: Post) => `Post-${item.id}`
 
-  // eslint-disable-next-line react/prop-types
-  const renderItem = ({ item }) => {
+  const renderItem: ListRenderItem<Post> = (params) => {
+    const { item } = params;
     return <FeedPostContainer detailPath={detailPath} post={item} />
   }
 
   return (
-    <AnimatedFlatList
+    <Animated.FlatList
       contentContainerStyle={{ paddingVertical: 21 }}
       data={posts}
       ItemSeparatorComponent={() => <PostSeparator />}
@@ -71,19 +79,6 @@ const PostList = ({ containerStyle, detailPath, onRefresh, onScroll, posts, refr
       style={[styles.container, containerStyle]}
     />
   )
-}
-
-PostList.defaultProps = {
-  containerStyle: {},
-}
-
-PostList.propTypes = {
-  containerStyle: ViewPropTypes.style,
-  detailPath: PropTypes.string.isRequired,
-  onRefresh: PropTypes.func.isRequired,
-  onScroll: PropTypes.shape({}).isRequired,
-  refreshing: PropTypes.bool.isRequired,
-  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default PostList

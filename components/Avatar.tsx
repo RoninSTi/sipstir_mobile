@@ -1,13 +1,19 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import { TouchableOpacity, ViewPropTypes } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-paper'
 
 import { useDispatch } from 'react-redux'
 import { SET_FOLLOWTRAY_USER } from '../redux/actions/types'
+import { User } from '../types'
 
-const BSAvatar = ({ size, user, containerStyle }) => {
+type Props = {
+  containerStyle: object;
+  size: number;
+  user?: User;
+}
+
+const BSAvatar: React.FC<Props> = ({ size = 45, user, containerStyle = {} }) => {
   const dispatch = useDispatch()
 
   const avatar = user?.avatar
@@ -29,21 +35,6 @@ const BSAvatar = ({ size, user, containerStyle }) => {
       )}
     </TouchableOpacity>
   )
-}
-
-BSAvatar.defaultProps = {
-  containerStyle: {},
-  size: 45,
-  user: null,
-}
-
-BSAvatar.propTypes = {
-  containerStyle: ViewPropTypes.style,
-  size: PropTypes.number,
-  user: PropTypes.shape({
-    avatar: PropTypes.string,
-    username: PropTypes.string,
-  }),
 }
 
 export default BSAvatar

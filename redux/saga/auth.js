@@ -1,12 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { put, takeEvery, select } from 'redux-saga/effects'
 
-import AsyncStorage from '@react-native-community/async-storage'
-
-import * as Sentry from 'sentry-expo'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import * as AppleAuthentication from 'expo-apple-authentication'
-import * as Facebook from 'expo-facebook'
+
+import { AccessToken, LoginManager } from 'react-native-fbsdk-next'
+
+import jwtDecode from 'jwt-decode'
 
 import {
   ATTEMPT_APPLE_LOGIN,
@@ -27,7 +28,9 @@ import { navigate } from '../../navigation/rootNavigation'
 
 const getUser = (state) => state.auth.user
 
-function* setAuthUser({ accessToken, user }) {
+function* setAuthUser({ accessToken }) {
+  const user = jwtDecode(accessToken)
+
   const { avatar, email, username, id } = user
 
   yield put({
@@ -49,21 +52,21 @@ function* onAuthAppleSuccess(action) {
 }
 
 function* onAuthEmailSuccess(action) {
-  const { accessToken, user } = action.payload.data
+  const { accessToken } = action.payload.data
 
-  yield setAuthUser({ accessToken, user })
+  yield setAuthUser({ accessToken })
 }
 
 function* onAuthRegisterSuccess(action) {
-  const { accessToken, user } = action.payload.data
+  const { accessToken } = action.payload.data
 
-  yield setAuthUser({ accessToken, user })
+  yield setAuthUser({ accessToken })
 }
 
 function* onFacebookAuthSuccess(action) {
-  const { accessToken, user } = action.payload.data
+  const { accessToken } = action.payload.data
 
-  yield setAuthUser({ accessToken, user })
+  yield setAuthUser({ accessToken })
 }
 
 function* onAttemptAppleLogin() {
@@ -93,21 +96,17 @@ function* onAttemptLogin() {
     },
   })
 
-  yield Facebook.initializeAsync({ appId: '358673965266057' })
+  yield LoginManager.logInWithPermissions(['public_profile', 'email'])
 
-  const { token } = yield Facebook.logInWithReadPermissionsAsync({
-    permissions: ['public_profile, email'],
-  })
+  const authTokenResult = yield AccessToken.getCurrentAccessToken()
 
-  yield put(facebookAuthAction({ fbToken: token }))
+  yield put(facebookAuthAction({ fbToken: authTokenResult.accessToken.toString() }))
 }
 
 function* onAttemptLogout() {
   yield put({ type: LOGOUT })
 
   yield AsyncStorage.removeItem('user')
-
-  Sentry.Native.configureScope((scope) => scope.setUser(null))
 }
 
 function* onSetAuthUser() {
@@ -122,8 +121,6 @@ function* onSetAuthUser() {
   }
 
   yield AsyncStorage.setItem('user', JSON.stringify(user))
-
-  Sentry.Native.setUser(user)
 
   yield put({ type: SET_LOGGED_IN, payload: true })
 }

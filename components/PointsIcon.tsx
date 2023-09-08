@@ -1,8 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import { Image, StyleSheet, Text, View, ViewPropTypes } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -36,7 +35,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const PointsIcon = ({ containerStyle, label }) => {
+type Props = {
+  containerStyle: object;
+  label: string;
+}
+
+const PointsIcon: React.FC<Props> = ({ containerStyle = {}, label }) => {
   return (
     <View style={[styles.container, containerStyle]}>
       <Image
@@ -49,15 +53,6 @@ const PointsIcon = ({ containerStyle, label }) => {
       </View>
     </View>
   )
-}
-
-PointsIcon.defaultProps = {
-  containerStyle: {},
-}
-
-PointsIcon.propTypes = {
-  containerStyle: ViewPropTypes.style,
-  label: PropTypes.string.isRequired,
 }
 
 export default PointsIcon

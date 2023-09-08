@@ -1,8 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { put, select, takeEvery } from 'redux-saga/effects'
 
-import AsyncStorage from '@react-native-community/async-storage'
-import * as Sentry from 'sentry-expo'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { LOGOUT, SET_LOADING, UPDATE_LOADING, SET_DROPDOWN_DATA } from '../actions/types'
 
 const getLoaders = (state) => state.ui.isLoading
@@ -72,8 +71,6 @@ function* checkLoading(action) {
 
 function* onError(action) {
   const { error } = action
-
-  Sentry.Native.captureException(error)
 
   const title = 'An Error Occurred'
 

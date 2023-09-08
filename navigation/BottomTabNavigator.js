@@ -22,7 +22,16 @@ export default function BottomTabNavigator() {
       initialRouteName="Feed"
       // eslint-disable-next-line react/jsx-props-no-spreading
       tabBar={(props) => <TabBar {...props} />}
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarStyle: [
+          {
+            display: 'flex',
+          },
+          null,
+        ],
+      }}>
       <BottomTab.Screen name="FeedStack" component={FeedStack} />
       <BottomTab.Screen name="Rewards" component={RewardsStack} />
       <BottomTab.Screen name="CreatePost" component={Empty} />

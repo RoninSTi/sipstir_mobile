@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import React, { useRef } from 'react'
+import React from 'react'
 
 import { StyleSheet, View } from 'react-native'
 
@@ -34,8 +34,6 @@ const MyFeedScreen = () => {
 
   const posts = useSelector((state) => state.myPosts.posts)
 
-  const postListRef = useRef(null)
-
   const onRefresh = () => dispatch({ type: REFRESH_MY_FEED })
 
   const loading = isLoading.some((item) => item.loadingType === FETCH_FEED) && !isRefreshing
@@ -47,7 +45,6 @@ const MyFeedScreen = () => {
           detailPath="MyFeedDetail"
           onRefresh={onRefresh}
           posts={posts}
-          ref={postListRef}
           refreshing={isRefreshing}
         />
       </ScreenLoader>

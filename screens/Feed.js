@@ -37,6 +37,17 @@ const FeedScreen = () => {
   const isLoadingFeed =
     isLoading.some((item) => item.loadingType === FETCH_FEED) && !isRefreshing && posts.length === 0
 
+  const handleOnScroll = () => {
+    Animated.event(
+      [
+        {
+          nativeEvent: { contentOffset: { y: offsetRef } },
+        },
+      ],
+      { useNativeDriver: true } // <-- Add this
+    )
+  }
+
   return (
     <View style={styles.container}>
       <FeedSelector offsetY={offsetRef} />
@@ -44,14 +55,7 @@ const FeedScreen = () => {
         <PostList
           detailPath="Detail"
           onRefresh={onRefresh}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: { contentOffset: { y: offsetRef } },
-              },
-            ],
-            { useNativeDriver: true } // <-- Add this
-          )}
+          onScroll={handleOnScroll}
           posts={posts}
           refreshing={isRefreshing}
         />

@@ -179,12 +179,12 @@ const FeedPostFooter = ({ detailPath, isDetail, post }) => {
       {showGuess && (
         <View style={styles.locationContainer}>
           <BackgroundButton
-            icon={() => (
+            icon={
               <Image
                 source={require('../assets/images/icon_guess_large.png')}
                 style={{ height: 24, marginRight: 7, width: 20 }}
               />
-            )}
+            }
             onPress={onPressGuess}
             source={require('../assets/images/button_background.png')}
             title="Guess"

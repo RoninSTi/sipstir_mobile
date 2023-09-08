@@ -3,7 +3,7 @@
     "name": "SipStir",
     "slug": "sipstir-mobile",
     "scheme": "sipstir",
-    "version": "1.0.20" ,
+    "version": "1.0.20",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -38,7 +38,16 @@
         "NSCameraUsageDescription": "Enable SipStir to access your Camera so we can upload your photos and save photos you've taken with the app.",
         "NSLocationAlwaysUsageDescription": "This allows us to more easily suggest venues and friends in your area.  It personalizes the discovery and guessing process.",
         "NSLocationWhenInUseUsageDescription": "This allows us to more easily suggest venues and friends in your area.  It personalizes the discovery and guessing process.",
-        "NSPhotoLibraryUsageDescription": "Enable SipStir to access your Photo Library so we can upload your photos and save photos you've taken with the app."
+        "NSPhotoLibraryUsageDescription": "Enable SipStir to access your Photo Library so we can upload your photos and save photos you've taken with the app.",
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "SKAdNetworkItems": [
+          {
+            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
+          },
+          {
+            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
+          }
+        ]
       },
       "supportsTablet": true,
       "usesAppleSignIn": true
@@ -46,20 +55,26 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "facebookScheme": "fb358673965266057",
-    "facebookAppId": "358673965266057",
-    "facebookDisplayName": "SipStir",
-    "hooks": {
-      "postPublish": [
+    "plugins": [
+      "expo-image-picker",
+      [
+        "react-native-fbsdk-next",
         {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "barsnap",
-            "project": "barsnap",
-            "authToken": "9215769ed85243a888d2f8b5d1b4cbeb74a19bd69fbc44cc9db47e52927b051c"
-          }
+          "appID": "1298193007479538",
+          "clientToken": "b8fd50126d2b1341687f2de3ab186467",
+          "displayName": "SipStir",
+          "scheme": "fb1298193007479538",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": true,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b02bed12-4326-4f68-8286-3323bfdeefa3"
+      }
     }
   }
 }

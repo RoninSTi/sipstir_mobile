@@ -13,7 +13,7 @@ const ActivityStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         component={LeaderboardScreen}
-        name="Leaderboard"
+        name="LeaderboardScreen"
         options={{
           headerBackground: () => <BackgroundHeader />,
           headerBackTitle: null,

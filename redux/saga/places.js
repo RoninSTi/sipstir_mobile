@@ -1,10 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 import { put, takeEvery, select } from 'redux-saga/effects'
 
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import * as Location from 'expo-location'
-import * as Permissions from 'expo-permissions'
 
 import {
   ASK_LOCATION_PERMISSION,
@@ -78,7 +77,7 @@ function* processPermissionStatus(status) {
 
 function* getLocationPermissionStatus() {
   try {
-    const { status } = yield Permissions.getAsync(Permissions.LOCATION)
+    const { status } = yield Location.getForegroundPermissionsAsync()
 
     yield processPermissionStatus(status)
   } catch (error) {
@@ -99,7 +98,7 @@ function* onAskLocationPermission() {
       },
     })
 
-    const { status } = yield Permissions.askAsync(Permissions.LOCATION)
+    const { status } = yield Location.requestForegroundPermissionsAsync()
 
     yield processPermissionStatus(status)
 

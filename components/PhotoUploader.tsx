@@ -1,22 +1,20 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
-import React from 'react'
-import PropTypes from 'prop-types'
-
-import { TouchableOpacity, ViewPropTypes } from 'react-native'
+import React, { PropsWithChildren } from 'react'
+import { TouchableOpacity } from 'react-native'
 
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import * as ImageManipulator from 'expo-image-manipulator'
-import * as Permissions from 'expo-permissions'
 import * as mime from 'react-native-mime-types'
 
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { useDispatch, useSelector } from 'react-redux'
 
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
-import { nanoid } from 'nanoid/async/index.native'
+import 'react-native-get-random-values'
+import { nanoid } from 'nanoid'
 import * as FileSystem from 'expo-file-system'
 import { CAUGHT_ERROR } from '../redux/actions/types'
 
@@ -24,30 +22,61 @@ import clients from '../services/api'
 
 const api = clients.default.client
 
-const PhotoUploader = ({
+type OnProgressParams = {
+  progressData: number;
+}
+
+type OnSelectParams = {
+  uri: string
+}
+
+type OnUploadCompleteParams = {
+  url: string;
+}
+
+type Props = {
+  onCancel: () => {};
+  onPress: () => {};
+  onProgress: (params: OnProgressParams) => {};
+  onSelect: (params: OnSelectParams) => {};
+  onUploadComplete: (params: OnUploadCompleteParams) => {};
+  photoDimensions: {
+    height: number;
+    width: number;
+  },
+  style: object,
+}
+
+const PhotoUploader: React.FC<Props & PropsWithChildren> = ({
   children,
   onCancel,
   onPress,
   onProgress,
   onSelect,
   onUploadComplete,
-  photoDimensions,
+  photoDimensions: {
+    height = 800,
+    width = 800
+  },
   style,
 }) => {
   const dispatch = useDispatch()
 
   const { showActionSheetWithOptions } = useActionSheet()
 
+  const [cameraStatus, requestCameraPermissions] = ImagePicker.useCameraPermissions()
+
+  const [libStatus, requestLibPermissions] = ImagePicker.useMediaLibraryPermissions()
+
+  // @ts-ignore
   const authUser = useSelector((state) => state.auth.user)
 
-  const processPhoto = async (result) => {
-    const { uri } = result
+  const processPhoto = async (result: ImagePicker.ImagePickerSuccessResult) => {
+    const { uri } = result.assets[0]
 
     onSelect({ uri })
 
     try {
-      const { height, width } = photoDimensions
-
       const { uri: resizedUri } = await ImageManipulator.manipulateAsync(
         uri,
         [{ resize: { height, width } }],
@@ -76,9 +105,9 @@ const PhotoUploader = ({
         },
       })
 
-      const { signedRequest, url } = response.data
+      const { signedRequest, url }: {signedRequest: string, url: string} = response.data
 
-      const options = {
+      const options: AxiosRequestConfig = {
         headers: {
           'Content-Type': fileType,
           'Content-Encoding': 'base64',
@@ -116,7 +145,7 @@ const PhotoUploader = ({
       quality: 1,
     })
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       processPhoto(result)
     }
   }
@@ -129,16 +158,15 @@ const PhotoUploader = ({
       quality: 1,
     })
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       processPhoto(result)
     }
   }
 
   const checkCameraPermission = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA)
-      if (status !== 'granted') {
-        alert('Sorry, we need camera permissions to make this work!')
+    if (Constants.platform?.ios) {
+      if (cameraStatus?.status !== 'granted') {
+        requestCameraPermissions()
       } else {
         openCamera()
       }
@@ -148,10 +176,9 @@ const PhotoUploader = ({
   }
 
   const checkCameraRollPermission = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!')
+    if (Constants.platform?.ios) {
+      if (libStatus?.status !== 'granted') {
+        requestLibPermissions()
       } else {
         openCameraRoll()
       }
@@ -204,33 +231,6 @@ const PhotoUploader = ({
       {children}
     </TouchableOpacity>
   )
-}
-
-PhotoUploader.defaultProps = {
-  onCancel: () => {},
-  onPress: () => {},
-  onProgress: () => {},
-  onSelect: () => {},
-  onUploadComplete: () => {},
-  photoDimensions: {
-    height: 800,
-    width: 800,
-  },
-  style: {},
-}
-
-PhotoUploader.propTypes = {
-  children: PropTypes.node.isRequired,
-  onCancel: PropTypes.func,
-  onPress: PropTypes.func,
-  onProgress: PropTypes.func,
-  onSelect: PropTypes.func,
-  onUploadComplete: PropTypes.func,
-  photoDimensions: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
-  }),
-  style: ViewPropTypes.style,
 }
 
 export default PhotoUploader

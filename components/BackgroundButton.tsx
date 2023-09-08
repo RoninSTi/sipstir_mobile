@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import { ImageBackground, StyleSheet, TouchableOpacity, Text, ViewPropTypes } from 'react-native'
+import { ImageBackground, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 
 const styles = StyleSheet.create({
@@ -32,16 +31,26 @@ const styles = StyleSheet.create({
   },
 })
 
-const BackgroundButton = ({
+type Props = {
+  containerStyle: object;
+  disabled: boolean;
+  Icon?: React.ComponentType;
+  isLoading: boolean;
+  onPress: () => {};
+  source: number;
+  title: string;
+}
+
+const BackgroundButton: React.FC<Props> = ({
   containerStyle,
   disabled,
-  icon,
+  Icon,
   isLoading,
   onPress,
   source,
   title,
 }) => {
-  const showIcon = icon && !isLoading
+  const showIcon = !!Icon && !isLoading
 
   return (
     <TouchableOpacity
@@ -49,31 +58,12 @@ const BackgroundButton = ({
       onPress={onPress}
       style={[styles.container, containerStyle]}>
       <ImageBackground source={source} style={styles.background}>
-        {showIcon && icon()}
+        {showIcon && <Icon />}
         {isLoading && <ActivityIndicator color="#FFFFFF" size={20} style={{ marginRight: 7 }} />}
         <Text style={styles.text}>{title}</Text>
       </ImageBackground>
     </TouchableOpacity>
   )
-}
-
-BackgroundButton.defaultProps = {
-  containerStyle: {},
-  disabled: false,
-  icon: () => {},
-  isLoading: false,
-  onPress: () => {},
-  title: '',
-}
-
-BackgroundButton.propTypes = {
-  containerStyle: ViewPropTypes.style,
-  disabled: PropTypes.bool,
-  icon: PropTypes.func,
-  isLoading: PropTypes.bool,
-  onPress: PropTypes.func,
-  source: PropTypes.number.isRequired,
-  title: PropTypes.string,
 }
 
 export default BackgroundButton
