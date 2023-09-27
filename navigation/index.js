@@ -15,6 +15,7 @@ import LinkingConfiguration from './LinkingConfiguration'
 import Auth from '../screens/Auth'
 import AuthEmail from '../screens/AuthEmail'
 import AuthLoading from '../screens/AuthLoading'
+import AuthForgot from '../screens/AuthForgot'
 import AuthRegister from '../screens/AuthRegister'
 import CreateProfile from '../screens/CreateProfile'
 import ZoomedImageScreen from '../screens/ZoomedImage'
@@ -59,6 +60,7 @@ function AuthStack() {
       <Stack.Screen name="CreateProfile" component={CreateProfile} />
       <Stack.Screen name="AuthEmail" component={AuthEmail} />
       <Stack.Screen name="AuthRegister" component={AuthRegister} />
+      <Stack.Screen name="AuthForgot" component={AuthForgot} />
     </Stack.Navigator>
   )
 }

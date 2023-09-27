@@ -2,14 +2,20 @@
 import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ImageBackground, StyleSheet, View, Text, TextInput } from 'react-native'
+import {
+  ImageBackground,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+} from 'react-native'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import { Button } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { emailAuthAction } from '../redux/actions/auth'
-import { AUTH_EMAIL } from '../redux/actions/types'
+import { forgotAuthAction } from '../redux/actions/auth'
+import { AUTH_FORGOT } from '../redux/actions/types'
 
 const styles = StyleSheet.create({
   background: {
@@ -62,40 +68,27 @@ const styles = StyleSheet.create({
   },
 })
 
-const AuthEmail = ({ navigation }) => {
+const AuthForgot = ({ navigation }) => {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
   const dispatch = useDispatch()
 
   const { navigate } = navigation
 
   const isLoading = useSelector((state) =>
-    state.ui.isLoading.some(({ loadingType }) => loadingType === AUTH_EMAIL)
+    state.ui.isLoading.some(({ loadingType }) => loadingType === AUTH_FORGOT),
   )
-
-  const passwordRef = useRef(null)
-
-  const focusPassword = () => passwordRef.current?.focus()
-
-  const handleForgot = () => {
-    navigate('AuthForgot')
-  }
 
   const handleRegister = () => {
     navigate('AuthRegister')
   }
 
   const handleSubmit = () => {
-    dispatch(emailAuthAction({ email: email.toLowerCase(), password }))
+    dispatch(forgotAuthAction({ email: email.toLowerCase() }))
   }
 
   const onChangeEmail = (text) => {
     setEmail(text)
-  }
-
-  const onChangePassword = (text) => {
-    setPassword(text)
   }
 
   return (
@@ -104,27 +97,17 @@ const AuthEmail = ({ navigation }) => {
         source={require('../assets/images/background.png')}
         style={styles.background}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>Sign In to SipStir</Text>
-          <Text style={styles.subtitle}>Enter your email and password.</Text>
+          <Text style={styles.title}>Forgot Password?</Text>
+          <Text style={styles.subtitle}>Enter your email and get instructions via email.</Text>
         </View>
         <View style={styles.card}>
           <TextInput
             autoFocus
             onChangeText={onChangeEmail}
-            onSubmitEditing={focusPassword}
             placeholder="Email"
             placeholderTextColor="#979797"
-            style={[styles.textInput, { marginBottom: 7 }]}
-            value={email}
-          />
-          <TextInput
-            onChangeText={onChangePassword}
-            onSubmitEditing={handleSubmit}
-            placeholder="Password"
-            placeholderTextColor="#979797"
-            secureTextEntry
             style={styles.textInput}
-            value={password}
+            value={email}
           />
         </View>
         <Button
@@ -134,19 +117,7 @@ const AuthEmail = ({ navigation }) => {
           mode="contained"
           onPress={handleSubmit}
           style={styles.button}>
-          Log In With Email
-        </Button>
-        <Button
-          textColor="#5177FF"
-          onPress={handleRegister}
-          style={[styles.button, { marginBottom: 7 }]}>
-          Need an account? Press to register
-        </Button>
-        <Button
-          textColor="#5177FF"
-          onPress={handleForgot}
-          style={styles.button}>
-          Forgot Password?
+          Begin Reset Process
         </Button>
         <KeyboardSpacer />
       </ImageBackground>
@@ -154,10 +125,10 @@ const AuthEmail = ({ navigation }) => {
   )
 }
 
-AuthEmail.propTypes = {
+AuthForgot.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
 }
 
-export default AuthEmail
+export default AuthForgot

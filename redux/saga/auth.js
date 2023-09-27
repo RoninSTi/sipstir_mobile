@@ -15,10 +15,12 @@ import {
   ATTEMPT_LOGOUT,
   AUTH_APPLE_SUCCESS,
   AUTH_EMAIL_SUCCESS,
+  AUTH_FORGOT_SUCCESS,
   AUTH_REGISTER_SUCCESS,
   FACEBOOK_AUTH_SUCCESS,
   LOGOUT,
   SET_AUTH_USER,
+  SET_DROPDOWN_DATA,
   SET_LOGGED_IN,
   UPDATE_LOADING,
 } from '../actions/types'
@@ -55,6 +57,23 @@ function* onAuthEmailSuccess(action) {
   const { accessToken } = action.payload.data
 
   yield setAuthUser({ accessToken })
+}
+
+function* onAuthForgotSuccess() {
+  const message = 'Attempt to login after you have successfully reset your password.'
+
+  const title = 'Request to reset password received.'
+
+  yield put({
+    type: SET_DROPDOWN_DATA,
+    payload: {
+      alertType: 'success',
+      message,
+      title,
+    },
+  })
+
+  navigate('Auth')
 }
 
 function* onAuthRegisterSuccess(action) {
@@ -131,6 +150,7 @@ export function* watchAuth() {
   yield takeEvery(ATTEMPT_LOGOUT, onAttemptLogout)
   yield takeEvery(AUTH_APPLE_SUCCESS, onAuthAppleSuccess)
   yield takeEvery(AUTH_EMAIL_SUCCESS, onAuthEmailSuccess)
+  yield takeEvery(AUTH_FORGOT_SUCCESS, onAuthForgotSuccess)
   yield takeEvery(AUTH_REGISTER_SUCCESS, onAuthRegisterSuccess)
   yield takeEvery(FACEBOOK_AUTH_SUCCESS, onFacebookAuthSuccess)
   yield takeEvery(SET_AUTH_USER, onSetAuthUser)

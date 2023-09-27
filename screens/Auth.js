@@ -22,9 +22,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 21,
   },
-  disabledButton: {
-    backgroundColor: 'gray',
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -150,38 +147,20 @@ const Auth = ({ navigation }) => {
               Terms of Service
             </Button>
           </View>
-          {checked ? (
+          <Button
+            buttonColor="#5177FF"
+            disabled={!checked}
+            icon={() => <Icon color="#FFFFFF" name="facebook" size={18} />}
+            loading={isLoading.some((item) => item.loadingType === ATTEMPT_LOGIN)}
+            mode="contained"
+            onPress={login}
+            style={[styles.button, { marginBottom: 8 }]}>
+            Log In With Facebook
+          </Button>
+          {Platform.OS === 'ios' && (
             <Button
-              color="#5177FF"
-              icon={() => <Icon color="#FFFFFF" name="facebook" size={18} />}
-              loading={isLoading.some((item) => item.loadingType === ATTEMPT_LOGIN)}
-              mode="contained"
-              onPress={login}
-              style={[styles.button, { marginBottom: 8 }]}>
-              Log In With Facebook
-            </Button>
-          ) : (
-            <Button
-              color="#5177FF"
-              icon={() => <Icon color="#FFFFFF" name="facebook" size={18} />}
-              loading={isLoading.some((item) => item.loadingType === ATTEMPT_LOGIN)}
-              mode="contained"
-              style={[styles.button, styles.disabledButton, { marginBottom: 8 }]}>
-              Log In With Facebook
-            </Button>
-          )}
-          {Platform.OS === 'ios' && !checked && (
-            <Button
-              color="#5177FF"
-              icon={() => <Icon color="#FFFFFF" name="apple" size={18} />}
-              mode="contained"
-              style={[styles.button, styles.disabledButton, { marginBottom: 8 }]}>
-              Sign In With Apple
-            </Button>
-          )}
-          {Platform.OS === 'ios' && checked && (
-            <Button
-              color="#5177FF"
+              buttonColor="#5177FF"
+              disabled={!checked}
               icon={() => <Icon color="#FFFFFF" name="apple" size={18} />}
               mode="contained"
               onPress={handleAppleLogin}
@@ -189,24 +168,15 @@ const Auth = ({ navigation }) => {
               Sign In With Apple
             </Button>
           )}
-          {checked ? (
-            <Button
-              color="#5177FF"
-              icon={() => <Icon color="#FFFFFF" name="mail" size={18} />}
-              mode="contained"
-              onPress={handleEmailLogin}
-              style={styles.button}>
-              Log In With Email
-            </Button>
-          ) : (
-            <Button
-              color="#5177FF"
-              icon={() => <Icon color="#FFFFFF" name="mail" size={18} />}
-              mode="contained"
-              style={[styles.button, styles.disabledButton]}>
-              Log In With Email
-            </Button>
-          )}
+          <Button
+            buttonColor="#5177FF"
+            disabled={!checked}
+            icon={() => <Icon color="#FFFFFF" name="mail" size={18} />}
+            mode="contained"
+            onPress={handleEmailLogin}
+            style={styles.button}>
+            Log In With Email
+          </Button>
         </View>
       </ImageBackground>
     </View>
