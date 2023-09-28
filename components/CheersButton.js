@@ -40,7 +40,7 @@ const CheersButton = ({ post }) => {
 
   return (
     <Button
-      color="#676767"
+      textColor="#676767"
       compact
       icon={() => (
         <Image

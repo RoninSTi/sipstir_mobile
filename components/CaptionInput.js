@@ -115,7 +115,7 @@ const CaptionInput = ({
       </View>
       {!hideButton && !showButtonOnFocus && (
         <Button
-          color="#5177FF"
+          buttonColor="#5177FF"
           loading={isLoading}
           mode="contained"
           onPress={onPress}

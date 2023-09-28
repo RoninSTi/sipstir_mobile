@@ -90,7 +90,7 @@ const FollowTray = () => {
         {me?.id !== user?.id && (
           <>
             <Button
-              color="#5177FF"
+              buttonColor="#5177FF"
               compact
               loading={isTryingToFollow}
               mode="contained"
@@ -99,7 +99,7 @@ const FollowTray = () => {
               {isFollowing ? 'Unfollow' : 'Follow'}
             </Button>
             <Button
-              color="#5177FF"
+              buttonColor="#5177FF"
               compact
               loading={isTryingToBlock}
               mode="contained"
@@ -112,7 +112,7 @@ const FollowTray = () => {
       </View>
       <View style={{ height: 50, justifyContent: 'center', width: '100%' }}>
         <Button
-          color="#979797"
+          textColor="#979797"
           compact
           labelStyle={{ color: '#FFFFFF' }}
           mode="contained"

@@ -21,7 +21,7 @@ const DoneButton = () => {
   }
 
   return (
-    <Button color="#FFFFFF" labelStyle={styles.button} onPress={onPress} uppercase={false}>
+    <Button textColor="#FFFFFF" labelStyle={styles.button} onPress={onPress} uppercase={false}>
       Done
     </Button>
   )

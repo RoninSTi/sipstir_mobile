@@ -96,7 +96,7 @@ const PostAddCaption = () => {
         <PhotoUploader
           onUploadComplete={handleUploadComplete}
           photoDimensions={{ height: 800, width: 800 }}>
-          <Button color="#E85349">Change</Button>
+          <Button textColor="#E85349">Change</Button>
         </PhotoUploader>
       </View>
       {imageURI && (

@@ -140,7 +140,7 @@ const Auth = ({ navigation }) => {
             />
             <Text>I agree to the </Text>
             <Button
-              color="#5177FF"
+              textColor="#5177FF"
               onPress={handleTos}
               style={{ marginLeft: -15 }}
               uppercase={false}>

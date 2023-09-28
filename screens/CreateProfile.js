@@ -194,7 +194,7 @@ const CreateProfile = () => {
               onProgress={handleProgress}
               onUploadComplete={handleUploadComplete}
               photoDimensions={{ height: 300, width: 300 }}>
-              <Button color="#5177FF">{avatar ? 'Change Photo' : 'Add Photo'}</Button>
+              <Button textColor="#5177FF">{avatar ? 'Change Photo' : 'Add Photo'}</Button>
             </PhotoUploader>
           </View>
           <View style={{ height: 20 }}>

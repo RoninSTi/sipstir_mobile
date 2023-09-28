@@ -67,10 +67,10 @@ const NotificationModal = () => {
             Would you like to be notified when someone comments or guesses on your snap?
           </Text>
           <View style={styles.buttonContainer}>
-            <Button color="#5177FF" onPress={onDismiss}>
+            <Button textColor="#5177FF" onPress={onDismiss}>
               Cancel
             </Button>
-            <Button color="#5177FF" mode="contained" onPress={onPressYes} style={styles.yesButton}>
+            <Button buttonColor="#5177FF" mode="contained" onPress={onPressYes} style={styles.yesButton}>
               Yes
             </Button>
           </View>

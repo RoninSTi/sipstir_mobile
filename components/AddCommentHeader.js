@@ -68,7 +68,7 @@ const AddCommentHeader = ({ selectedPlace }) => {
                 <Text style={[styles.text, styles.name]}>{selectedPlace.name}</Text>
                 <Text style={[styles.text]}>{selectedPlace.vicinity}</Text>
               </View>
-              <Button color="#E85349" onPress={onPress}>
+              <Button textColor="#E85349" onPress={onPress}>
                 Change
               </Button>
             </View>

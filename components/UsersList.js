@@ -57,7 +57,7 @@ const UsersList = ({ users, ListEmptyComponent }) => {
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             {item.id !== user.id && (
               <Button
-                color="#5177FF"
+                buttonColor="#5177FF"
                 compact
                 loading={isTryingToFollow}
                 mode="contained"
