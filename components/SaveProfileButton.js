@@ -32,7 +32,7 @@ const SaveProfileButton = () => {
 
   return (
     <IconButton
-      color="#FFFFFF"
+      iconColor="#FFFFFF"
       disabled={buttonDisabled}
       icon="content-save-outline"
       size={24}

@@ -40,7 +40,7 @@ const PostButton = () => {
   return loading ? (
     <ActivityIndicator color="#FFFFFF" size={24} style={{ marginRight: 10 }} />
   ) : (
-    <IconButton color="#FFFFFF" icon="plus" size={24} onPress={handleOnPress} />
+    <IconButton iconColor="#FFFFFF" icon="plus" size={24} onPress={handleOnPress} />
   )
 }
 

@@ -10,7 +10,7 @@ const BackgroundHeader = () => {
 
   const headerHeight = Platform.select({
     android: 78,
-    ios: statusBarHeight > 20 ? 90 : 64,
+    ios: statusBarHeight > 20 ? 90 : 55,
   })
 
   return (

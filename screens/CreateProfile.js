@@ -219,7 +219,7 @@ const CreateProfile = () => {
           />
           {!isEditing && (
             <Button
-              color="#5177FF"
+              buttonColor="#5177FF"
               disabled={usernameButtonDisabled}
               loading={showLoadingIndicator}
               mode="contained"

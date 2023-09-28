@@ -14,7 +14,7 @@ const CancelButton = ({ onPress }) => {
     navigation.goBack()
   }
 
-  return <IconButton color="#FFFFFF" icon="window-close" size={24} onPress={handleOnPress} />
+  return <IconButton iconColor="#FFFFFF" icon="window-close" size={24} onPress={handleOnPress} />
 }
 
 CancelButton.defaultProps = {

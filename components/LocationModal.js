@@ -75,11 +75,11 @@ const LocationModal = () => {
             experience.
           </Text>
           <View style={styles.buttonContainer}>
-            <Button color="#5177FF" onPress={onDismiss}>
+            <Button textColor="#5177FF" onPress={onDismiss}>
               Cancel
             </Button>
             <Button
-              color="#5177FF"
+              buttonColor="#5177FF"
               loading={isLoading.some(({ action }) => action === 'locationAsk')}
               mode="contained"
               onPress={onPressYes}

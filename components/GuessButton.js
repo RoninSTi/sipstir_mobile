@@ -33,7 +33,7 @@ const GuessButton = () => {
     <ActivityIndicator color="#FFFFFF" size={24} style={{ marginRight: 10 }} />
   ) : (
     <IconButton
-      color="#FFFFFF"
+      iconColor="#FFFFFF"
       icon="map-marker-question-outline"
       size={24}
       onPress={handleOnPress}

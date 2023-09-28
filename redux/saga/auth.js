@@ -48,9 +48,9 @@ function* setAuthUser({ accessToken }) {
 }
 
 function* onAuthAppleSuccess(action) {
-  const { accessToken, user } = action.payload.data
+  const { accessToken } = action.payload.data
 
-  yield setAuthUser({ accessToken, user })
+  yield setAuthUser({ accessToken })
 }
 
 function* onAuthEmailSuccess(action) {
