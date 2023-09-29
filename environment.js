@@ -24,7 +24,7 @@ const ENV = {
     reduxLoggerEnabled: false,
   },
   prod: {
-    apiUrl: 'https://sipstir-api-prod.herokuapp.com/',
+    apiUrl: 'https://api.sipstir.app/',
     google: {
       placeApiKey: 'AIzaSyAVebIejVYP7By_UIR_4-ucpz5K0rGkfLU',
     },

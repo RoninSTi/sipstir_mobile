@@ -154,7 +154,8 @@ const Auth = ({ navigation }) => {
             loading={isLoading.some((item) => item.loadingType === ATTEMPT_LOGIN)}
             mode="contained"
             onPress={login}
-            style={[styles.button, { marginBottom: 8 }]}>
+            style={[styles.button, { marginBottom: 8 }]}
+            textColor='#FFF'>
             Log In With Facebook
           </Button>
           {Platform.OS === 'ios' && (
@@ -164,7 +165,8 @@ const Auth = ({ navigation }) => {
               icon={() => <Icon color="#FFFFFF" name="apple" size={18} />}
               mode="contained"
               onPress={handleAppleLogin}
-              style={[styles.button, { marginBottom: 8 }]}>
+              style={[styles.button, { marginBottom: 8 }]}
+              textColor='#FFF'>
               Sign In With Apple
             </Button>
           )}
@@ -174,7 +176,8 @@ const Auth = ({ navigation }) => {
             icon={() => <Icon color="#FFFFFF" name="mail" size={18} />}
             mode="contained"
             onPress={handleEmailLogin}
-            style={styles.button}>
+            style={styles.button}
+            textColor='#FFF'>
             Log In With Email
           </Button>
         </View>
