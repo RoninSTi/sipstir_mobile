@@ -7,12 +7,10 @@
         "simulator": true
       }
     },
-    "production" : {
-      "autoIncrement": true
-    }
+    "production" : {}
   },
   "cli": {
-    "appVersionSource": "remote",
+    "appVersionSource": "local",
     "requireCommit": true
   }
 }
