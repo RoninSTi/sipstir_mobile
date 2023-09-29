@@ -6,6 +6,13 @@
       "ios": {
         "simulator": true
       }
+    },
+    "production" : {
+      "autoIncrement": true
     }
+  },
+  "cli": {
+    "appVersionSource": "remote",
+    "requireCommit": true
   }
 }
