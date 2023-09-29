@@ -23,7 +23,7 @@
           "apiKey": "AIzaSyDx6FH8-_uPJuRzYqgWEUFoI9v0fVWUYQo"
         }
       },
-      "package": "com.sipstir.sipstir",
+      "package": "com.sipstir.sipstir"
     },
     "ios": {
       "bundleIdentifier": "com.sipstir.sipstir",
