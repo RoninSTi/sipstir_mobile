@@ -45,7 +45,7 @@ function* fetchPlaces() {
 
   let params = {
     type: 'bar',
-    key: env.google.placeApiKey,
+    key: process.env.EXPO_PUBLIC_GOOGLE_PLACE_API_KEY,
   }
 
   if (currentLocation) {
