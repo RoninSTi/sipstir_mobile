@@ -9,7 +9,7 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "http://0.0.0.0:8080",
         "EXPO_PUBLIC_GOOGLE_PLACE_API_KEY": "AIzaSyAVebIejVYP7By_UIR_4-ucpz5K0rGkfLU",
-        "EXPO_PUBLIC_REDUX_LOGGER_ENABLED": "true"
+        "EXPO_PUBLIC_REDUX_LOGGER_ENABLED": "false"
       }
     },
     "production" : {
