@@ -1,15 +1,23 @@
 {
   "build": {
     "development-simulator": {
-      "channel": "prod",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
         "simulator": true
+      },
+      "env": {
+        "API_URL": "http://0.0.0.0:8080",
+        "GOOGLE_PLACE_API_KEY": "AIzaSyAVebIejVYP7By_UIR_4-ucpz5K0rGkfLU",
+        "REDUX_LOGGER_ENABLED": true
       }
     },
     "production" : {
-      "channel": "prod"
+      "env": {
+        "API_URL": "https://api.sipstir.app",
+        "GOOGLE_PLACE_API_KEY": "AIzaSyAVebIejVYP7By_UIR_4-ucpz5K0rGkfLU",
+        "REDUX_LOGGER_ENABLED": false
+      }
     }
   },
   "cli": {

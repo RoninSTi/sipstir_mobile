@@ -2,10 +2,9 @@ import React from 'react'
 
 import { Image, StyleSheet, View } from 'react-native'
 
-import env from '../environment'
 import { AccountPhoto } from '../types'
 
-const API_KEY = env.google.placeApiKey
+const API_KEY = process.env.GOOGLE_PLACE_API_KEY
 
 const styles = StyleSheet.create({
   image: {

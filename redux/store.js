@@ -8,13 +8,11 @@ import reducer from './reducers/reducer'
 import rootSaga from './saga/saga'
 import clients from '../services/api'
 
-import env from '../environment'
-
 const sagaMiddleware = createSagaMiddleware()
 
 const middleware = [multiClientMiddleware(clients), sagaMiddleware]
 
-if (env.reduxLoggerEnabled) {
+if (process.env.REDUX_LOGGER_ENABLED) {
   middleware.push(logger)
 }
 

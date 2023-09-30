@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-import env from '../environment'
-
 const defaultClient = axios.create({
-  baseURL: env.apiUrl,
+  baseURL: process.env.API_URL,
   timeout: 10000,
   withCredentials: true,
 })

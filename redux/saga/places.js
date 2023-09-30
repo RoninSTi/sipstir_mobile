@@ -27,8 +27,6 @@ import { fetchPlaceAction, fetchPlacesAction } from '../actions/places'
 
 import { navigate } from '../../navigation/rootNavigation'
 
-import env from '../../environment'
-
 const getAuthUser = (state) => state.auth.user
 
 const getLocation = (state) => state.places.currentLocation
@@ -222,7 +220,7 @@ function* onSetPlacesSearchString(action) {
 
   let params = {
     input: action.payload,
-    key: env.google.placeApiKey,
+    key: process.env.GOOGLE_PLACE_API_KEY,
     type: 'establishment',
   }
 
