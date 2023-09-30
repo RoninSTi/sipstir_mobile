@@ -220,7 +220,7 @@ function* onSetPlacesSearchString(action) {
 
   let params = {
     input: action.payload,
-    key: process.env.GOOGLE_PLACE_API_KEY,
+    key: process.env.EXPO_PUBLIC_GOOGLE_PLACE_API_KEY,
     type: 'establishment',
   }
 

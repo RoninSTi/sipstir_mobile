@@ -12,7 +12,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const middleware = [multiClientMiddleware(clients), sagaMiddleware]
 
-if (process.env.REDUX_LOGGER_ENABLED) {
+if (process.env.EXPO_PUBLIC_REDUX_LOGGER_ENABLED) {
   middleware.push(logger)
 }
 
