@@ -2,14 +2,13 @@ import Constants from 'expo-constants'
 
 const ENV = {
   default: {
-    apiUrl: 'https://0352d7f5f6ee.ngrok.io/',
+    apiUrl: 'https://api.sipstir.app/',
     google: {
       placeApiKey: 'AIzaSyAVebIejVYP7By_UIR_4-ucpz5K0rGkfLU',
     },
     reduxLoggerEnabled: false,
   },
   dev: {
-    // apiUrl: 'https://sipstir-api-prod.herokuapp.com/',
     apiUrl: 'http://0.0.0.0:8080',
     google: {
       placeApiKey: 'AIzaSyAVebIejVYP7By_UIR_4-ucpz5K0rGkfLU',

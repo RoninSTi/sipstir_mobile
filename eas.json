@@ -7,7 +7,9 @@
         "simulator": true
       }
     },
-    "production" : {}
+    "production" : {
+      "channel": "prod"
+    }
   },
   "cli": {
     "appVersionSource": "local",
