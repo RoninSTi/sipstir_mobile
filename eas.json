@@ -1,6 +1,7 @@
 {
   "build": {
     "development-simulator": {
+      "channel": "prod",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
